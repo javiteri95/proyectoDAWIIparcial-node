@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+  <title>El Curso-Fundamentos de Programación</title>
+  <meta name="description" content="">  
+  <meta name="author" content="">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   <!-- mobile specific metas
+   ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="stylesheets/base.css">  
+   <link rel="stylesheet" href="stylesheets/main.css">
+   <link rel="stylesheet" href="stylesheets/vendor.css">     
+
+
+   <!-- script
+   ================================================== -->
+  <script src="js/modernizr.js"></script>
+      <script src="js/equipo.js"></script>
+
+   <!-- favicons
+  ================================================== -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+</head>
+
+<body id="top">
+
+  <!-- header 
+   ================================================== -->
+   <header class="sticky">
+
+    <div class="row">
+
+      <div class="logo">
+           <a href="#" onclick="ini();">Fundamentos de Programación</a>
+        </div>
+
+      <nav id="main-nav-wrap">
+        <ul class="main-navigation">
+          <li onclick="inicio();"><a href="#" title="">Inicio</a></li>
+          <li class="current" onclick="curso();"><a href="#" title="">El Curso</a></li>
+          <li onclick="semana();"><a href="#" title="">Semana</a></li>
+          <li onclick="equipo();"><a href="#" title="">Equipo</a></li>
+          <li onclick="ayudantias();"><a href="#" title="">Ayudantías</a></li>
+               <li class="with-sep nove" onclick="sandbox();"><a href="#" title="">SANDBOX</a></li>
+               <li class="nove " id="soloprof" onclick="proyectos();"><a  href="#"  title="">Proyectos</a></li>
+               <li class="with-sep nove" onclick="perfil();"><a href="#"  title="">Perfil</a></li>       
+          <li id="highlighted" class="highlight with-sep"><div class='video-link'><a id="iniciar" href="#login-popup" title="">Iniciar Sesión</a></div></li>
+               <li class="highlight"><a id="cerrar" href="index.html" title="">Cerrar Sesión</a></li>
+
+        </ul>
+      </nav>
+
+      <a class="menu-toggle" href="#"><span>Menu</span></a>
+      
+    </div>    
+    
+   </header> <!-- /header -->
+
+    <!-- Process Section
+   ================================================== -->
+   <section id="process">  
+
+    <div class="row section-intro">
+      <div class="col-twelve with-bottom-line">
+
+        <h5>El curso</h5>
+        <h1>¿Qué comprende?</h1>
+
+        <p class="lead">Aquí te dejamos la información necesaria del curso</p>
+
+      </div>      
+    </div>
+
+    <div class="row process-content">
+
+      <div class="left-side">
+
+        <div class="item" data-item="1">
+
+          <h5>Descripción</h5>
+
+          <p>El curso presenta a los estudiantes estrategias para resolver problemas comunes en diversas profesiones por medio del diseño e implementación de soluciones basadas en el uso de un lenguaje de programación. Cubre los principios básicos para que el estudiante pueda leer y escribir programas; haciendo énfasis en el diseño y análisis de algoritmos. Además, introduce a los estudiantes en el uso de herramientas de desarrollo y depuración.</p>
+            
+        </div>
+
+        <div class="item" data-item="2">
+
+          <h5>Syllabus</h5>
+
+               <div class='video-link'>
+            <a type="button" class="btn" id="syllabus" href="#pdfsyll-popup"><button>Ver Syllabus</button></a>
+          </div>
+        </div>
+          
+      </div> <!-- /left-side -->
+
+      <div class="right-side">
+          
+        <div class="item" data-item="3">
+
+          <h5>Requisitos</h5>
+
+          <p><h6>Pre-Requisitos:</h6>Herramientas de Colaboración Digital<br><br><h6>Co-Requisitos:</h6>Ninguno<br><br><h6>Nivel mínimo de estudios:</h6> No aplica<br><br><br><br><br></p>
+            
+        </div>
+
+        <div class="item" data-item="4">
+
+          <h5>Políticas</h5>
+
+               <div class='video-link'>
+            <a type="button" class="btn" id="politicas" href="#pdfpol-popup"><button>Ver Políticas</button></a>
+               </div>
+            
+        </div>
+
+      </div> <!-- /right-side -->
+
+      <div class="image-part"></div>        
+
+    </div> <!-- /process-content --> 
+
+    <div id="login-popup" class="popup-modal mfp-hide">
+ 
+          
+          <div class="fluid-video-wrapper" id="log">
+                <form id="login" class="group" width="300" height="201">
+                   <p>Usuario:</p><input id="ulogin" type="text" placeholder="Ingrese su correo Espol completo" >
+                   <p>Contraseña:</p><input id="clogin" type="password" placeholder="Ingrese su contraseña" >
+                   <p class="oculto" style="display: none;">Revise sus datos</p>
+                    <a class="button" onclick="login();">Ingresar</a>
+                </form>
+          </div>              
+
+         <a class="close-popup">Cerrar</a>         
+
+      </div> <!-- /video-popup -->        
+
+   </section> <!-- /process--> 
+
+   <div id="pdfpol-popup" class="popup-modal mfp-hide">
+
+         <div class="fluid-video-wrapper">
+            <iframe src="data/Politicas.pdf" width="100%" height="1000" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+         </div>           
+
+         <a class="close-popup">Cerrar</a>         
+
+      </div> <!-- /video-popup --> 
+
+      <div id="pdfsyll-popup" class="popup-modal mfp-hide">
+
+         <div class="fluid-video-wrapper">
+            <iframe src="data/Syllabus.pdf" width="100%" height="1000" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+         </div>           
+
+         <a class="close-popup">Cerrar</a>         
+
+      </div> <!-- /video-popup -->
+  <footer>
+
+    <div class="footer-main">
+
+      <div class="row">  
+
+          <div class="col-four tab-full mob-full footer-info">            
+
+              <div class="footer-logo"></div>
+
+              <p>
+              Facultad de Ingeniería en Electricidad y Computación<br>
+               Escuela Superior Politécnica del Litoral<br>
+               Campus Gustavo Galindo - km. 30.5 vía perimetral<br>
+               Guayaquil-Ecuador
+              admweb@fiec.espol.edu.ec &nbsp; +593 42 269 800 / +593 42 269 803
+              </p>
+
+          </div> <!-- /footer-info -->
+
+          <div class="col-two tab-1-3 mob-1-2 site-links">
+
+            <h4>Enlaces de interés</h4>
+
+            <ul>
+              <li><a href="http://www.abet.espol.edu.ec/">Proyecto ABET ESPOL</a></li>
+            <li><a href="https://www.fiec.espol.edu.ec/es">Carreras de Pregrado</a></li>
+            <li><a href="https://www.fiec.espol.edu.ec/es/trabajos-y-pasantias">Bolsa de Trabajo</a></li>
+            <li><a href="https://www.fiec.espol.edu.ec/es/directorio-telefonico">Directorio Telefónico</a></li>
+          </ul>
+
+          </div> <!-- /site-links -->  
+
+          <div class="col-two tab-1-3 mob-1-2 social-links">
+
+            <h4>Social</h4>
+
+            <ul>
+              <li><a href="https://twitter.com/SECRETARIAFIEC">Twitter</a></li>
+            <li><a href="https://www.facebook.com/FIEC01">Facebook</a></li>
+            <li><a href="https://www.youtube.com/channel/UCsUsWgqQDwoHxj-HpbF7gzQ">Youtube</a></li>
+          </ul>
+                      
+          </div> <!-- /social --> 
+
+          <div class="col-four tab-1-3 mob-full footer-subscribe">
+
+            <h4>Subscríbete</h4>
+
+            <p>Mantente al día. Subscribete a nuestro boletín de noticias.</p>
+
+            <div class="subscribe-form">
+          
+              <form id="mc-form" class="group" novalidate="true">
+
+              <input type="email" value="" name="dEmail" class="email" id="mc-email" placeholder="tipea tu email &amp; presiona enter" required=""> 
+        
+              <input type="submit" name="subscribe" >
+        
+              <label for="mc-email" class="subscribe-message"></label>
+      
+            </form>
+
+            </div>            
+                      
+          </div> <!-- /subscribe -->         
+
+        </div> <!-- /row -->
+
+    </div> <!-- /footer-main -->
+
+
+      <div class="footer-bottom">
+
+        <div class="row">
+
+          <div class="col-twelve">
+            <div class="copyright">
+              <span>© Copyright Espol 2016.</span> 
+              <span>Design by <a href="http://www.styleshout.com/"> &copy; El contenido de esta obra es de propiedad intelectual de la ESPOL y FIEC.
+Todos los derechos reservados.  Prohibida su reproducción total, parcial, comunicación
+pública o distribución sin autorización previa del titular de los derechos</a></span>             
+             </div>
+
+             <div id="go-top" style="display: block;">
+                <a class="smoothscroll" title="Back to Top" href="#top"><i class="icon ion-android-arrow-up"></i></a>
+             </div>         
+          </div>
+
+        </div> <!-- /footer-bottom -->      
+
+      </div>
+
+   </footer>  
+
+   <div id="preloader"> 
+      <div id="loader"></div>
+   </div> 
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   <script src="js/jquery-1.11.3.min.js"></script>
+   <script src="js/jquery-migrate-1.2.1.min.js"></script>
+   <script src="js/plugins.js"></script>
+   <script src="js/main.js"></script>
+   <script src="js/cargar.js"></script>
+   <script type="text/javascript" src="js/ini.js"></script>
+   <script type="text/javascript" src="js/ayudantes.js"></script>
+</body>
+
+</html>   

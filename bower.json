@@ -1,0 +1,23 @@
+{
+  "name": "proyectodawiiparcial node",
+  "description": "componentes fronend proyecto",
+  "main": "",
+  "authors": [
+    "javiteri95 <josevns95@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/javiteri95/proyectoDAWIIparcial-node",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.1",
+    "bootstrap-css": "^3.3.6"
+  }
+}

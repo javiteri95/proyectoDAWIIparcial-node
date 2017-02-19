@@ -1,0 +1,23 @@
+@import url("fonts.css");
+@import url("ionicons/css/ionicons.min.css");
+@import url("micons/micons.css");
+a{
+  font-family: "raleway-bold", sans-serif;
+    color: red;
+}
+
+a.nounderline:link   
+{   
+ text-decoration:none;   
+}
+
+
+.panel-default > .panel-heading {
+    font-weight: normal;
+    background-color: #ddd;
+    color: #0E3F56;
+    font-size: 1em;
+}
+
+
+
