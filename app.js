@@ -28,7 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 // Express Session
 app.use(session({
     secret: 'secreto',
@@ -39,6 +38,9 @@ app.use(session({
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
 
 // Express Validator
 app.use(expressValidator({
