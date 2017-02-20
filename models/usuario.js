@@ -1,5 +1,6 @@
 //Import the mongoose module
 var mongoose = require('mongoose');
+var bcrypt = require('bcryptjs');
 
 //--------------------realiza la conexion---------------------------
 //Set up default mongoose connection
@@ -28,6 +29,7 @@ var usuarioS = new Schema({
 		type : String,
 		enum : ['matricula','cedula']
 	},
+	identificacion : String,
 	nombres : String,
 	apellidos : String,
 	carrera : String
@@ -39,3 +41,12 @@ var Usuario = mongoose.model("usuario", usuarioS);
 
 //lo envia para exportar
 module.exports = Usuario;
+
+module.exports.createUsuario = function(newUser, callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+	        newUser.password = hash;
+	        newUser.save(callback);
+	    });
+	});
+}
