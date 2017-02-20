@@ -17,4 +17,4 @@ var ejercicio = new Schema({
 ;
 var Ejercicio = mongoose.model('Ejercicio', ejercicio);
 
-module.exports = Ejercicio;
+module.exports = Ejercicio; 
