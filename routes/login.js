@@ -17,10 +17,8 @@ passport.use(new LocalStrategy({
 },
 function(correo, password, done) {
    Usuario.getUsuarioByCorreo(correo, function(err, user){
-   	console.log("entra aqui 1")
    	if(err) throw err;
    	if(!user){
-   		console.log("usuario mo existe");
    		return done(null, false, {message: 'usuario no existe'});
    	}
 
@@ -29,12 +27,10 @@ function(correo, password, done) {
    		if(isMatch){
    			return done(null, user);
    		} else {
-   			console.log("no existe password");
    			return done(null, false, {message: 'Contraseña inválida '});
    		}
    	});
    });
-   console.log("entra aqui 2");
   }));
 
 passport.serializeUser(function(user, done) {
@@ -48,7 +44,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/',
-  passport.authenticate('local', {successRedirect:'/usuario', failureRedirect:'/login',failureFlash: true}),
+  passport.authenticate('local', {successRedirect:'/usuario', failureRedirect:'/',failureFlash: true}),
   function(req, res) {
   	console.log("aqui redirige")
     res.redirect('/usuario');
@@ -59,7 +55,7 @@ router.get('/logout', function(req, res){
 
 	req.flash('success_msg', 'You are logged out');
 
-	res.redirect('/login');
+	res.redirect('/');
 });
 
 
