@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Login form shake effect</title>
   <% include partials/header %>
+  
 </head>
 
 <body>
@@ -51,11 +52,55 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Launch demo modal
+            Agregar usuario
           </button>     
         </div>
       </div>
     </div>
+    <br>
+    <div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table id="tablaUsuarios" class="display">
+            <thead>
+                <tr>
+                    <th style="display: none;">id</th>
+                    <th>nombres</th>
+                    <th>apellidos</th>
+                    <th>correo</th>
+                    <th>rol</th>
+                    <th>tipo identificacion</th>
+                    <th>identificacion</th>
+                    <th>carrera</th>
+
+                </tr>
+            </thead>
+            <tbody>
+              <% for (var key in listaUsuarios) {
+                  var value = listaUsuarios[key]; %>
+                <tr>
+                    <td style="display: none;"><%= value._id %></td>
+                    <td><%= value.nombres %></td>
+                    <td><%= value.apellidos %></td>
+                    <td><%= value.correo %></td>
+                    <td><%= value.rol %></td>
+                    <td><%= value.tipoI %></td>
+                    <td><%= value.identificacion %></td>
+                    <td><%= value.carrera %></td>
+                </tr>
+                <% }%>
+            </tbody>
+        </table>
+          
+        </div>
+          
+      </div>
+
+    </div>
+
+
+
+
   </section>
 
 
@@ -126,8 +171,9 @@
 
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
 
-  <script src="js/loginJS.js"></script>
+  <script src="js/usuariosV.js"></script>
 
 </body>
 </html>

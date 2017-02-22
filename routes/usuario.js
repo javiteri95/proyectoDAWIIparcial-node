@@ -3,8 +3,23 @@ var router = express.Router();
 var Usuario = require('../models/usuario')
 
 /* GET home page. */
+/*
 router.get('/', function(req, res, next) {
+
   res.render('usuario');
+});
+*/
+
+router.get('/', function(req, res, next) {
+  Usuario.find({}, function(err, users) {
+    var userMap = {};
+
+    users.forEach(function(user) {
+      userMap[user._id] = user;
+    });
+
+    res.render('usuario', { listaUsuarios: userMap });  
+  });
 });
 
 router.post('/', function(req, res, next) {
