@@ -18,6 +18,8 @@
     "jquery": "^3.1.1",
     "bootstrap": "^3.3.7",
     "express": "^4.14.1",
-    "bootstrap-css": "^3.3.6"
+    "bootstrap-css": "^3.3.6",
+    "datatables.net": "^2.1.1",
+    "datatables.net-dt": "^3.2.2"
   }
 }
