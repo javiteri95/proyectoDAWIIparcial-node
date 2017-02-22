@@ -48,5 +48,16 @@ router.post('/', function(req, res, next) {
 	}
 });
 
+router.get('/:paralelo'),function(req,res,next){
+	var paralelo=req.body.paralelo;
+	var respuesta=Curso.getCursoByParalelo(paralelo,function(err,user){
+		if(err) throw err;
+		console.log(user);
+	});
+	var respuesta={}
+	respuesta.paralelo=paralelo;
+
+}
+
 
 module.exports = router;
