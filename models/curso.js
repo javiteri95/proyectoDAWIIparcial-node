@@ -31,3 +31,9 @@ module.exports.getCursoByParalelo = function(paralelo, callback){
 	console.log("entra aqui 0")
 	Curso.findOne(query, callback);
 }
+
+module.exports.getCursoByProfesor = function(profesor, callback){
+	var query = {profesor: profesor};
+	console.log("entra aqui 0")
+	Curso.findOne(query, callback);
+}
