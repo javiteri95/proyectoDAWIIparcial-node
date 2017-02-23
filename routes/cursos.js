@@ -6,7 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('cursos');
 });
 
-router.post('/', function(req, res, next) {
+router.get('/todos',function(req, res, next){
+	Curso.
+});
+
+router.post('/agregar', function(req, res, next) {
   	var profesor = req.body.profesor;
 	var paralelo = req.body.paralelo;
 	var estudiante = req.body.estudiante;
@@ -37,9 +41,9 @@ router.post('/', function(req, res, next) {
 			estudiantes : estudiantes
 		});
 
-		Curso.createCurso(nuevocurso, function(err, user){
+		Curso.createCurso(nuevocurso, function(err, curso){
 			if(err) throw err;
-			console.log(user);
+			console.log(curso);
 		});
 
 		req.flash('success_msg', 'El curso se ha registrado');

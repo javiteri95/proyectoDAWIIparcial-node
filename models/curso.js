@@ -23,7 +23,7 @@ var Curso = mongoose.model('Curso', curso);
 module.exports = Curso;
 
 module.exports.createCurso = function(newCurso, callback){
-	
+	newCurso.save(callback);
 }
 
 module.exports.getCursoByParalelo = function(paralelo, callback){
@@ -35,5 +35,5 @@ module.exports.getCursoByParalelo = function(paralelo, callback){
 module.exports.getCursoByProfesor = function(profesor, callback){
 	var query = {profesor: profesor};
 	console.log("entra aqui 0")
-	Curso.findOne(query, callback);
+	Curso.find(query, callback);
 }
