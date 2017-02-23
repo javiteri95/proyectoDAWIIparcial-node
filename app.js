@@ -15,6 +15,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var usuario = require('./routes/usuario')
 var ejercicios = require('./routes/ejercicios')
+var cursos = require('./routes/cursos');
 
 var app = express();
 
@@ -77,6 +78,7 @@ app.use(function (req, res, next) {
 app.use('/', login);
 app.use('/usuario', usuario)
 app.use('/ejercicios', ejercicios)
+app.use('/cursos',cursos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
