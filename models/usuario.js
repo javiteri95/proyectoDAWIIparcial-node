@@ -53,7 +53,6 @@ module.exports.createUsuario = function(newUser, callback){
 
 module.exports.getUsuarioByCorreo = function(correo, callback){
 	var query = {correo: correo};
-	console.log("entra aqui 0")
 	Usuario.findOne(query, callback);
 }
 
@@ -66,4 +65,15 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	if(err) throw err;
     	callback(null, isMatch);
 	});
+}
+
+module.exports.cambiarPassword = function(idUser, newPassword, callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newPassword, salt, function(err, hash) {
+	    	newPassword = hash;
+	    	Usuario.update({ _id: idUser }, { $set: { password: newPassword }}, callback);
+	    });
+	});
+
+
 }

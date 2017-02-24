@@ -33,15 +33,24 @@ function(correo, password, done) {
    });
   }));
 
+
+
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
+
+
+
 
 passport.deserializeUser(function(id, done) {
   Usuario.getUsuarioById(id, function(err, user) {
     done(err, user);
   });
 });
+
+
+
 
 router.post('/',
   passport.authenticate('local', {successRedirect:'/usuario', failureRedirect:'/',failureFlash: true}),
@@ -58,5 +67,34 @@ router.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
+
+router.post('/cambio', function(req, res){
+
+  Usuario.getUsuarioByCorreo(req.body.correo, function(err, user){
+    if(err) throw err;
+    if(!user){
+      var data = { type : "error" , message : "usuario no existe" };
+      res.json(data);
+      
+    }
+
+    Usuario.comparePassword(req.body.oldPassword, user.password, function(err, isMatch){
+      if(err) throw err;
+      if(isMatch){
+        var id = user._id;
+        Usuario.cambiarPassword(id, req.body.newPassword, function(err){
+          if (err) throw err;
+          var data = {type : "success" , message : "cambio Contraseña exitoso"};
+          res.json(data);
+        })
+        
+      } else {
+        var data = {type : "error" , message : "Contraseña no valida"};
+        res.json(data);
+      }
+    });
+   });
+
+});
 
 module.exports = router;
