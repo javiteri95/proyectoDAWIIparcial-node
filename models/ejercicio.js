@@ -17,4 +17,9 @@ var ejercicio = new Schema({
 ;
 var Ejercicio = mongoose.model('Ejercicio', ejercicio);
 
-module.exports = Ejercicio; 
+module.exports = Ejercicio;
+
+module.exports.createEjercicio = function(newEjercicio, callback){
+	newEjercicio.save(callback);
+	
+}

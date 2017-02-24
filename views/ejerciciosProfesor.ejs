@@ -52,7 +52,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Agregar usuario
+            Agregar Ejercicio
           </button>     
         </div>
       </div>
@@ -61,32 +61,47 @@
     <div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <table id="tablaUsuarios" class="display">
-            <thead>
-                <tr>
-                    <th style="display: none;">id</th>
-                    <th>Nombres</th>
-                    <th>Dificultad</th>
-                    
+         
+  
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Ejercicio 1  -   Facil</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Ejercicio2</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Ejercicio 3</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      </div>
+    </div>
+  </div> 
 
-                </tr>
-            </thead>
-            <tbody id = "ejercicios">
-              <% for (var key in listaUsuarios) {
-                  var value = listaUsuarios[key]; %>
-                <tr>
-                    <td style="display: none;"><%= value._id %></td>
-                    <td><%= value.nombres %></td>
-                    <td><%= value.apellidos %></td>
-                    <td><%= value.correo %></td>
-                    <td><%= value.rol %></td>
-                    <td><%= value.tipoI %></td>
-                    <td><%= value.identificacion %></td>
-                    <td><%= value.carrera %></td>
-                </tr>
-                <% }%>
-            </tbody>
-        </table>
           
         </div>
           
@@ -107,52 +122,40 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+            <h4 class="modal-title" id="myModalLabel">Agregar Ejercicio</h4>
           </div>
            <div class="modal-body">
               <form method='post' action='/usuario'>
                 <div class="form-group">
-                  <label for="correo">Correo</label>
-                  <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
+                  <label for="titulo">Título</label>
+                  <input type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" name="titulo">
                 </div>
                 <div class="form-group">
-                  <label for="pass">Password</label>
-                  <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
-                </div>
-                <div class="form-group">
-                  <label for="rol">Rol</label>
+                  <label for="rol">Dificultad</label>
                   <select class="form-control" id="rol1" name="rol">
-                    <option>administrador</option>
-                    <option>profesor</option>
-                    <option>estudiante</option>
-                    <option>ayudante</option>
+                    <option>Fácil</option>
+                    <option>Intermedio</option>
+                    <option>Difícil</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="tipoI">tipo seleccion</label>
-                  <select class="form-control" id="tipoI1" name="tipoI">
-                    <option>matricula</option>
-                    <option>cedula</option>
-                  </select>
+                  <label for="desc">Descripcion</label>
+                  <textarea class="form-control" rows="2" id="descripcion"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="identificacion">Identificacion</label>
-                  <input type="text" class="form-control" id="exampleIdentificacion"  placeholder="Ingrese identificacion" name="identificacion">
+                  <label for="rol">Datos entrada</label>
+                 <input type="file" class="form-control" id="inputEntrada" aria-describedby="EntradaHelp" placeholder="Ingrese el archivo con los datos" name="entrada">
                 </div>
-                 <div class="form-group">
-                  <label for="nombres">Nombres</label>
-                  <input type="text" class="form-control" id="exampleNombres"  placeholder="Ingrese nombres" name="nombres">
-                </div>
-                <div class="form-group">
-                  <label for="apellidos">Apellidos</label>
-                  <input type="text" class="form-control" id="exampleApellidos"  placeholder="Ingrese apellidos" name="apellidos">
+               <div class="form-group">
+                  <label for="rol">Datos salida</label>
+                 <input type="file" class="form-control" id="inputSalida" aria-describedby="SalidaHelp" placeholder="Ingrese el archivo con los datos" name="salida">
                 </div>
                 <div class="form-group">
-                  <label for="curso">Carrera</label>
-                  <input type="text" class="form-control" id="exampleCurso"  placeholder="Ingrese curso" name="curso">
+                  <label for="titulo">Etiquetas</label>
+                  <input type="text" class="form-control" id="inputEtiqueta1" aria-describedby="etiquetaHelp" placeholder="Ingrese la etiqueta" name="etiqueta1">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a type="btn-primary" class="btn btn-primary">Subir</a>
               </form>
           </div>
         </div>
