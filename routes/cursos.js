@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/todos',function(req, res, next){
-	Curso.
+	console.log('llgué');
 });
 
 router.post('/agregar', function(req, res, next) {
