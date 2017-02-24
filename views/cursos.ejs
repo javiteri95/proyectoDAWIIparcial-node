@@ -1,11 +1,162 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Cursos</title>
+  <% include partials/header %>
+  
+</head>
+
+<body>
+
+  <header class="sticky">
+
+    <div class="row">
+
+      <div class="logo">
+           <a onclick="ini();" href="#">Fundamentos de Programación</a>
+        </div>
+
+      <nav id="main-nav-wrap">
+        <ul class="main-navigation">
+          <li onclick="inicio();"><a href="#" title="">Inicio</a></li>
+          <li onclick="curso();"><a href="#" title="">El Curso</a></li>
+          <li onclick="semana();"><a href="#" title="">Semana</a></li>
+          <li onclick="equipo();"><a href="#" title="">Equipo</a></li>
+          <li onclick="ayudantias();"><a href="#" title="">Ayudantías</a></li>
+               <li class="with-sep nove" onclick="sandbox();"><a href="#" title="">SANDBOX</a></li>
+               <li class="nove current" id="soloprof" onclick="proyectos();"><a  href="#"  title="">Proyectos</a></li>
+               <li class="with-sep nove" onclick="perfil();"><a href="#"  title="">Perfil</a></li>       
+          <li id="highlighted" class="highlight with-sep"><div class='video-link'><a id="iniciar" href="#login-popup" title="">Iniciar Sesión</a></div></li>
+               <li class="highlight"><a id="cerrar" href="index.html" title="">Cerrar Sesión</a></li>
+
+        </ul>
+      </nav>
+
+      <a class="menu-toggle" href="#"><span>Menu</span></a>
+      
+    </div>    
+    
+  </header > <!-- /header -->
+  <section id="process">
+    <div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h1> Módulo Cursos</h1>
+          
+        </div>
+          
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Agregar Curso
+          </button>     
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table id="tablaUsuarios" class="display">
+            <thead>
+                <tr>
+                    <th style="display: none;">id</th>
+                    <th>Nombre</th>
+                    <th>Profesor</th>
+                    <th>Paralelo</th>
+                    <th>rol</th>
+                    <th>tipo identificacion</th>
+                    <th>identificacion</th>
+                    <th>carrera</th>
+
+                </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </table>
+          
+        </div>
+          
+      </div>
+
+    </div>
+
+
+
+
+  </section>
+
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Agregar Curso</h4>
+          </div>
+           <div class="modal-body">
+              <form method='post' action='/usuario'>
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
+                </div>
+                <div class="form-group">
+                  <label for="pass">Paralelo</label>
+                  <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
+                </div>
+                <div class="form-group">
+                  <label for="rol">Rol</label>
+                </div>
+                <div class="form-group">
+                  <label for="tipoI">tipo seleccion</label>
+                  <select class="form-control" id="tipoI1" name="tipoI">
+                    <option>matricula</option>
+                    <option>cedula</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="identificacion">Identificacion</label>
+                  <input type="text" class="form-control" id="exampleIdentificacion"  placeholder="Ingrese identificacion" name="identificacion">
+                </div>
+                 <div class="form-group">
+                  <label for="nombres">Nombres</label>
+                  <input type="text" class="form-control" id="exampleNombres"  placeholder="Ingrese nombres" name="nombres">
+                </div>
+                <div class="form-group">
+                  <label for="apellidos">Apellidos</label>
+                  <input type="text" class="form-control" id="exampleApellidos"  placeholder="Ingrese apellidos" name="apellidos">
+                </div>
+                <div class="form-group">
+                  <label for="curso">Carrera</label>
+                  <input type="text" class="form-control" id="exampleCurso"  placeholder="Ingrese curso" name="curso">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <footer>
+    <% include partials/footer %>
+  </footer>
+
+
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
+
+  <script src="js/usuariosV.js"></script>
+
+</body>
 </html>
+
