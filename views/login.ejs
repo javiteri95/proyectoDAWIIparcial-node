@@ -2,22 +2,28 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Login form shake effect</title>
+  <title>Login </title>
   
-  
-  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-      <link rel="stylesheet" href="stylesheets/loginStyle2.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'> 
+
+   <link rel="stylesheet" href="stylesheets/loginStyle2.css">
+
+
 
   
 </head>
 
 <body>
-<<<<<<< HEAD
   <div>
     <form method="post" action="/">
       <div class="login-form">
-       <img src="images/footer-logo.png" alt="logo espol" ">
+       <img src="images/footer-logo.png" alt="logo espol" width="100%" heigth = "10%">
        <div class="form-group ">
          <input type="text" class="form-control" placeholder="Correo " id="UserName" name="correo">
          <i class="fa fa-user"></i>
@@ -27,16 +33,8 @@
          <i class="fa fa-lock"></i>
        </div>
         <span class="alert">credenciales incorrectas!!</span>
-        <a class="link" href="#">Lost your password?</a>
+        <a class="link" href="#" data-toggle="modal" data-target="#myModal">Lost your password?</a>
        <button type="submit" class="log-btn" >Log in</button>  
-=======
-  <form method="post" action="/">
-    <div class="login-form">
-     <img src="images/footer-logo.png" alt="logo espol" width="100%" heigth = "10%">
-     <div class="form-group ">
-       <input type="text" class="form-control" placeholder="Correo " id="UserName" name="correo">
-       <i class="fa fa-user"></i>
->>>>>>> 2f6df2e33d3df93fca1aedae0f4abdf6e67711e5
      </div>
     </form>
     
@@ -52,29 +50,29 @@
               <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
             </div>
              <div class="modal-body">
-                  <div class="form-group">
-                    <label for="correo">Correo</label>
-                    <input type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
+                  <div id="messageZone2">
                   </div>
-                  <div class="form-group">
-                    <label for="pass">Vieja Contraseña</label>
-                    <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
+
+                  <div>
+                    <div class="form-group">
+                      <label for="correo">Correo</label>
+                      <input type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
+                    </div>
+                    <div class="form-group">
+                      <label for="pass">Vieja Contraseña</label>
+                      <input type="password" class="form-control" id="oldPassword" placeholder="Password" name="oldPassword">
+                    </div>
+                    <div class="form-group">
+                      <label for="pass">Nueva Contraseñna</label>
+                      <input type="password" class="form-control" id="newPassword1" placeholder="Password" name="newPassword1">
+                    </div>
+                    <div class="form-group">
+                      <label for="pass">Repita nueva contraseña</label>
+                      <input type="password" class="form-control" id="newPassword2" placeholder="Password" name="newPassword2">
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="pass">Nueva Contraseñna</label>
-                    <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
-                  </div>
-                  <div class="form-group">
-                    <label for="pass">Repita nueva contraseña</label>
-                    <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
-                  </div>
-                  <div class="form-group">
-                    <label for="tipoI">tipo seleccion</label>
-                    <select class="form-control" id="tipoI1" name="tipoI">
-                      <option>matricula</option>
-                      <option>cedula</option>
-                    </select>
-                  </div>
+
+
             </div>
             <div class="modal-footer">
               <input type="submit" form="task-form" class="btn btn-success" value="Crear" onclick="cambioPassword();">
@@ -87,8 +85,11 @@
 
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="js/loginJS.js"></script>
+
+  <script src="js/loginJS.js"></script>
 
 </body>
 </html>

@@ -143,3 +143,17 @@ h1 {
     left: -15px;
   }
 }
+
+.errorMessage {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  color: red;
+}
+
+.successMessage {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  color: green;
+}

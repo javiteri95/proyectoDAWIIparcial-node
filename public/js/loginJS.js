@@ -11,15 +11,39 @@ $(document).ready(function(){
 });
 
 function cambioPassword(){
+  $('#messageZone2').empty();
   var correo = $('#inputCorreo').val();
-  var oldPassword = $('').val();
-  var newPassword1 = $('').val();
-  var newPassword2 = $('').val();
+  var oldPassword = $('#oldPassword').val();
+  var newPassword1 = $('#newPassword1').val();
+  var newPassword2 = $('#newPassword2').val();
+  console.log(newPassword1)
+  console.log(newPassword2)
 
-  $.post('/cambio', { correo: correo, oldPassword : oldPassword , newPassword : newPassword1}, 
+  if (newPassword1 != newPassword2){
+    $( "#messageZone2" ).append( "<p class='errorMessage'> ambas contraseñas nuevas no coinciden ! </p>"  );
+    setTimeout( "$('.errorMessage').fadeOut(1500);",3000 );
+  }
+  else{
+    $.post('/cambio', { correo: correo, oldPassword : oldPassword , newPassword : newPassword1}, 
     function(data){
-         console.log(data);
+      if (data.type == "error"){
+        $( "#messageZone2" ).append( "<p class='errorMessage'> " +  data.message + " </p>" );
+        setTimeout( "$('.errorMessage').fadeOut(1500);",3000 );
+      }
+      else{
+        
+        $( "#messageZone2" ).append( "<p class='successMessage'> " +  data.message + " </p>" );
 
-  }, "json");
+        setTimeout(function() {
+          $('#myModal').modal('hide');
+          $('.successMessage').fadeOut(1500)
+
+        }, 2000);
+        
+      }
+    }, "json");
+
+  }
+
 }
 
