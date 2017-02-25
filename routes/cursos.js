@@ -1,13 +1,29 @@
 var express = require('express');
 var router = express.Router();
-var Usuario = require('../models/curso');
+var Curso = require('../models/curso');
 
 router.get('/', function(req, res, next) {
-  res.render('cursos');
+  Curso.find({}, function(err, courses) {
+    var courseMap = {};
+
+    courses.forEach(function(course) {
+      courseMap[course._id] = course;
+    });
+
+    res.render('cursos', { listaCursos: courseMap });  
+  });
 });
 
 router.get('/todos',function(req, res, next){
-	console.log('llgué');
+	Curso.find({}, function(err, courses) {
+    var courseMap = {};
+
+    courses.forEach(function(course) {
+      courseMap[course._id] = course;
+    });
+
+    res.render('cursos', { listaCursos: courseMap });  
+  });
 });
 
 router.post('/agregar', function(req, res, next) {
