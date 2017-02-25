@@ -23,7 +23,7 @@ router.get('/api/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  if(true){
+  if(false){
   	res.render("ejerciciosEstudiante");
   
   }else{

@@ -63,44 +63,31 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
          
   
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
+  <div class="panel-group" id="accordion" ng-app="myApp" ng-controller="myCtrl">
+    <div class="panel panel-default" ng-repeat="x in Ejercicio">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Ejercicio 1  -   Facil</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index+1}}">{{ x.nombre + ' - ' + x.dificultad }}</a>
         </h4>
       </div>
-      <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      <div id="collapse{{$index+1}}" class="panel-collapse collapse">
+        <div class="panel-body">
+        <p>{{x.descripcion}}</p>
+        <h3>Datos entrada</h3>
+        <a href= {{x.entrada}} >Entradas.txt</a>
+        <h3>Datos salidas</h3>
+        <a href={{x.salida}}>Salidas.txt</a>
+        </div>
+        <div class="panel-footer">
+          
+          <ul class="list-group">
+          <li class="list-group-item" ng-repeat="y in x.etiquetas" >{{y}}</li>
+        </ul>
+        </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Ejercicio2</a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Ejercicio 3</a>
-        </h4>
-      </div>
-      <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      </div>
-    </div>
-  </div> 
+
 
           
         </div>
@@ -125,14 +112,18 @@
             <h4 class="modal-title" id="myModalLabel">Agregar Ejercicio</h4>
           </div>
            <div class="modal-body">
-              <form method='post' action='/usuario'>
+              <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
                 <div class="form-group">
                   <label for="titulo">Título</label>
-                  <input type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" name="titulo">
+                  <input type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" name="titulo" required>
+                  <span style="color:red" ng-show="myForm.titulo.$dirty && myForm.titulo.$invalid">
+                    <span ng-show="myForm.titulo.$error.required">Titulo es requerido.</span>
+                    </span>
+
                 </div>
                 <div class="form-group">
-                  <label for="rol">Dificultad</label>
-                  <select class="form-control" id="rol1" name="rol">
+                  <label for="combo">Dificultad</label>
+                  <select class="form-control" id="combo" name="rol">
                     <option>Fácil</option>
                     <option>Intermedio</option>
                     <option>Difícil</option>
@@ -140,22 +131,35 @@
                 </div>
                 <div class="form-group">
                   <label for="desc">Descripcion</label>
-                  <textarea class="form-control" rows="2" id="descripcion"></textarea>
+                  <textarea class="form-control" rows="2" id="descripcion" name="desc" required></textarea>
+                  <span style="color:red" ng-show="myForm.desc.$dirty && myForm.desc.$invalid">
+                    <span ng-show="myForm.desc.$error.required">Descripcion es requerida.</span>
+                    </span>
+
                 </div>
                 <div class="form-group">
                   <label for="rol">Datos entrada</label>
                  <input type="file" class="form-control" id="inputEntrada" aria-describedby="EntradaHelp" placeholder="Ingrese el archivo con los datos" name="entrada">
+                 <span style="color:red" ng-show="myForm.entrada.$dirty && myForm.entrada.$invalid">
+                    <span ng-show="myForm.entrada.$error.required">Entrada es requerida.</span>
+                    </span>
                 </div>
                <div class="form-group">
                   <label for="rol">Datos salida</label>
                  <input type="file" class="form-control" id="inputSalida" aria-describedby="SalidaHelp" placeholder="Ingrese el archivo con los datos" name="salida">
+                 <span style="color:red" ng-show="myForm.salida.$dirty && myForm.salida.$invalid">
+                    <span ng-show="myForm.salida.$error.required">Salida es requerida.</span>
+                    </span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id ="et">
                   <label for="titulo">Etiquetas</label>
                   <input type="text" class="form-control" id="inputEtiqueta1" aria-describedby="etiquetaHelp" placeholder="Ingrese la etiqueta" name="etiqueta1">
                 </div>
 
-                <a type="btn-primary" class="btn btn-primary">Subir</a>
+                <a type="btn-primary" class="btn btn-primary"   ng-disabled="myForm.titulo.$dirty && myForm.titulo.$invalid ||  
+myForm.desc.$dirty && myForm.desc.$invalid  ||  
+myForm.entrada.$dirty && myForm.entrada.$invalid ||  
+myForm.salida.$dirty && myForm.salida.$invalid">Subir</a>
               </form>
           </div>
         </div>
@@ -171,8 +175,10 @@
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/usuariosV.js"></script>
+  <script src="js/myCtrl.js"></script>
+
 
 </body>
 </html>
