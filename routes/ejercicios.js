@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 */
 
-router.get('/', function(req, res, next) {
+router.get('/api/', function(req, res, next) {
   Ejercicio.find({}, function(err, ejers) {
     var ejerMap = {};
 
@@ -20,6 +20,15 @@ router.get('/', function(req, res, next) {
 
     res.send(ejerMap);  
   });
+});
+
+router.get('/', function(req, res, next) {
+  if(true){
+  	res.render("ejerciciosEstudiante");
+  
+  }else{
+  	res.render("ejerciciosProfesor");
+  }
 });
 
 router.post('/', function(req, res, next) {
@@ -40,25 +49,24 @@ router.post('/', function(req, res, next) {
 		console.log('hay errores')
 		console.log(errors)
 	} else {
-		var nuevousuario = new Usuario({
-			nombres: nombres,
-			apellidos:apellidos,
-			correo: correo,
-			rol: rol,
-			carrera : carrera,
-			tipoI : tipoI,
-			password : password,
-			identificacion : identificacion
+		var nuevousuario = new Ejercicio({
+			titulo : titulo,
+			descripcion : descripcion, 
+			datosEntrada : datosEntrada,
+			datosSalida : datosSalida,
+			etiquetas : etiquetas,
+			dificultad : dificultad
 		});
 
-		Usuario.createUsuario(nuevousuario, function(err, user){
+		Ejercicio.createEjercicio(nuevousuario, function(err, user){
 			if(err) throw err;
 			console.log(user);
 		});
 
-		req.flash('success_msg', 'You are registered and can now login');
+		req.flash('success_msg', 'Ejercicio creado correctamente');
 
-		res.redirect('/usuario');
+		res.redirect('/ejercicio');
+
 	}
 });
 
