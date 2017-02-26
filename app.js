@@ -10,15 +10,22 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var perfil = require('./routes/perfil');
+var reportes = require('./routes/reportes');
+
 var login = require('./routes/login');
 var usuario = require('./routes/usuario')
 var ejercicios = require('./routes/ejercicios')
 var cursos = require('./routes/cursos');
-
+var mongoose = require('mongoose');
 var app = express();
+//-------------------------conexion base de datos
+var mongoDB = 'mongodb://javiteri:1234@ds051873.mlab.com:51873/proyecto_daw';
+mongoose.connect(mongoDB);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+//--------------------------
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -76,8 +83,10 @@ app.use(function (req, res, next) {
 
 
 app.use('/', login);
-app.use('/usuario', usuario)
-app.use('/ejercicios', ejercicios)
+app.use('/usuario', usuario);
+app.use('/perfil', perfil);
+app.use('/reportes', reportes);
+app.use('/ejercicios', ejercicios);
 app.use('/cursos',cursos);
 
 // catch 404 and forward to error handler

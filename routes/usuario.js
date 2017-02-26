@@ -11,15 +11,15 @@ router.get('/', function(req, res, next) {
 */
 
 router.get('/', function(req, res, next) {
-  console.log(req.user)
   Usuario.find({}, function(err, users) {
     var userMap = {};
 
     users.forEach(function(user) {
       userMap[user._id] = user;
     });
-
-    res.render('usuario', { listaUsuarios: userMap });  
+    console.log(10)
+    console.log(req.user.rol)
+    res.render('usuario', { listaUsuarios: userMap , rol : req.user.rol});  
   });
 });
 

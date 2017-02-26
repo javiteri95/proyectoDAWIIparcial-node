@@ -1,4 +1,4 @@
-
+a
 function cargarEjercicios(dificultad) {
   var acordion = $("#accordion")
   $.$.ajax({

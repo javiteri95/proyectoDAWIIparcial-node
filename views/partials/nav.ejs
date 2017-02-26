@@ -1,0 +1,25 @@
+<div class="row">
+
+  <div class="logo">
+    <a onclick="ini();" href="#">Fundamentos de Programación</a>
+  </div>
+
+  <nav id="main-nav-wrap">
+        <ul class="main-navigation">
+          <li ><a href="/perfil" >Perfil</a></li>
+          <% if (rol == 'administrador'){ %>
+          <li ><a href="/usuario" >Usuarios</a></li>
+          <li ><a href="/cursos" >Cursos</a></li> 
+          <li ><a href="/reportes" >Reportes</a></li>  
+          <% } else { %>
+          <li ><a href="/ejercicios" >Ejercicios</a></li>
+          <% } %> 
+
+          <li class="highlight"><a href="/logout" title="">Cerrar Sesión</a></li>
+        </ul>
+  </nav>
+
+  <a class="menu-toggle" href="#"><span>Menu</span></a>
+      
+</div>    
+    

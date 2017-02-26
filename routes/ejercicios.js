@@ -23,11 +23,12 @@ router.get('/api/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  if(false){
-  	res.render("ejerciciosEstudiante");
-  
-  }else{
-  	res.render("ejerciciosProfesor");
+  var rol = req.user.rol;
+  console.log(rol)
+  if(( rol == 'profesor') || (rol == 'ayudante')){
+  	res.render("ejerciciosProfesor", { rol: rol });
+  }else if (rol == 'estudiante'){
+  	res.render("ejerciciosEstudiante",{ rol: rol });
   }
 });
 

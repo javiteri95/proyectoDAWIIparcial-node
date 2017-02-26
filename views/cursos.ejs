@@ -10,33 +10,8 @@
 <body>
 
   <header class="sticky">
+  <% include partials/nav %>
 
-    <div class="row">
-
-      <div class="logo">
-           <a onclick="ini();" href="#">Fundamentos de Programación</a>
-        </div>
-
-      <nav id="main-nav-wrap">
-        <ul class="main-navigation">
-          <li onclick="inicio();"><a href="#" title="">Inicio</a></li>
-          <li onclick="curso();"><a href="#" title="">El Curso</a></li>
-          <li onclick="semana();"><a href="#" title="">Semana</a></li>
-          <li onclick="equipo();"><a href="#" title="">Equipo</a></li>
-          <li onclick="ayudantias();"><a href="#" title="">Ayudantías</a></li>
-               <li class="with-sep nove" onclick="sandbox();"><a href="#" title="">SANDBOX</a></li>
-               <li class="nove current" id="soloprof" onclick="proyectos();"><a  href="#"  title="">Proyectos</a></li>
-               <li class="with-sep nove" onclick="perfil();"><a href="#"  title="">Perfil</a></li>       
-          <li id="highlighted" class="highlight with-sep"><div class='video-link'><a id="iniciar" href="#login-popup" title="">Iniciar Sesión</a></div></li>
-               <li class="highlight"><a id="cerrar" href="index.html" title="">Cerrar Sesión</a></li>
-
-        </ul>
-      </nav>
-
-      <a class="menu-toggle" href="#"><span>Menu</span></a>
-      
-    </div>    
-    
   </header > <!-- /header -->
   <section id="process">
     <div>
