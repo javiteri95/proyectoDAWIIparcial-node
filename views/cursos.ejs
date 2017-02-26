@@ -67,10 +67,10 @@
 
     </div>
     <br>
-    <div>
+    <div id="todosC">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <table id="tablaCursos" class="display">
+          <table class="display tablaCursos">
             <thead>
                 <tr>
                     <th style="display: none;">id</th>
@@ -97,6 +97,39 @@
 
     </div>
 
+    <div id="profC" style="display: none">
+      <div class="row">
+      	<label class="col-lg-12">Ingese nombre completo del profesor</label><input class="col-lg-6" type="text" id="pro">
+      	<button class="glyphicon glyphicon-search autocomplete col-lg-1" onclick="porProfesor();"></button>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table class="display tablaCursos">
+            <thead>
+                <tr>
+                    <th style="display: none;">id</th>
+                    <th>Estudiantes</th>
+
+                </tr>
+            </thead>
+            <tbody>
+              <% for (var key in listaCursos) {
+                  var value = listaCursos[key]; %>
+                <tr>
+                    <td style="display: none;"><%= value._id %></td>
+                    <%for (var i=0; i< value.estudiantes-1; i++){ %>
+                    <td><%= value.estudiantes[i] %></td>
+                    <% } %>
+                </tr>
+                <% }%>
+            </tbody>
+        </table>
+          
+        </div>
+          
+      </div>
+
+    </div>
+
+
 
 
 
@@ -120,14 +153,14 @@
                 </div>
                 <div class="form-group">
                   <label>Paralelo</label>
-                  <input type="number" min="0" class="form-control" id="paral" placeholder="Ingrese el número del paralelo" name="paralelo">
+                  <input type="number" min="1" class="form-control" id="paral" placeholder="Ingrese el número del paralelo" name="paralelo">
                 </div>
                 <div class="form-group row" id="llenar">
                   <label class="col-lg-12">Estudiantes</label><br>
                   <input type="text" name="estudiante" class="col-lg-10"><a href="#"><span class="glyphicon glyphicon-plus col-lg-1" id="mas" aria-hidden="true" onclick="agregarEstudiante();"></span></a>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary" onclick="agregar();">Agregar</button>
+                <a type="submit" class="btn btn-primary" style="float: right;" onclick="agregar();">Agregar</a>
               </form>
           </div>
         </div>
