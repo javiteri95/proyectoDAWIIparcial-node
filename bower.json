@@ -1,5 +1,5 @@
 {
-  "name": "proyectodawiiparcial node",
+  "name": "proyectodawiiparcial-node",
   "description": "componentes fronend proyecto",
   "main": "",
   "authors": [
@@ -20,6 +20,8 @@
     "express": "^4.14.1",
     "bootstrap-css": "^3.3.6",
     "datatables.net": "^2.1.1",
-    "datatables.net-dt": "^3.2.2"
+    "datatables.net-dt": "^3.2.2",
+    "angular": "^1.6.2",
+    "angular-route": "^1.6.2"
   }
 }
