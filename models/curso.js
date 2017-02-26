@@ -1,12 +1,13 @@
 var mongoose     = require('mongoose');
 var bcrypt = require('bcryptjs');
 //-------------------------------------------------------------------------
-/**
+/* Viteri, por qué me comentas esto, me genera inconvenientes :C no puedo acceder a la base cuando pruebo,
+ yo no necesito comentar la tuya, no me da inconveneientes*/
 var mongoDB = 'mongodb://javiteri:1234@ds051873.mlab.com:51873/proyecto_daw';
 mongoose.connect(mongoDB);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-*/
+
 var Schema = mongoose.Schema;
 
 var curso = new Schema({
