@@ -6,12 +6,12 @@ var Schema       = mongoose.Schema;
 var ejercicio = new Schema({
 	titulo : String,
 	descripcion : String, 
-	datosEntrada : [Object],
-	datosSalida : [Object],
-	etiquetas : [String],
+	datosEntrada : String,
+	datosSalida : String,
+	etiquetas : String,
 	dificultad : {
 		type : String,
-		enum : ['facil','intermedio','dificil']
+		enum : ['FACIL','INTERMEDIO','DIFICIL']
 	}
 })
 ;
@@ -22,4 +22,9 @@ module.exports = Ejercicio;
 module.exports.createEjercicio = function(newEjercicio, callback){
 	newEjercicio.save(callback);
 	
+}
+
+module.exports.findDificulty = function (dificulty, callback) {
+	var query = {dificultad: dificulty};
+	ejercicios = Ejercicio.find(query,callback);
 }

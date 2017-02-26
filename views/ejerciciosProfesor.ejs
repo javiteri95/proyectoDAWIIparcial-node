@@ -10,7 +10,7 @@
 <body>
 
   <header class="sticky">
-  <% include partials/nav %>
+ 
   </header > <!-- /header -->
   <section id="process">
     <div>
@@ -86,10 +86,11 @@
             <h4 class="modal-title" id="myModalLabel">Agregar Ejercicio</h4>
           </div>
            <div class="modal-body">
-              <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+              <form  action='http://localhost:3000/ejercicios' ref='uploadForm' id='uploadForm'  method="POST" ng-submit="uploadFile()" ng-app="myApp" ng-controller="HomeCtrl" name="myForm" encType="multipart/form-data" novalidate>
+            
                 <div class="form-group">
                   <label for="titulo">Título</label>
-                  <input type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" name="titulo" required>
+                  <input name= "titulo" type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" ng-model="titulo" required>
                   <span style="color:red" ng-show="myForm.titulo.$dirty && myForm.titulo.$invalid">
                     <span ng-show="myForm.titulo.$error.required">Titulo es requerido.</span>
                     </span>
@@ -97,15 +98,15 @@
                 </div>
                 <div class="form-group">
                   <label for="combo">Dificultad</label>
-                  <select class="form-control" id="combo" name="rol">
-                    <option>Fácil</option>
-                    <option>Intermedio</option>
-                    <option>Difícil</option>
+                  <select class="form-control" id="combo" ng-model="dificultad" >
+                    <option>FACIL</option>
+                    <option>INTERMEDIO</option>
+                    <option>DIFICIL</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="desc">Descripcion</label>
-                  <textarea class="form-control" rows="2" id="descripcion" name="desc" required></textarea>
+                  <textarea name="descripcion" class="form-control" rows="2" id="descripcion" name="desc" required></textarea>
                   <span style="color:red" ng-show="myForm.desc.$dirty && myForm.desc.$invalid">
                     <span ng-show="myForm.desc.$error.required">Descripcion es requerida.</span>
                     </span>
@@ -113,27 +114,30 @@
                 </div>
                 <div class="form-group">
                   <label for="rol">Datos entrada</label>
-                 <input type="file" class="form-control" id="inputEntrada" aria-describedby="EntradaHelp" placeholder="Ingrese el archivo con los datos" name="entrada">
+                 <!-- <input type="file" uploader-model="entradas" class="form-control" id="inputEntrada" aria-describedby="EntradaHelp" placeholder="Ingrese el archivo con los datos" name="entrada"> -->
+                 <input type="file" name="entradas" />
                  <span style="color:red" ng-show="myForm.entrada.$dirty && myForm.entrada.$invalid">
                     <span ng-show="myForm.entrada.$error.required">Entrada es requerida.</span>
                     </span>
                 </div>
                <div class="form-group">
                   <label for="rol">Datos salida</label>
-                 <input type="file" class="form-control" id="inputSalida" aria-describedby="SalidaHelp" placeholder="Ingrese el archivo con los datos" name="salida">
+                 <!-- <input type="file" uploader-model="salidas" class="form-control" id="inputSalida" aria-describedby="SalidaHelp" placeholder="Ingrese el archivo con los datos" name="salida"> -->
+                 <input type="file" name="salidas" />
                  <span style="color:red" ng-show="myForm.salida.$dirty && myForm.salida.$invalid">
                     <span ng-show="myForm.salida.$error.required">Salida es requerida.</span>
                     </span>
                 </div>
+                <input  style="display: none;" type="text"  id="dif" name="dificultad">
                 <div class="form-group" id ="et">
                   <label for="titulo">Etiquetas</label>
-                  <input type="text" class="form-control" id="inputEtiqueta1" aria-describedby="etiquetaHelp" placeholder="Ingrese la etiqueta" name="etiqueta1">
+                  <input type="text" name="etiquetas" class="form-control" id="inputEtiqueta1" aria-describedby="etiquetaHelp" placeholder="Ingrese la etiqueta" name="etiqueta1">
                 </div>
 
-                <a type="btn-primary" class="btn btn-primary"   ng-disabled="myForm.titulo.$dirty && myForm.titulo.$invalid ||  
+                <input  type="submit" class="btn btn-primary"   ng-disabled="myForm.titulo.$dirty && myForm.titulo.$invalid ||  
 myForm.desc.$dirty && myForm.desc.$invalid  ||  
 myForm.entrada.$dirty && myForm.entrada.$invalid ||  
-myForm.salida.$dirty && myForm.salida.$invalid">Subir</a>
+myForm.salida.$dirty && myForm.salida.$invalid">
               </form>
           </div>
         </div>
@@ -141,7 +145,7 @@ myForm.salida.$dirty && myForm.salida.$invalid">Subir</a>
   </div>
 
   <footer>
-    <% include partials/footer %>
+    
   </footer>
 
 
@@ -150,8 +154,8 @@ myForm.salida.$dirty && myForm.salida.$invalid">Subir</a>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="js/usuariosV.js"></script>
   <script src="js/myCtrl.js"></script>
+  <script src="js/ejerciciosP.js"></script>
 
 
 </body>
