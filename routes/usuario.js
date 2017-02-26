@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
 */
 
 router.get('/', function(req, res, next) {
+  console.log(req.user)
   Usuario.find({}, function(err, users) {
     var userMap = {};
 

@@ -6,7 +6,6 @@ var Usuario = require('../models/usuario')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	console.log("entra aqui -1d")
   res.render('login');
 });
 
@@ -51,14 +50,29 @@ passport.deserializeUser(function(id, done) {
 
 
 
-
+/* antes de angular
 router.post('/',
   passport.authenticate('local', {successRedirect:'/usuario', failureRedirect:'/',failureFlash: true}),
   function(req, res) {
-  	console.log("aqui redirige")
+  	
     res.redirect('/usuario');
   });
+*/
 
+router.post('/',
+  passport.authenticate('local', {failureRedirect:'/',failureFlash: true}),
+  function(req, res) {
+    
+    res.redirect('/usuario');
+});
+
+  // loggedin
+router.get("/loggedin", function(req, res) {
+  res.send(req.isAuthenticated() ? req.user : '0');
+});
+
+
+//logout
 router.get('/logout', function(req, res){
 	req.logout();
 
@@ -68,6 +82,10 @@ router.get('/logout', function(req, res){
 });
 
 
+ 
+
+
+//cambio password
 router.post('/cambio', function(req, res){
 
   Usuario.getUsuarioByCorreo(req.body.correo, function(err, user){
