@@ -62,32 +62,35 @@ router.post('/agregar', function(req, res, next) {
 			console.log(curso);
 			
 		});
-		res.redirect('/cursos');
+
+		
 		req.flash('success_msg', 'El curso se ha registrado');
+		res.redirect('/cursos');
+
 	}
 });
 
-router.get('/paralelo/:paralelo'),function(req,res,next){
+router.get('/paralelo/:paralelo',function(req,res,next){
 	var paralelo=req.body.paralelo;
-	var respuesta=Curso.getCursoByParalelo(paralelo,function(err,user){
+	var respuesta=Curso.getCursoByParalelo(paralelo,function(err,curso){
 		if(err) throw err;
-		console.log(user);
+		console.log(curso);
 	});
-	var respuesta={}
 	respuesta.paralelo=paralelo;
 
-}
+});
 
-router.get('/profesor/:profesor'),function(req,res,next){
-	var paralelo=req.body.paralelo;
-	var respuesta=Curso.getCursoByParalelo(paralelo,function(err,user){
+router.get('/profesor',function(req,res,next){
+	var profesor=req.body.profesor;
+	var respuesta=Curso.getCursoByProfesor(profesor,function(err,curso){
 		if(err) throw err;
-		console.log(user);
+		console.log(respuesta);
+		console.log(curso);
+		res.status(200).jsonp(curso);
 	});
-	var respuesta={}
-	respuesta.paralelo=paralelo;
+	
 
-}
+});
 
 
 module.exports = router;
