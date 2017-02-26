@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 var curso = new Schema({
 	profesor :String,
 	paralelo : Number, 
-	estudiantes : [String]
+	estudiantes : String
 });
 
 var Curso = mongoose.model('curso', curso);
