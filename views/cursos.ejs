@@ -113,43 +113,21 @@
             <h4 class="modal-title" id="myModalLabel">Agregar Curso</h4>
           </div>
            <div class="modal-body">
-              <form method='post' action='/usuario'>
+              <form>
                 <div class="form-group">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
-                </div>
-                <div class="form-group">
-                  <label for="pass">Paralelo</label>
-                  <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
+                  <label>Profesor</label>
+                  <input type="text" class="form-control autocomplete" id="prof" placeholder="Ingrese el profesor" name="profesor">
                 </div>
                 <div class="form-group">
-                  <label for="rol">Rol</label>
+                  <label>Paralelo</label>
+                  <input type="number" min="0" class="form-control" id="paral" placeholder="Ingrese el número del paralelo" name="paralelo">
                 </div>
-                <div class="form-group">
-                  <label for="tipoI">tipo seleccion</label>
-                  <select class="form-control" id="tipoI1" name="tipoI">
-                    <option>matricula</option>
-                    <option>cedula</option>
-                  </select>
+                <div class="form-group row" id="llenar">
+                  <label class="col-lg-12">Estudiantes</label><br>
+                  <input type="text" name="estudiante" class="col-lg-10"><a href="#"><span class="glyphicon glyphicon-plus col-lg-1" id="mas" aria-hidden="true" onclick="agregarEstudiante();"></span></a>
                 </div>
-                <div class="form-group">
-                  <label for="identificacion">Identificacion</label>
-                  <input type="text" class="form-control" id="exampleIdentificacion"  placeholder="Ingrese identificacion" name="identificacion">
-                </div>
-                 <div class="form-group">
-                  <label for="nombres">Nombres</label>
-                  <input type="text" class="form-control" id="exampleNombres"  placeholder="Ingrese nombres" name="nombres">
-                </div>
-                <div class="form-group">
-                  <label for="apellidos">Apellidos</label>
-                  <input type="text" class="form-control" id="exampleApellidos"  placeholder="Ingrese apellidos" name="apellidos">
-                </div>
-                <div class="form-group">
-                  <label for="curso">Carrera</label>
-                  <input type="text" class="form-control" id="exampleCurso"  placeholder="Ingrese curso" name="curso">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <br>
+                <button type="submit" class="btn btn-primary" onclick="agregar();">Agregar</button>
               </form>
           </div>
         </div>
@@ -167,6 +145,7 @@
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
 
   <script src="js/cursosV.js"></script>
+  <script src="js/autocompletar.js"></script>
 
 </body>
 </html>

@@ -32,3 +32,15 @@ function tomar(){
     	console.log("mostrando todos los cursos de la base");
     }
 }
+function agregar(){
+	console.log("agregando");
+}
+function agregarEstudiante(){
+	var inp = document.createElement("input");
+	$(inp).attr('type','text');
+	$(inp).attr('name','estudiante');
+	$(inp).addClass("col-lg-10");
+	$(inp).css('margin-left','0px');
+	$(inp).css('float','left');
+	$("#llenar").append(inp);
+}
