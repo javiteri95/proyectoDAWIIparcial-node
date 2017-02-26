@@ -22,7 +22,7 @@ router.get('/todos',function(req, res, next){
       courseMap[course._id] = course;
     });
 
-    res.render('cursos', { listaCursos: courseMap });  
+    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol });  
   });
 });
 
@@ -80,15 +80,14 @@ router.get('/paralelo/:paralelo',function(req,res,next){
 
 });
 
-router.get('/profesor',function(req,res,next){
-	var profesor=req.body.profesor;
-	var respuesta=Curso.getCursoByProfesor(profesor,function(err,curso){
+router.get('/profesor/:profesor',function(req,res,next){
+	var profesor=req.params.profesor;
+	console.log(profesor);
+	Curso.getCursoByProfesor(profesor,function(err,curso){
 		if(err) throw err;
-		console.log(respuesta);
 		console.log(curso);
-		res.status(200).jsonp(curso);
+		res.send(curso);
 	});
-	
 
 });
 

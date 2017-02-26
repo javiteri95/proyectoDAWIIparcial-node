@@ -16,10 +16,11 @@ function tomar(){
     if(op=="todos"){
     	$("#todosC").css('display','block');
     	$('#profC').css('display','none');
+    	$('#paraC').css('display','none');
     	$.ajax({
 		      url: '/cursos/todos',
 		      type: 'GET',
-		      dataType: 'json',
+		      dataType: 'html',
 		      data:{},
 		    })
 		    .done(function(){
@@ -37,6 +38,13 @@ function tomar(){
     	if (op=="porProfesor") {
     		$("#todosC").css('display','none');
     		$('#profC').css('display','block');
+    		$('#paraC').css('display','none');
+    	}
+    else
+    	if (op=="porParalelo") {
+    		$("#todosC").css('display','none');
+    		$('#profC').css('display','none');
+    		$('#paraC').css('display','block');
     	}
 }
 function agregar(){
@@ -59,7 +67,7 @@ function agregar(){
 	 $.ajax({
       url: '/cursos/agregar',
       type: 'POST',
-      dataType: 'json',
+      dataType: 'html',
       data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
     })
     .done(function() {
@@ -91,8 +99,9 @@ function agregarEstudiante(){
 function porProfesor(){
 	console.log($("#profC .row #pro").val());
 	var p=$("#profC .row #pro").val();
-    		$.ajax({
-    			url: '/cursos/profesor',
+	if (/([A-Z]([a-z]+))+/.test(p)){
+		$.ajax({
+    			url: '/cursos/profesor/'+p,
     			type: 'GET',
 			    dataType: 'json',
 			    data: {profesor: p},
@@ -108,4 +117,6 @@ function porProfesor(){
 		    .always(function() {
 		      console.log("complete");
 		});
+	}
+
 }

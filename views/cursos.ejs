@@ -104,6 +104,38 @@
 
     </div>
 
+    <div id="paraC" style="display: none">
+      <div class="row">
+      	<label class="col-lg-12">Ingese número del paralelo</label><input class="col-lg-6" type="number" id="pro" min="1">
+      	<button class="glyphicon glyphicon-search autocomplete col-lg-1" onclick="porParalelo();"></button>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table class="display tablaCursos">
+            <thead>
+                <tr>
+                    <th style="display: none;">id</th>
+                    <th>Estudiantes</th>
+
+                </tr>
+            </thead>
+            <tbody>
+              <% for (var key in listaCursos) {
+                  var value = listaCursos[key]; %>
+                <tr>
+                    <td style="display: none;"><%= value._id %></td>
+                    <%for (var i=0; i< value.estudiantes-1; i++){ %>
+                    <td><%= value.estudiantes[i] %></td>
+                    <% } %>
+                </tr>
+                <% }%>
+            </tbody>
+        </table>
+          
+        </div>
+          
+      </div>
+
+    </div>
+
 
 
 
