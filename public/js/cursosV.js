@@ -20,6 +20,7 @@ function tomar(){
 		      url: '/cursos/todos',
 		      type: 'GET',
 		      dataType: 'json',
+		      data:{},
 		    })
 		    .done(function(){
 		      console.log("success");
@@ -89,4 +90,22 @@ function agregarEstudiante(){
 }
 function porProfesor(){
 	console.log($("#profC .row #pro").val());
+	var p=$("#profC .row #pro").val();
+    		$.ajax({
+    			url: '/cursos/profesor',
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {profesor: p},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
 }
