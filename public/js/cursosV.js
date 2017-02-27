@@ -5,18 +5,17 @@ $(document).ready(function(){
 });
 function tomar(){
 	var elegir=$("#elegir form input");
-    console.log(elegir);
     var op;
 	for (var i = elegir.length - 1; i >= 0; i--) {
     	if(elegir[i].checked){
     		op=$(elegir[i]).val();
-    		console.log(op);
     	}
     }
     if(op=="todos"){
     	$("#todosC").css('display','block');
     	$('#profC').css('display','none');
     	$('#paraC').css('display','none');
+    	$(".err").remove();
     	$.ajax({
 		      url: '/cursos/todos',
 		      type: 'GET',
@@ -39,12 +38,14 @@ function tomar(){
     		$("#todosC").css('display','none');
     		$('#profC').css('display','block');
     		$('#paraC').css('display','none');
+    		$(".err").remove();
     	}
     else
     	if (op=="porParalelo") {
     		$("#todosC").css('display','none');
     		$('#profC').css('display','none');
     		$('#paraC').css('display','block');
+    		$(".err").remove();
     	}
 }
 function agregar(){
@@ -52,33 +53,30 @@ function agregar(){
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
-	console.log(prof);
-	console.log(para);
-	console.log(llena);
 	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
-			if (/([A-Z]([a-z]+))+/.test($(llena[i]).val())) {
-				console.log($(llena[i]).val());
+			if (/([A-Z]([a-z]+))/.test($(llena[i]).val())) {
 				est.push($(llena[i]).val());
 			}
 		}
 	console.log(est);
-	 $.ajax({
-      url: '/cursos/agregar',
-      type: 'POST',
-      dataType: 'html',
-      data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
-    })
-    .done(function() {
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-});
+	if(!($.isEmptyObject(est))){
+		 $.ajax({
+	      url: '/cursos/agregar',
+	      type: 'POST',
+	      dataType: 'html',
+	      data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
+	    })
+	    .done(function() {
+	      console.log("success");
+	    })
+	    .fail(function() {
+	      console.log("error");
+	    })
+	    .always(function() {
+	      console.log("complete");
+		});
 		console.log("agregando");
 		$("body").removeClass('modal-open');
 	    $("#myModal").removeClass('in');
@@ -86,8 +84,22 @@ function agregar(){
 		$(".modal-backdrop").remove();
 		tomar();
 	}
+	else{
+		var errmesg=error();
+		var br=document.createElement("br");
+		$("#llenar").append(br);
+		$("#llenar").append(errmesg);
+	}
+	}
+	else{
+		var errmesg=error();
+		var br=document.createElement("br");
+		$("#llenar").append(br);
+		$("#llenar").append(errmesg);
+	}
 }
 function agregarEstudiante(){
+	$("#llenar .err").remove();
 	var inp = document.createElement("input");
 	$(inp).attr('type','text');
 	$(inp).attr('name','estudiante');
@@ -97,8 +109,9 @@ function agregarEstudiante(){
 	$("#llenar").append(inp);
 }
 function porProfesor(){
-	console.log($("#profC .row #pro").val());
-	var p=$("#profC .row #pro").val();
+	$(".err").remove();
+	$(".agregado").remove();
+	var p=$("#profC .row .inpor #pro").val();
 	if (/([A-Z]([a-z]+))+/.test(p)){
 		$.ajax({
     			url: '/cursos/profesor/'+p,
@@ -109,6 +122,7 @@ function porProfesor(){
     		 .done(function(resp) {
 		      console.log("success");
 		      console.log(resp);
+		      agregarEst("profC",resp);
 		    })
 		    .fail(function(resp) {
 		      console.log("error");
@@ -118,5 +132,78 @@ function porProfesor(){
 		      console.log("complete");
 		});
 	}
+	else{
+		var errmesg=error();
+		var br=document.createElement("br");
+		$("#profC .row .inpor").append(errmesg);
+	}
 
+}
+function porParalelo(){
+	$(".err").remove();
+	$(".agregado").remove();
+	var p=$("#paraC .row .inpor #par").val();
+	if (/[0-9]+/.test(p)){
+		$.ajax({
+    			url: '/cursos/paralelo/'+p,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {paralelo: p},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		      agregarEst("paraC",resp);
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
+	}
+	else{
+		var errmesg=error();
+		var br=document.createElement("br");
+		$("#paraC .row .inpor").append(errmesg);
+	}
+
+}
+function error(){
+	var error=document.createElement("span");
+	$(error).css('color','red');
+	$(error).html("Ingrese los datos correctamente");
+	$(error).addClass("col-lg-10");
+		$(error).addClass("err");
+		$(error).css('margin-left','0px');
+		$(error).css('float','left');
+	return error;
+}
+function agregarEst(tipo,r){
+	switch(tipo) {
+    case "paraC":
+    	$("#estpar .id").html(r._id);
+    	var e=JSON.parse(r.estudiantes);
+    	var thp=document.createElement("th");
+    	$(thp).html("Profesor: "+r.profesor);
+    	$(thp).addClass("agregado");
+    	var thl=document.createElement("th");
+    	$(thl).html("Paralelo: "+r.paralelo);
+    	$(thl).addClass("agregado");
+    	$("#encabpl").append(thp);
+    	$("#encabpl").append(thl);
+    	for (var i = e.length - 1; i >= 0; i--) {
+    		var tr=document.createElement("tr");
+        	$(tr).html(e[i]);
+        	$(tr).addClass("agregado");
+        	$("#estpar").append(tr);
+    	}
+        break;
+    case "profC":
+        console.log("aun no");
+        break;
+    default:
+        console.log("aun no");
+} 
 }

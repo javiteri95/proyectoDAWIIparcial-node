@@ -71,12 +71,12 @@ router.post('/agregar', function(req, res, next) {
 });
 
 router.get('/paralelo/:paralelo',function(req,res,next){
-	var paralelo=req.body.paralelo;
-	var respuesta=Curso.getCursoByParalelo(paralelo,function(err,curso){
+	var paralelo=req.params.paralelo;
+	Curso.getCursoByParalelo(paralelo,function(err,curso){
 		if(err) throw err;
 		console.log(curso);
+		res.send(curso);
 	});
-	respuesta.paralelo=paralelo;
 
 });
 
