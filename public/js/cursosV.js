@@ -59,7 +59,7 @@ function agregar(){
 	 $.ajax({
       url: '/cursos/agregar',
       type: 'POST',
-      dataType: 'json',
+      dataType: 'html',
       data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
     })
     .done(function() {
@@ -92,7 +92,7 @@ function porProfesor(){
 	console.log($("#profC .row #pro").val());
 	var p=$("#profC .row #pro").val();
     		$.ajax({
-    			url: '/cursos/profesor',
+    			url: '/cursos/profesor/'+p,
     			type: 'GET',
 			    dataType: 'json',
 			    data: {profesor: p},
