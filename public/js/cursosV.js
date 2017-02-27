@@ -16,6 +16,7 @@ function tomar(){
     if(op=="todos"){
     	$("#todosC").css('display','block');
     	$('#profC').css('display','none');
+    	$('#paraC').css('display','none');
     	$.ajax({
 		      url: '/cursos/todos',
 		      type: 'GET',
@@ -37,6 +38,13 @@ function tomar(){
     	if (op=="porProfesor") {
     		$("#todosC").css('display','none');
     		$('#profC').css('display','block');
+    		$('#paraC').css('display','none');
+    	}
+    else
+    	if (op=="porParalelo") {
+    		$("#todosC").css('display','none');
+    		$('#profC').css('display','none');
+    		$('#paraC').css('display','block');
     	}
 }
 function agregar(){
