@@ -22,7 +22,7 @@ router.get('/todos',function(req, res, next){
       courseMap[course._id] = course;
     });
 
-    res.render('cursos', { listaCursos: courseMap });  
+    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol });  
   });
 });
 
