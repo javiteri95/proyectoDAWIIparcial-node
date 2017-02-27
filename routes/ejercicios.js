@@ -18,7 +18,7 @@ router.get('/api/', function(req, res, next) {
       ejerMap[ejer._id] = ejer;
     });
 
-    res.send(ejerMap);  
+    res.send(ejers);  
   });
 });
 
@@ -29,14 +29,14 @@ router.get('/api/:dif',function (req,res,next) {
 		ejers.forEach(function(ejer) {
       	ejerMap[ejer._id] = ejer;
     	});
-    res.send(ejerMap)
+    res.send(ejers)
 	});
 })
 
 
 router.get('/', function(req, res, next) {
   //if(( rol == 'profesor') || (rol == 'ayudante')){
-  	if(true){
+  	if(false){
   	res.render("ejerciciosProfesor"/*, { rol: rol }*/);}
   //}else if (rol == 'estudiante'){
   	else{
@@ -94,16 +94,17 @@ router.post('/', function(req, res, next) {
    if (!req.files){console.log("no hay archivos");}
    else{
     let fileE = req.files.entradas;
-    ent = '../proyectoDAWIIparcial-node/data/entradas/';
+    origen = '../proyectoDAWIIparcial-node/public/'
+    ent = '/data/entradas/';
     ePath = ent+fileE.name
-     fileE.mv(ePath,function (err) {
+     fileE.mv(origen+ePath,function (err) {
      	if (err) console.log(err);
      	console.log("Entradas subidas");
      })
      let fileS = req.files.salidas;
-     sal = '../proyectoDAWIIparcial-node/data/salidas/';
+     sal = '/data/salidas/';
      sPath = sal+fileS.name;
-     fileE.mv(sPath,function (err) {
+     fileE.mv(origen+sPath,function (err) {
      	if (err) console.log(err);
      	console.log("Salidas subidas");
      })

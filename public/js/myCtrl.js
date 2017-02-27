@@ -1,11 +1,71 @@
 var app = angular.module("myApp",[]);
-app.controller('myCtrl', function($scope) {
-    $scope.Ejercicio =[{nombre:"NOMBRE", dificultad: "DIFICULTAD", descripcion:"Loreimkdknsnfd,bvsdbmnvbdv", entrada:"entrada.cnf",salida: "salidas.cnf", etiquetas: ["e1","e2"]},{nombre:"NOMBRE", dificultad: "DIFICULTAD", descripcion:"Loreimkdknsnfd,bvsdbmnvbdv", entrada:"entrada.cnf",salida: "salidas.cnf", etiquetas: ["e1","e2"]},{nombre:"NOMBRE", dificultad: "DIFICULTAD", descripcion:"Loreimkdknsnfd,bvsdbmnvbdv", entrada:"entrada.cnf",salida: "salidas.cnf", etiquetas: ["e1","e2"]}];
+app.controller('myCtrl', function($scope, $http) {
+	$http({
+  method: 'GET',
+  url: '/ejercicios/api/'
+}).then(function successCallback(response) {
+	var ejercicios = response.data;
+	console.log(ejercicios);
+	Ejercicios = []
+    for (var i = 0; i < ejercicios.length; i++) {
+
+    	et = ejercicios[i].etiquetas.split(",")
+    	Ejercicios.push({nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
+    	
+    }
+    $scope.Ejercicio = Ejercicios
+    
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  });
+    
 });
-var ej= {nombre:"NOMBRE", dificultad: "DIFICULTAD", descripcion:"Loreimkdknsnfd,bvsdbmnvbdv", entrada:"entrada.cnf",salida: "salidas.cnf", etiquetas: ["e1","e2"]}
-app.controller('controller', ['$scope', function ($scope) {
-	$scope.Ejercicio = ej;
+
+
+function getEjercicios($scope,$http) {
+	dif = $("#dif option:selected").html();
+		if(dif != "Selecccione una Díficultad" ){
+			console.log('/ejercicios/api/'+ dif);
+			$http({
+				  method: 'GET',
+				  url: '/ejercicios/api/'+ dif
+				}).then(function successCallback(response) {
+					var ejercicios = response.data;
+					tamaño = ejercicios.length;
+					indice = Math.floor(Math.random() * tamaño);
+					Ejercicio = ejercicios[indice];
+					//Ejercicios = []
+				    
+
+				   et = Ejercicio.etiquetas.split(",")
+				    	
+				    
+				    $scope.Ejercicio = {nombre: Ejercicio.titulo, dificultad: Ejercicio.dificultad, descripcion: Ejercicio.descripcion, entrada: Ejercicio.datosEntrada, salida: Ejercicio.datosSalida, etiquetas: et};
+				    
+				  }, function errorCallback(response) {
+				    // called asynchronously if an error occurs
+				    // or server returns response with an error status.
+				  });
+		}
+}
+
+
+app.controller('controller', ['$scope',"$http", function ($scope,$http) {
+	dificultadCombo = $("#dif");
+
+	$("#saltar").click(function(event) {
+		getEjercicios($scope,$http);
+	});
+
+	$(dificultadCombo).change(function(event) {
+		getEjercicios($scope,$http);
+	});
+
+	
 }]);
+
+
 /*
 app.controller("HomeCtrl", ['$scope','upload',function ($scope,upload) {
 	$scope.uploadFile = function(){
