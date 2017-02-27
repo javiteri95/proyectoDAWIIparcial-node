@@ -28,3 +28,4 @@ module.exports.findDificulty = function (dificulty, callback) {
 	var query = {dificultad: dificulty};
 	ejercicios = Ejercicio.find(query,callback);
 }
+
