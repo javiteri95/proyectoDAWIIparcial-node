@@ -39,6 +39,7 @@ function tomar(){
     		$('#profC').css('display','block');
     		$('#paraC').css('display','none');
     		$(".err").remove();
+    		$(".agregado").remove();
     	}
     else
     	if (op=="porParalelo") {
@@ -46,9 +47,11 @@ function tomar(){
     		$('#profC').css('display','none');
     		$('#paraC').css('display','block');
     		$(".err").remove();
+    		$(".agregado").remove();
     	}
 }
 function agregar(){
+	$(".err").remove();
 	var prof=$("#prof").val();
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
@@ -61,36 +64,63 @@ function agregar(){
 			}
 		}
 	console.log(est);
-	if(!($.isEmptyObject(est))){
-		 $.ajax({
-	      url: '/cursos/agregar',
-	      type: 'POST',
-	      dataType: 'html',
-	      data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
-	    })
-	    .done(function() {
-	      console.log("success");
-	    })
-	    .fail(function() {
-	      console.log("error");
-	    })
-	    .always(function() {
-	      console.log("complete");
+	$.ajax({
+    			url: '/cursos/paralelo/'+para,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {paralelo: para},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		   	  var error=document.createElement("span");
+				$(error).css('color','red');
+				$(error).html("El paralelo ya existe");
+				$(error).addClass("col-lg-10");
+				$(error).addClass("err");
+				$(error).css('margin-left','0px');
+				$(error).css('float','left');
+				var br=document.createElement("br");
+				$("#llenar").append(br);
+				$("#llenar").append(error);
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      if(!($.isEmptyObject(est))){
+				 $.ajax({
+			      url: '/cursos/agregar',
+			      type: 'POST',
+			      dataType: 'html',
+			      data: {profesor: prof, paralelo: para, estudiantes: JSON.stringify(est)},
+			    })
+			    .done(function() {
+			      console.log("success");
+			    })
+			    .fail(function() {
+			      console.log("error");
+			    })
+			    .always(function() {
+			      console.log("complete");
+				});
+				console.log("agregando");
+				$("body").removeClass('modal-open');
+			    $("#myModal").removeClass('in');
+			    $("#myModal").css('display', 'none');
+				$(".modal-backdrop").remove();
+				tomar();
+			}
+			else{
+				var errmesg=error();
+				var br=document.createElement("br");
+				$("#llenar").append(br);
+				$("#llenar").append(errmesg);
+			}
+		    })
+		    .always(function() {
+		      console.log("complete");
 		});
-		console.log("agregando");
-		$("body").removeClass('modal-open');
-	    $("#myModal").removeClass('in');
-	    $("#myModal").css('display', 'none');
-		$(".modal-backdrop").remove();
-		tomar();
-	}
-	else{
-		var errmesg=error();
-		var br=document.createElement("br");
-		$("#llenar").append(br);
-		$("#llenar").append(errmesg);
-	}
-	}
+		}
 	else{
 		var errmesg=error();
 		var br=document.createElement("br");
@@ -201,7 +231,25 @@ function agregarEst(tipo,r){
     	}
         break;
     case "profC":
-        console.log("aun no");
+    	var th=document.createElement("th");
+        $(th).addClass("agregado");
+        $(th).html("Profesor: "+r[0].profesor);
+        $("#encabpf").append(th);
+        for (var i = r.length - 1; i >= 0; i--) {
+        	var c=r[i];
+        	var tr=document.createElement("tr");
+        	$(tr).addClass("agregado");
+	       	var tdi=document.createElement("td");
+        	$(tdi).html(c._id);
+        	$(tdi).addClass("agregado");
+        	$(tdi).css('display','none');
+        	var tdpf=document.createElement("td");
+        	$(tdpf).html(c.paralelo);
+        	$(tdpf).addClass("agregado");
+        	$(tr).append(tdi);
+        	$(tr).append(tdpf);
+        	$("#estpro").append(tr);
+        }
         break;
     default:
         console.log("aun no");
