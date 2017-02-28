@@ -78,4 +78,50 @@ router.post('/', function(req, res, next) {
 });
 
 
+router.put('/', function(req, res, next) {
+
+
+	Usuario.findById(req.body.id, function (err, usuario) {
+	  if (err) {
+	  	var error = {type : 'error' , error : err}
+	  	res.json(error)
+	  }else{
+	  	  usuario.correo = req.body.correo;
+	  	  usuario.nombres = req.body.nombres;
+		  usuario.apellidos = req.body.apellidos;
+		  usuario.rol = req.body.rol;
+		  usuario.tipoI = req.body.tipoI;
+		  usuario.identificacion = req.body.identificacion;
+		  usuario.carrera = req.body.carrera;
+
+		  usuario.save(function (err, updatedUsuario) {
+		    if (err) {
+		    	var error = {type : 'error' , error : err}
+	  			res.json(error)
+		    }else{
+		    	var data = { type : 'success' , usuario : updatedUsuario}
+		    	res.json(data);
+		    }
+
+		  });
+
+	  }
+	  
+
+	});
+});
+
+router.delete('/', function(req, res, next) {
+	console.log(req.body.id)
+	Usuario.findByIdAndRemove(req.body.id, function(err, user) {
+	    if (!err) {
+	        res.json({type : 'success'})
+	    }
+	    else {
+	        res.json({type : 'error'})
+	    }
+	});
+});
+
+
 module.exports = router;
