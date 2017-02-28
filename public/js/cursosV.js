@@ -171,6 +171,7 @@ function porProfesor(){
 function porParalelo(){
 	$(".err").remove();
 	$(".agregado").remove();
+	$(".oculto").css('display','none');
 	var p=$("#paraC .row .inpor #par").val();
 	if (/[0-9]+/.test(p)){
 		$.ajax({
@@ -182,6 +183,8 @@ function porParalelo(){
     		 .done(function(resp) {
 		      console.log("success");
 		      console.log(resp);
+		      $(".oculto").css('display','block');
+		      $(".oculto").css('background-position','left-center');
 		      agregarEst("paraC",resp);
 		    })
 		    .fail(function(resp) {
@@ -404,7 +407,11 @@ function eliminar(event,tipo){
 	if(tipo=="t")
 	var p=$($(event.target).parent("td").siblings()[2]).html();
 	else
+		if (tipo=="p") 
     	var p=$($(event.target).parent("td").siblings("td")[1]).html();
+    else
+    	if (tipo=="l")
+    		var p=$($(event.target).siblings("input")[0]).val();
 	$("#modalP div div .modal-body p label").html(p);
 	$("body").addClass('modal-open');
 	$("#modalP").addClass('in');
@@ -434,6 +441,7 @@ function borrar(){
 		      console.log("success");
 		      console.log(r);
 		      cerrar();
+		      document.location.href="/cursos";
 		  })
 		      .fail(function(r) {
 		      console.log("error");
