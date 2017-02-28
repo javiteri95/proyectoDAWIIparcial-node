@@ -51,6 +51,7 @@
                     <th style="display: none;">id</th>
                     <th>Profesor</th>
                     <th>Paralelo</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -61,6 +62,7 @@
                     <td style="display: none;"><%= value._id %></td>
                     <td><%= value.profesor %></td>
                     <td><%= value.paralelo %></td>
+                    <td><button onclick="ver(event,'t');"><span class="glyphicon glyphicon-eye-open"></span></button><button onclick="actualizar();"><span class="glyphicon glyphicon-pencil"></span></button><button onclick="eliminar();"><span class="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
                 <% }%>
             </tbody>
@@ -158,6 +160,21 @@
                 <br>
                 <a type="submit" class="btn btn-primary" style="float: right;" onclick="agregar();">Agregar</a>
               </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="modalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrar();"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
+           <div class="modal-body" style="margin: 30px;margin-top: 0px;">
+              <table>
+              </table>
           </div>
         </div>
       </div>
