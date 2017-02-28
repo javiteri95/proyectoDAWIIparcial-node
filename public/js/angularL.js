@@ -36,15 +36,3 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
 }
 
 
-app.controller("LoginCtrl", function($location, $scope, $http, $rootScope) {
-
-
-  $scope.login = function(user) {
-    $http.post('/', user)
-      .then(function(response) {
-        $rootScope.currentUser = response;
-        console.log(response)
-      });
-  }
-});
-

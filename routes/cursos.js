@@ -91,5 +91,46 @@ router.get('/profesor/:profesor',function(req,res,next){
 
 });
 
+router.delete('/eliminar/:_id',function(req,res,next){
+	console.log(req.params._id);
+	var id=req.params._id;
+	Curso.findByIdAndRemove(id,function(err,course){
+		if (!err) {
+	        res.json({type : 'success'})
+	    }
+	    else {
+	        res.json({type : 'error'})
+	    }
+	})
+});
+
+router.put('/editar/:_id', function(req, res, next) {
+
+
+	Curso.findById(req.params._id, function (err, course) {
+	  if (err) {
+	  	var error = {type : 'error' , error : err}
+	  	res.json(error)
+	  }else{
+	  	  course.paralelo = req.body.paralelo;
+	  	  course.estudiantes = req.body.estudiantes;
+	  	  course.profesor=req.body.profesor;
+		  course.save(function (err, updatedCurso) {
+		    if (err) {
+		    	var error = {type : 'error' , error : err}
+	  			res.json(error)
+		    }else{
+		    	var data = { type : 'success' , course : updatedCurso}
+		    	res.json(data);
+		    }
+
+		  });
+
+	  }
+	  
+
+	});
+});
+
 
 module.exports = router;

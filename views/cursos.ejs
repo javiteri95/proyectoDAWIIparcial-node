@@ -51,6 +51,7 @@
                     <th style="display: none;">id</th>
                     <th>Profesor</th>
                     <th>Paralelo</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -61,6 +62,7 @@
                     <td style="display: none;"><%= value._id %></td>
                     <td><%= value.profesor %></td>
                     <td><%= value.paralelo %></td>
+                    <td><button onclick="ver(event,'t');"><span class="glyphicon glyphicon-eye-open"></span></button><button onclick="actualizar(event,'t');"><span class="glyphicon glyphicon-edit"></span></button><button onclick="eliminar(event,'t');"><span class="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
                 <% }%>
             </tbody>
@@ -79,18 +81,15 @@
       	<button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porProfesor();"></button>
       	</div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <table class="display tablaCursos">
+          <table class="display">
             <thead>
                 <tr id="encabpf">
-                    <th style="display: none;">id</th>
-                    <th>Estudiantes</th>
-
+                    <th style="display: none;">id</th> 
+                    <th>Paralelo</th>
                 </tr>
             </thead>
             <tbody id="estpro">
-                <tr>
-                    <td class="id" style="display: none;"></td>
-                </tr>
+                
             </tbody>
         </table>
           
@@ -103,8 +102,10 @@
     <div id="paraC" style="display: none">
       <div class="row">
       <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-      	<label class="col-lg-12">Ingese número del paralelo</label><input class="col-lg-9" type="number" id="par" min="1">
-      	<button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porParalelo();"></button>
+      	<label class="col-lg-12">Ingese número del paralelo</label><input class="col-lg-8" type="number" id="par" min="1">
+      	<button class="glyphicon glyphicon-search autocomplete col-lg-1" style="margin-right: 30px" onclick="porParalelo();"></button>
+      		<button class="oculto col-lg-1" style="display: none;" onclick="actualizar(event,'l');"><span class="glyphicon glyphicon-edit"></span></button>
+      		<button class="oculto col-lg-1" style="display: none;" onclick="eliminar(event,'l');"><span class="glyphicon glyphicon-remove"></span></button>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <table class="display tablaCursos">
@@ -161,6 +162,72 @@
                 <br>
                 <a type="submit" class="btn btn-primary" style="float: right;" onclick="agregar();">Agregar</a>
               </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="actualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Agregar Curso</h4>
+          </div>
+           <div class="modal-body">
+              <form method="post" action="/cursos">
+                <div class="form-group">
+                  <label>Profesor</label>
+                  <input type="text" class="form-control autocomplete" id="prof" placeholder="Ingrese el profesor" name="profesor">
+                </div>
+                <div class="form-group">
+                  <label>Paralelo</label>
+                  <input type="number" min="1" class="form-control" id="paral" placeholder="Ingrese el número del paralelo" name="paralelo">
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-12">Estudiantes</label><br>
+                  <input type="text" name="estudiante" class="col-lg-10"><a href="#"><span class="glyphicon glyphicon-plus col-lg-1" id="mas" aria-hidden="true" onclick="add();"></span></a>
+                  <div id="llenado">
+                  	
+                  </div>
+                </div>
+                <br>
+                <a type="submit" class="btn btn-primary" style="float: right;" onclick="editar();">Guardar cambios en la base</a>
+              </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="modalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrar();"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
+           <div class="modal-body" style="margin: 30px;margin-top: 0px;">
+              <table>
+              </table>
+          </div>
+          <div class="modal-footer"><button class="btn btn-success" onclick="cerrar();" style="margin-right: 30px; ">OK</button></div>
+        </div>
+      </div>
+  </div>
+  <div class="modal fade" id="modalP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrar();"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Eliminar curso</h4>
+          </div>
+           <div class="modal-body" style="margin: 30px;margin-top: 0px;">
+              <b><p>Paralelo a eliminar: <label></label></p>
+              <p>¿Segruro de eliminar este curso?</p></b>
+          </div>
+          <div class="modal-footer">
+          	<button class="btn btn-default" onclick="cerrar();" style="margin-right: 30px; ">No</button>
+          	<button class="btn btn-danger" onclick="borrar();">Si</button>
           </div>
         </div>
       </div>

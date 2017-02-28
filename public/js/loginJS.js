@@ -1,3 +1,23 @@
+
+
+
+app.controller("LoginCtrl", function($scope, $http, $rootScope) {
+
+
+  $scope.login = function(user) {
+    $http.post('/', user)
+      .then(function(response) {
+        $rootScope.currentUser = response;
+        console.log(response)
+      });
+  }
+
+
+});
+
+
+
+
 $(document).ready(function(){
         $('.log-btn').click(function(){
             $('.log-status').addClass('wrong-entry');
