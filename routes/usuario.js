@@ -49,11 +49,7 @@ router.post('/', function(req, res, next) {
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.render('usuario',{
-			errors:errors
-		});
-		console.log('hay errores')
-		console.log(errors)
+		res.json({ type : 'error', error : errors})
 	} else {
 		var nuevousuario = new Usuario({
 			nombres: nombres,
@@ -67,13 +63,14 @@ router.post('/', function(req, res, next) {
 		});
 
 		Usuario.createUsuario(nuevousuario, function(err, user){
-			if(err) throw err;
-			console.log(user);
+			if (err){
+				res.json({ type : 'error', error : err})
+			}else{
+				res.json({type : 'success', usuario : user})
+			}
+			
 		});
 
-		req.flash('success_msg', 'You are registered and can now login');
-
-		res.redirect('/usuario');
 	}
 });
 

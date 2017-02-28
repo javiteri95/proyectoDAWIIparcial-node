@@ -48,7 +48,8 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 				$( '#' + id + ' .tipoITabla').html(data.usuario.tipoI);
 				$( '#' + id + ' .identificacionTabla').html(data.usuario.identificacion);
 				$( '#' + id + ' .carreraTabla').html(data.usuario.carrera);
-				agregarMensaje(data.type , 'Actualizado con exito');	
+				agregarMensaje(data.type , 'Actualizado con exito');
+				$('#tablaUsuarios').DataTable();	
 				$('#myModalEditar').modal('hide');
 			}
 			console.log(data);
@@ -56,17 +57,49 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 	})
   }
 
-  $scope.agregarUsuario = function(){
-  	  $http({
-		  method: 'GET',
-		  url: '/someUrl'
-		}).then(function successCallback(response) {
-		    // this callback will be called asynchronously
-		    // when the response is available
-		  }, function errorCallback(response) {
-		    // called asynchronously if an error occurs
-		    // or server returns response with an error status.
-		  });
+  $scope.createUsuario = function(){
+  	var correo = $('#inputEmail1').val();
+	var nombres = $('#exampleNombres1').val();
+	var apellidos = $('#exampleApellidos1').val();
+	var password = $('#inputPassword1').val();
+	var rol = $('#rol1').val();
+	var tipoI = $('#tipoI1').val();
+	var identificacion = $('#exampleIdentificacion1').val();
+	var carrera = $('#exampleCarrera1').val();
+	var dataE = {correo : correo , nombres : nombres , apellidos : apellidos ,password : password, rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
+	console.log(dataE);
+	$.ajax({
+		type: "POST",
+		url: "/usuario",
+		dataType: "json",
+		data: dataE,
+		success: function(data){
+			if (data.type == 'error'){
+				console.log(data.error)
+				agregarMensaje(data.type , data.error);
+				$('#myModal').modal('hide');
+
+			}else{
+				$('tbody').append(" <tr id='" + data.usuario.id+ "'>" +
+					"<td class='nombresTabla'>" + data.usuario.nombres+ "</td>" + 
+					"<td class='apellidosTabla'>" +data.usuario.apellidos + "</td>" +
+					"<td class='correoTabla'>" +data.usuario.correo + "</td>" +
+					"<td class='rolTabla'>" + data.usuario.rol+ "</td>" +
+					"<td class='tipoITabla'>" +data.usuario.tipoI + "</td>" +
+					"<td class='identificacionTabla'>" + data.usuario.identificacion+ "</td>" +
+					"<td class='carreraTabla'>" + data.usuario.carrera + "</td>" +
+					"<td><a href='#' class='idConfX' > <span class='glyphicon glyphicon-edit' onclick='cargarModalEditar('"+ data.usuario.id + "');'> </span></a> </td>" +
+					"<td><a href='#' > <span class='glyphicon glyphicon-remove' onclick='cargarModalEliminar('"+ data.usuario.id+ "');'> </span></a> </td>" +
+					"</tr>"
+					)
+
+				agregarMensaje(data.type , 'Creado con exito');
+				$('#tablaUsuarios').DataTable();
+				$('#myModal').modal('hide');	
+			}
+		}
+	})
+
 
 
 
@@ -147,6 +180,7 @@ function cargarModalEliminar(id){
 							}else{
 								agregarMensaje(data.type , 'Eliminado con exito');	
 								$('#' + id ).remove();
+								$('#tablaUsuarios').DataTable();
 								dialogRef.close();
 							}
 							console.log(data);
