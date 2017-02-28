@@ -377,6 +377,145 @@ function cerrar(){
 				$("#modalP").removeClass('in');
 			    $("#modalP").css('display', 'none');
 }
+function actualizar(event,tipo){
+	if (tipo=="t") {
+	$("#llenado .err").remove(); $("#llenado .llene").remove();
+	var p=$($(event.target).parent("td").siblings()[2]).html();
+	}else
+if(tipo=="p")
+	var p=$($(event.target).parent("td").siblings()[1]).html();
+	if (/[0-9]+/.test(p)){
+		$.ajax({
+    			url: '/cursos/paralelo/'+p,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {paralelo: p},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		      $(".oculto").css('display','block');
+		      $(".oculto").css('background-position','left-center');
+		      $("#actualizar div div .modal-body form div #prof").val(resp.profesor);
+		      $("#actualizar div div .modal-body form div:nth-child(2) #paral").val(resp.paralelo);
+		      var e=JSON.parse(resp.estudiantes);
+		      $("#actualizar div div .modal-body form div:nth-child(3) input").val(e[e.length-1]);
+		      for (var i = e.length - 2; i >= 0; i--) {
+				var inp = document.createElement("input");
+				$(inp).attr('type','text');
+				$(inp).attr('name','estudiante');
+				$(inp).addClass("col-lg-10");
+				$(inp).css('margin-left','0px');
+				$(inp).css('float','left');
+				$(inp).val(e[i]);
+				$(inp).addClass("llene");
+				$("#llenado").append(inp);
+		      }
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      var error=document.createElement("span");
+				$(error).css('color','red');
+				$(error).html("No existe el praralelo");
+				$(error).addClass("col-lg-10");
+				$(error).addClass("err");
+				$(error).css('margin-left','0px');
+				$(error).css('float','left');
+				var br=document.createElement("br");
+				$("#paraC .row .inpor").append(br);
+				$("#paraC .row .inpor").append(error);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
+	}
+	$("#actualizar div div .modal-header h4").html("Editar curso")
+	$("#actualizar").modal('show');
+
+}
+function editar(){
+	$(".err").remove();
+	var prof=$("#actualizar div div .modal-body form div #prof").val();
+	var para=$("#actualizar div div .modal-body form div:nth-child(2) #paral").val();
+
+	var llena=$("#llenado input");
+	var est=[];
+	var unomas=$("#actualizar div div .modal-body form div:nth-child(3) input").val();
+	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))) {
+		if (/([A-Z]([a-z]+))+/.test(unomas)) {
+		est.push(unomas);
+		}
+		for (var i = llena.length - 1; i >= 0; i--) {
+			console.log(llena[i]);
+			if (/([A-Z]([a-z]+))/.test($(llena[i]).val())) {
+				est.push($(llena[i]).val());
+			}
+		}
+	console.log(est);
+	$.ajax({
+		url: '/cursos/paralelo/'+para,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {paralelo: para},
+    		})
+		.done(function(resp) {
+		      console.log("success");
+		      var _id=resp._id;
+		      $.ajax({
+    			
+    			url: '/cursos/editar/'+_id,
+    			type: 'PUT',
+			    dataType: 'json',
+			    data: {paralelo: para,profesor: prof,estudiantes:JSON.stringify(est)},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
+		    }).fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      var error=document.createElement("span");
+				$(error).css('color','red');
+				$(error).html("No existe el praralelo");
+				$(error).addClass("col-lg-10");
+				$(error).addClass("err");
+				$(error).css('margin-left','0px');
+				$(error).css('float','left');
+				var br=document.createElement("br");
+				$("#actualizar .row .inpor").append(br);
+				$("#actualizar .row .inpor").append(error);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
+		    $("#actualizar").modal('hide');
+		}
+	else{
+		var errmesg=error();
+		var br=document.createElement("br");
+		$("#llenado").append(br);
+		$("#llenado").append(errmesg);
+	}
+}
+function add(){
+	var inp = document.createElement("input");
+				$(inp).attr('type','text');
+				$(inp).attr('name','estudiante');
+				$(inp).addClass("col-lg-10");
+				$(inp).css('margin-left','0px');
+				$(inp).css('float','left');
+				$(inp).addClass("llene");
+				$("#llenado").append(inp);
+}
 function botones(o){
 	var bv=document.createElement("button");
 	var spanv=document.createElement("span");
@@ -391,7 +530,7 @@ function botones(o){
 	var tde=document.createElement("td");
 	$(spane).addClass("glyphicon");
 	$(spane).addClass("glyphicon-edit");
-	$(be).attr("onclick","actualizar(event);");
+	$(be).attr("onclick","actualizar(event,'p');");
 	$(be).append(spane);
 	$(td).append(be);
 	var bd=document.createElement("button");
