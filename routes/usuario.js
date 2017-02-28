@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Usuario = require('../models/usuario')
+var nodemailer = require('nodemailer');
 
 /* GET home page. */
 /*
@@ -22,6 +23,11 @@ router.get('/', function(req, res, next) {
     res.render('usuario', { listaUsuarios: userMap , rol : req.user.rol});  
   });
 });
+
+
+
+// setup e-mail data with unicode symbols
+
 
 router.post('/', function(req, res, next) {
   	var nombres = req.body.nombres;
@@ -66,6 +72,38 @@ router.post('/', function(req, res, next) {
 			if (err){
 				res.json({ type : 'error', error : err})
 			}else{
+
+				var smtpConfig = {
+				    host: 'smtp.gmail.com',
+				    port: 465,
+				    secure: true, // use SSL
+				    auth: {
+				        user: 'correoparadaw@gmail.com',
+				        pass: 'correoParaDaw123'
+				    },
+				    tls:{
+					    rejectUnauthorized: false
+					 }
+				};
+				var transporter = nodemailer.createTransport(smtpConfig);
+				var mensaje = "<p> La contraseña asignada a usted es: " + password + "</p> <br><br><p> Por favor proceda a cambiarla </p> "
+
+				// setup e-mail data with unicode symbols
+				var mailOptions = {
+				    from: '"Daw fundamentos de programacion" <correoparadaw@gmail.com>', // sender address
+				    to: correo, // list of receivers
+				    subject: 'cambio de contraseña', // Subject line
+				    html: mensaje // html body
+				};
+				transporter.sendMail(mailOptions, function(error, info){
+				    if(error){
+				        return console.log(error);
+				    }
+				    console.log('Message sent: ' + info.response);
+				});
+
+
+				console.log(user);
 				res.json({type : 'success', usuario : user})
 			}
 			
@@ -122,3 +160,32 @@ router.delete('/', function(req, res, next) {
 
 
 module.exports = router;
+
+/*
+exports.contact = function(req, res){
+    var name = req.body.name;
+    var from = req.body.from;
+    var message = req.body.message;
+    var to = '*******@gmail.com';
+    var smtpTransport = nodemailer.createTransport("SMTP",{
+        service: "Gmail",
+        auth: {
+            user: "correoparadaw@gmail.com",
+            pass: "*****"
+        }
+    });
+    var mailOptions = {
+        from: from,
+        to: to, 
+        subject: name+' | new message !',
+        text: message
+    }
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/');
+        }
+    });
+}
+*/
