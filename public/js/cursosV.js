@@ -371,6 +371,8 @@ function cerrar(){
 			    $("#modalE").removeClass('in');
 			    $("#modalE").css('display', 'none');
 				$(".modal-backdrop").remove();
+				$("#modalP").removeClass('in');
+			    $("#modalP").css('display', 'none');
 }
 function botones(o){
 	var bv=document.createElement("button");
@@ -385,7 +387,7 @@ function botones(o){
 	var spane=document.createElement("span");
 	var tde=document.createElement("td");
 	$(spane).addClass("glyphicon");
-	$(spane).addClass("glyphicon-pencil");
+	$(spane).addClass("glyphicon-edit");
 	$(be).attr("onclick","actualizar(event);");
 	$(be).append(spane);
 	$(td).append(be);
@@ -393,8 +395,71 @@ function botones(o){
 	var spand=document.createElement("span");
 	$(spand).addClass("glyphicon");
 	$(spand).addClass("glyphicon-remove");
-	$(bd).attr("onclick","actualizar(event);");
+	$(bd).attr("onclick","eliminar(event,'p');");
 	$(bd).append(spand);
 	$(td).append(bd);
 	$(o).append(td);
+}
+function eliminar(event,tipo){
+	if(tipo=="t")
+	var p=$($(event.target).parent("td").siblings()[2]).html();
+	else
+    	var p=$($(event.target).parent("td").siblings("td")[1]).html();
+	$("#modalP div div .modal-body p label").html(p);
+	$("body").addClass('modal-open');
+	$("#modalP").addClass('in');
+	$("#modalP").css('display', 'block');
+	$("#modalP").css('padding-left', '16px');
+	$("#modalP").css('margin-top', '16px');
+}
+function borrar(){
+	var p=$("#modalP div div .modal-body p label").html();
+	if (/[0-9]+/.test(p)){
+		$.ajax({
+    			url: '/cursos/paralelo/'+p,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {paralelo: p},
+    		})
+    		 .done(function(resp) {
+		      console.log("success");
+		      console.log(resp);
+		      $.ajax({
+		      	url: '/cursos/eliminar/'+resp._id,
+    			type: 'DELETE',
+			    dataType: 'json',
+			    data: {id: resp._id},
+		      })
+		      .done(function(r) {
+		      console.log("success");
+		      console.log(r);
+		      cerrar();
+		  })
+		      .fail(function(r) {
+		      console.log("error");
+		      console.log(r);
+		  })
+		      .always(function(r) {
+		      console.log("complete");
+		      console.log(r);
+		});
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      var error=document.createElement("span");
+				$(error).css('color','red');
+				$(error).html("No existe el praralelo");
+				$(error).addClass("col-lg-10");
+				$(error).addClass("err");
+				$(error).css('margin-left','0px');
+				$(error).css('float','left');
+				var br=document.createElement("br");
+				$("#modalP div div .modal-body").append(br);
+				$("#modalP div div .modal-body").append(error);
+		    })
+		    .always(function() {
+		      console.log("complete");
+		});
+	}
 }

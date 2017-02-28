@@ -62,7 +62,7 @@
                     <td style="display: none;"><%= value._id %></td>
                     <td><%= value.profesor %></td>
                     <td><%= value.paralelo %></td>
-                    <td><button onclick="ver(event,'t');"><span class="glyphicon glyphicon-eye-open"></span></button><button onclick="actualizar();"><span class="glyphicon glyphicon-pencil"></span></button><button onclick="eliminar();"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    <td><button onclick="ver(event,'t');"><span class="glyphicon glyphicon-eye-open"></span></button><button onclick="actualizar();"><span class="glyphicon glyphicon-edit"></span></button><button onclick="eliminar(event,'t');"><span class="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
                 <% }%>
             </tbody>
@@ -177,6 +177,24 @@
               </table>
           </div>
           <div class="modal-footer"><button class="btn btn-success" onclick="cerrar();" style="margin-right: 30px; ">OK</button></div>
+        </div>
+      </div>
+  </div>
+  <div class="modal fade" id="modalP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrar();"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Eliminar curso</h4>
+          </div>
+           <div class="modal-body" style="margin: 30px;margin-top: 0px;">
+              <b><p>Paralelo a eliminar: <label></label></p>
+              <p>¿Segruro de eliminar este curso?</p></b>
+          </div>
+          <div class="modal-footer">
+          	<button class="btn btn-default" onclick="cerrar();" style="margin-right: 30px; ">No</button>
+          	<button class="btn btn-danger" onclick="borrar();">Si</button>
+          </div>
         </div>
       </div>
   </div>

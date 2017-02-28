@@ -91,5 +91,18 @@ router.get('/profesor/:profesor',function(req,res,next){
 
 });
 
+router.delete('/eliminar/:_id',function(req,res,next){
+	console.log(req.params._id);
+	var id=req.params._id;
+	Curso.findByIdAndRemove(id,function(err,course){
+		if (!err) {
+	        res.json({type : 'success'})
+	    }
+	    else {
+	        res.json({type : 'error'})
+	    }
+	})
+});
+
 
 module.exports = router;
