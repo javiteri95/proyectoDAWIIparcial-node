@@ -378,12 +378,15 @@ function cerrar(){
 			    $("#modalP").css('display', 'none');
 }
 function actualizar(event,tipo){
-	if (tipo=="t") {
 	$("#llenado .err").remove(); $("#llenado .llene").remove();
+	if (tipo=="t")
 	var p=$($(event.target).parent("td").siblings()[2]).html();
-	}else
-if(tipo=="p")
+	else
+	if(tipo=="p")
 	var p=$($(event.target).parent("td").siblings()[1]).html();
+else
+	if (tipo=='l')
+		var p=$($(event.target).siblings("input")[0]).val();
 	if (/[0-9]+/.test(p)){
 		$.ajax({
     			url: '/cursos/paralelo/'+p,
