@@ -13,3 +13,9 @@ var ejercicioEstudiante = new Schema({
 var EjercicioEstudiante = mongoose.model('EjercicioEstudiante', ejercicioEstudiante);
 
 module.exports = EjercicioEstudiante; 
+
+
+module.exports.createEjercicio = function(newEjercicio, callback){
+	newEjercicio.save(callback);
+	
+}

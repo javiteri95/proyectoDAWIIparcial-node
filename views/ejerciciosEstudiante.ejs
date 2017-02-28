@@ -20,7 +20,9 @@
           
         </div>
           
-
+        <div>
+          <h3 style="color: red"><%= message %></h3>
+        </div>
       </div>
 
       <div class="row">
@@ -57,16 +59,32 @@
       <div class="row" ng-app="myApp" ng-controller="controller">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="contenedor">
-               <p ng-hide="true">{{Ejercicio._id}}</p>
+               <p id="hide" ng-hide="true">{{Ejercicio._id}}</p>
                <h1>{{Ejercicio.nombre}}</h1>
                <p>{{Ejercicio.descripcion}}</p>
                <h3>Datos Entrada</h3>
-               <a href="{{Ejercicio.entrada}}">Datos para probar</a>
+               <a  id="entrada" href="{{Ejercicio.entrada}}">Datos para probar</a>
                <h3>Datos Salidas</h3>
-               <a href="{{Ejercicio.salida}}">EJemplo de salida</a>
+               <a href="{{Ejercicio.salida}}">Ejemplo de salida</a>
                <h3>Respuesta</h3>
-               <input type="file" name="ejercicio">
-               <input type="submit" value='Subir'>
+               <form ref='uploadForm' 
+      id='uploadForm' 
+      action='http://localhost:3000/ejercicios/subir' 
+      method='post' 
+      encType="multipart/form-data">
+                 
+                 <div class="form-group">
+                 <input style="display: none;" type="text" name="entrada" id = "en">
+                 <input style="display: none;" type="text" name="salida" id = "sa">
+                 <input style="display: none;" type="text" name="dif" id = "dife">
+                 <input style="display: none;" type="text" name="idE" id = "idE">
+                  <label for="rol">Respuesta</label>
+                 <input type="file" id="respuesta"  name="solucion" />
+                </div>
+                <input type="submit" id="submit"  name="Subir">
+
+
+               </form>
                <br>
                <h3>Etiquetas</h3>
               <ul>
@@ -96,5 +114,6 @@
   <script src="js/usuariosV.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/myCtrl.js"></script>
+  <script src="js/ejerciciosE.js"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+[{
+  "nombre": "Calderón Argüello, Marco Antonio",
+  "cargo": ["Coordinador", "Profesor Ocasional 1"],
+  "foto": "https://www.fiec.espol.edu.ec/sites/fiec.espol.edu.ec/files/mcalderon.jpg",
+  "telefono": "2269-980",
+  "mail": "ancalder@espol.edu.ec",
+  "titulo": "Master of Science Computer Science"
+},{
+  "nombre": "Tapia Rosero, Ana Teresa",
+  "cargo": ["Profesor Tiempo Completo Agregado 3"],
+  "foto": "https://www.fiec.espol.edu.ec/sites/fiec.espol.edu.ec/files/ana%20tapia.jpg",
+  "telefono": "2269 - 815",
+  "mail": "atapia@fiec.espol.edu.ec",
+  "titulo": "Doctora en Ingeniería"
+},{
+  "nombre": "Magallanes Borbor, Jorge Antonio",
+  "cargo": ["Profesor Ocasional 1"],
+  "foto": "https://www.fiec.espol.edu.ec/sites/fiec.espol.edu.ec/files/jorge%20magallanes.jpg",
+  "telefono": "2269 - 815",
+  "mail": "jmagalla@espol.edu.ec",
+  "titulo": "Máster en Investigación en Informática"
+},{
+  "nombre": "Vaca Ruiz, Carmen Karina",
+  "cargo": ["Profesor Tiempo Completo Agregado 3"],
+  "foto": "https://www.fiec.espol.edu.ec/sites/fiec.espol.edu.ec/files/cvaca_0.jpg",
+  "telefono": "2269-847",
+  "mail": "cvaca@espol.edu.ec",
+  "titulo": "PhD in Information Technology"
+},{
+  "nombre": "Rafael Ignacio Bonilla Armijos",
+  "cargo": ["Profesor Ocasional 1"],
+  "foto": "https://www.fiec.espol.edu.ec/sites/fiec.espol.edu.ec/files/rafael%20bonilla.jpg",
+  "telefono": "2269-847",
+  "mail": "rabonilla@espol.edu.ec",
+  "titulo": "Master of Science in Computer Science"
+}]

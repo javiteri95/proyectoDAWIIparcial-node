@@ -10,6 +10,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var fileUpload = require('express-fileupload');
+var PythonShell = require('python-shell');
 
 var perfil = require('./routes/perfil');
 var reportes = require('./routes/reportes');
