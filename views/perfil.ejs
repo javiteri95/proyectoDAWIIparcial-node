@@ -14,7 +14,80 @@
 
   </header > <!-- /header -->
   <section id="process">
-  Aqui va el perfil
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <button type="button" class="btn btn-primary btn-lg" id="buttonQuemar">
+            Agregar usuario
+          </button>     
+        </div>
+    </div>
+
+    <div id="perfil">
+      <% if (type != error){%>
+      <div align="center">
+        <img src="images/profile-pictures/rafael bonilla.jpg" class="img-responsive img-circle">
+      </div>
+               
+      <div >
+        <h2 >
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <%= data.nombres %> <%= data.apellidos %>  
+            </div>
+          </div>
+        </h2>
+      </div>
+
+       <div>
+         <div class="row">
+           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+             <table>
+                 <tbody>
+                   <tr>
+                     <td class="title">Correo</td>
+                     <td><a href="#"><%= data.correo %></a></td>                 
+                   </tr>
+                   <tr>
+                     <td class="title">Ejercicios resueltos</td>
+                     <td><%= data.ejerciciosResueltos %></td>           
+                   </tr>
+                   <tr>
+                     <td class="title">Puntaje total</td>
+                     <td><%= data.notaTotal %></td>          
+                   </tr>
+                 </tbody>
+            </table>
+             
+           </div>
+         </div>
+
+
+
+
+      </div> 
+      <div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <% if (data.badges.length == 0){ %>
+              <p style="font-size: 1.5em; color: red;"> No tiene logros ganados usted </p>
+            <% } else { %>
+              <p style="font-size: 1.5em; color: green;"> Tiene logros </p>
+
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p> <%= data %> </p>
+        </div>
+
+      </div>
+        <% } %>
+      
+    </div>
 
   </section>
 
@@ -31,6 +104,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.js"></script>
 
+  <script src="js/perfilV.js"></script>
 
 </body>
 </html>

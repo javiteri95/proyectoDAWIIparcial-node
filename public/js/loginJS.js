@@ -15,10 +15,7 @@ app.controller("LoginCtrl", function($scope, $http, $rootScope) {
 
 });
 
-
-
-
-$(document).ready(function(){
+function credencialesIncorrectas(){
         $('.log-btn').click(function(){
             $('.log-status').addClass('wrong-entry');
            $('.alert').fadeIn(500);
@@ -27,7 +24,16 @@ $(document).ready(function(){
         $('.form-control').keypress(function(){
             $('.log-status').removeClass('wrong-entry');
         });
+}
 
+
+
+
+
+$(document).ready(function(){
+  
+
+  
 });
 
 function cambioPassword(){

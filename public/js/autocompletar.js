@@ -1,4 +1,4 @@
-$(document).ready(function(){
+s$(document).ready(function(){
                 /* Una vez que se cargo la pagina , llamo a todos los autocompletes y
                  * los inicializo */
                 $('.autocomplete').autocomplete();
