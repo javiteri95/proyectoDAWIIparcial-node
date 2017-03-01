@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <h1>Módulo Cursos</h1>
-          
+          <p id="direccion"><%= type%></p>
         </div>
           
 
@@ -28,6 +28,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
             Agregar Curso
+          </button> 
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#archivo">
+            Agregar Curso por csv
           </button>     
         </div>
       </div>
@@ -129,7 +132,9 @@
 
     </div>
 
-
+ <div class="row" id="prueba">
+  	
+  </div>
 
 
 
@@ -232,6 +237,39 @@
         </div>
       </div>
   </div>
+  <div class="modal fade" id="archivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Ingreso de curso por CSV</h4>
+          </div>
+           <div class="modal-body" style="margin: 30px;margin-top: 0px;">
+           <form ref='uploadForm' 
+      id='uploadForm' 
+      action='http://localhost:3000/cursos/subir' 
+      method='post' 
+      encType="multipart/form-data">
+           	<div class="form-group">
+
+                  <label>Cargar carchivo</label>
+                 <input type="file" id="entradas" name="csv" />
+                 <span style="color:red">
+                    <span style="display: none;">Archivo es requerido</span>
+                    </span>
+                    
+                </div>
+          
+          	<output id="list"></output>
+          </div>
+          <div class="modal-footer">
+          <input class="btn btn-primary" type='submit' id="subir" value="Cargar CSV" disabled="disabled" style="float: right;">
+          </div>
+           </form>
+        </div>
+      </div>
+  </div>
+ 
 
   <footer>
     <% include partials/footer %>
@@ -242,9 +280,13 @@
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="js/csv.js"></script>
+  <script src="js/autocompletar.js"></script>
 
   <script src="js/cursosV.js"></script>
-  <script src="js/autocompletar.js"></script>
+  
+  
 
 </body>
 </html>

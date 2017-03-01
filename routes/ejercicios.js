@@ -50,7 +50,7 @@ router.get('/', function(req, res, next) {
 router.post('/subir',function (req,res,next) {
    	 if (!req.files){console.log("no hay archivos");}
    else{
-   	console.log(req.body);
+   	console.log(req.files);
    	idEstudiante = req.user._id;
     let file = req.files.solucion;
     var ruta = req.body.salida;
@@ -117,7 +117,7 @@ router.post('/subir',function (req,res,next) {
 				  		}
 
 				  		pro = []
-				  		array =data.split("\n")
+				  		array =data.split("\r\n")
 				  		M = resu.length
 				  		N = array.length
 				  		console.log(M);
