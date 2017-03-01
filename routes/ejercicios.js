@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Ejercicio = require('../models/ejercicio')
-
+var EjercicioEstudiante = require('../models/ejercicioEstudiante')
+var BadgesEstudiante = require('../models/badgesEstudiante')
+var PythonShell = require('python-shell');
+var fs = require('fs');
 /* GET home page. */
 /*
 router.get('/', function(req, res, next) {
@@ -40,40 +43,194 @@ router.get('/', function(req, res, next) {
   	res.render("ejerciciosProfesor"/*, { rol: rol }*/);}
   //}else if (rol == 'estudiante'){
   	else{
-  	res.render("ejerciciosEstudiante"/*,{ rol: rol }*/);}
+  	res.render("ejerciciosEstudiante",{message:""}/*,{ rol: rol }*/);}
   //}
 });
 
 router.post('/subir',function (req,res,next) {
-	var fs = require('fs')
+   	 if (!req.files){console.log("no hay archivos");}
+   else{
+   	console.log(req.body);
+   	idEstudiante = req.user._id;
+    let file = req.files.solucion;
+    var ruta = req.body.salida;
+    var entrada = req.body.entrada;
+    var dif = req.body.dif;
+    var idE = req.body.idE;
+    puntaje = 0;
 
-   
-    var file = req.files.ejercicio,
-      name = file.name,
-      type = file.type,
-      path = __dirname + "/data/resueltos/" + name
-  ;
-   var format = type.split("/");
-
-if(format[1] === "py"){
-
-    fs.rename(req.files.ejercicio.path, path, function(err){
-      if(err) res.send("Ocurrio un error al intentar subir la imagen");
-         probarCodigo(path) 
-          //estId = id del estudiante en la sesion 
-          esEjercicio = req.body.ejercicio;
-          if(dificultad == "FACIL"){
-          		puntaje = 3;
-          }
+    if(dif=="FACIL"){
+    	puntaje = 5;
+    }
+    if(dif=="INTERMEDIO"){
+    	puntaje = 10;
+    }
+    if(dif=="DIFICIL"){
+    	puntaje =15 ;
+    }
 
 
-    });
-}else{
-  fs.unlink(file.path);
-  res.send("El formato debe ser py");
-} 
+    console.log(file);
+    origen = './public/'
+    ent = '/data/resueltos/';
+    ePath = ent+file.name;
+    type = file.mimetype;
+    var format = file.name.split(".");
+	if(format[1] === "py"){
 
-})
+	    file.mv(origen+ePath,function (err) {
+     	if (err) console.log(err);
+     	dir=""
+
+     	for (var i = 0; i < __dirname.length -6; i++) {
+     		letra = __dirname.charAt(i)
+     		if(letra != "\\"){
+     			dir = dir+ letra
+     		}
+     		else{
+     			dir = dir + "/"
+     		}
+
+     	}
+
+     	dir = dir + "public"
+     	en = dir+entrada;
+     	var options = {
+			  mode: 'text',
+			  scriptPath: './public/data/resueltos',
+			  args: [en]
+			};
+
+			PythonShell.run(file.name, options, function (err, results) {
+			  if (err) throw err;
+			  
+			  // results is an array consisting of messages collected during execution
+			  fs.readFile("./public/"+ruta, 'utf-8', (err, data) => {
+				  if(err) {
+				    console.log('error: ', err);
+				  } else {
+				  	if(results != null && results != "" && results != undefined){
+				  		resu = []
+
+				  		for (var i = 0; i < results.length; i+=2) {
+				  			resu.push(results[i])
+				  		}
+
+				  		pro = []
+				  		array =data.split("\n")
+				  		M = resu.length
+				  		N = array.length
+				  		console.log(M);
+				  		console.log(N);
+					  	if(M!=N){
+					  		res.render("errorPython",{error: "Su código no da los resultados correctos"})
+					  	}
+					  	else{
+
+					  		for (var i = 0; i < array.length; i++) {
+					  			a1 = array[i];
+					  			b1 =resu[i].slice(0, -1)
+
+					  			pro.push(a1)
+					  			pro.push(b1)
+					  			if(a1 != b1){
+					  				console.log(pro);
+					  				
+					  				res.render("errorPython",{error: "Su código no da los resultados erroneos"})
+					  			}
+					  		}
+					  		console.log("Resultados correctos");
+
+					  		console.log(idEstudiante);
+					  		console.log(idE);
+					  		console.log(puntaje);
+
+
+					  		var nuevoPuntaje = new EjercicioEstudiante({
+								estudiante : idEstudiante,
+								ejercicio : idE, 
+								calificacion : puntaje,
+							});
+
+					  		EjercicioEstudiante.createEjercicio(nuevoPuntaje, function(err, ejerES){
+								if(err) throw err;
+								
+							});
+
+					  		sem = [];
+
+
+
+
+					  		EjercicioEstudiante.findByEstudiante(idEstudiante,function (err,estudiantes) {
+					  			
+					  			if(estudiantes.length+1 == 10){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Novato", function (argument) {
+					  					console.log("Novato");
+					  				});
+					  				
+					  			}
+					  			if(estudiantes.length+1 == 20){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"PRO", function (argument) {
+					  					console.log("PRO");
+					  				});
+					  				
+					  			}
+					  			if(estudiantes.length+1 == 30){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Experto", function (argument) {
+					  					console.log("Experto");
+					  				});
+					  			
+					  			}
+					  			var hoy = new Date();
+					  			semana = 604800000
+					  			semanaPasadaMs = hoy.getTime() - semana;
+					  			semanaPasada = new Date(semanaPasadaMs)
+					  			estudiantes.forEach(function (ejer) {
+					  				if(ejer.fecha >= semanaPasada){
+					  					sem.push(ejer);
+					  				}
+					  			});
+					  			
+					  			if(sem.length+1 == 5){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Indestructible", function (argument) {
+					  					console.log("Indestructible");
+					  				});
+					  				
+					  			}
+					  			if(sem.length+1 == 10){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Duro de Matar", function (argument) {
+					  					console.log("Duro de Matar");
+					  				});
+					  			
+					  			}
+					  			if(sem.length+1 == 15){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Rápidos y Furiosos", function (argument) {
+					  					console.log("Rápidos y Furiosos");
+					  				});
+					  			}
+
+					  		});
+
+					  		res.render("ejerciciosEstudiante",{message: "Ejercicio exitoso!!!!!"})
+					  	}
+
+
+
+					}
+				  }
+				});
+			});
+
+
+
+
+     	})
+	}else{
+	  res.send("El formato debe ser py");
+		} 
+	}
+});
 
 
 
@@ -112,14 +269,6 @@ router.post('/', function(req, res, next) {
 
 		// Validation
 	var errors = req.validationErrors();
-	console.log("Inicio");
-	console.log(titulo);
-	console.log(descripcion);
-	console.log(ePath);
-	console.log(sPath);
-	console.log(etiquetas);
-	console.log(dificultad);
-	console.log("Inicio");
 	if(errors){
 		res.render('Ejercicio',{
 			errors:errors
