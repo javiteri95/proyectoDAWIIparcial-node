@@ -38,3 +38,14 @@ module.exports.getCursoByProfesor = function(profesor, callback){
 	console.log("entra aqui 0")
 	Curso.find(query, callback);
 }
+module.exports.createCursos = function (cursos) {
+	cursos.forEach(function (curso) {
+		new Curso({
+			profesor: curso.profesor,
+			paralelo: curso.paralelo,
+			estudiantes: curso.estudiantes
+		}).save(function (err,cu) {
+			console.log(cu)
+		})
+	})
+}
