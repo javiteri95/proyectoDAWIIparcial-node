@@ -12,9 +12,19 @@ var ejercicioEstudiante = new Schema({
 ;
 var EjercicioEstudiante = mongoose.model('EjercicioEstudiante', ejercicioEstudiante);
 
-
 module.exports = EjercicioEstudiante;
+
+
+module.exports.createEjercicio = function(newEjercicio, callback){
+	newEjercicio.save(callback);	
+}
+
+module.exports.findByEstudiante = function (idEstudiante, callback) {
+	var query = {estudiante: idEstudiante};
+	ejerE = EjercicioEstudiante.find(query,callback);
+}
  
 module.exports.createEjercicioEstudiante = function(newEjercicioEstudiante, callback){
 	newEjercicioEstudiante.save(callback);	
 }
+
