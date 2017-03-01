@@ -55,6 +55,7 @@ router.get("/", function(req,res,next){
 						if (error2){
 							res.render("perfil",{type : "error", data : error2 , rol : req.user.rol})
 						}else{
+							console.log(ejercicioB.badges)
 							if (ejercicioB.length == 0){
 								var data = {
 									nombres : nombres ,
@@ -72,11 +73,10 @@ router.get("/", function(req,res,next){
 									correo : correo ,
 									notaTotal : notaTotal ,
 									ejerciciosResueltos : ejerciciosResueltos ,
-									badges : ejercicioB.badges
+									badges : JSON.parse(ejercicioB[0].badges)
 								}
 
 							}	
-							console.log(ejercicioB);
 							res.render('perfil', {type : 'success', data : data , rol : req.user.rol})
 						}
 

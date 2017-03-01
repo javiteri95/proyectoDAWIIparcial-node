@@ -14,18 +14,11 @@
 
   </header > <!-- /header -->
   <section id="process">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <button type="button" class="btn btn-primary btn-lg" id="buttonQuemar">
-            Agregar usuario
-          </button>     
-        </div>
-    </div>
 
     <div id="perfil">
       <% if (type != error){%>
       <div align="center">
-        <img src="images/profile-pictures/rafael bonilla.jpg" class="img-responsive img-circle">
+        <img src="images/user-icon.png" class="img-responsive img-circle" style="width: 12em; height: 12em ;">
       </div>
                
       <div >
@@ -71,8 +64,61 @@
             <% if (data.badges.length == 0){ %>
               <p style="font-size: 1.5em; color: red;"> No tiene logros ganados usted </p>
             <% } else { %>
-              <p style="font-size: 1.5em; color: green;"> Tiene logros </p>
+              <p style="font-size: 1.5em;"> Badges </p>
+              <div class="row">
+              <% for (i = 0 ; i < data.badges.length ; i++){%>
+                <% if (data.badges[i].toLowerCase() == 'novato' ){ %>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/bronze-medal.png" class="img-responsive">
 
+                      <p style=" color: green ;"> Novato %></p>
+                    </div>
+                    
+                <% } %>
+                <% if (data.badges[i].toLowerCase() == 'pro' ){ %>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/silver-medal.png" class="img-responsive">
+                      <br>
+                      <p style=" color: green ;"> PRO %></p>
+                    </div>
+                    
+                <% } %>
+                <% if (data.badges[i].toLowerCase() == 'experto' ){ %>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/gold-medal.png" class="img-responsive">
+                      <br>
+                      <p style=" color: green ;"> Experto  %></p>
+                    </div>
+                    
+                <% } %>
+                <% if (data.badges[i].toLowerCase() == 'indestructible' ){ %>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/medal.png" class="img-responsive">
+                      <br>
+                      <p style=" color: green ;"> Indestructible %></p>
+                    </div>
+                    
+                <% } %>
+                <% if (data.badges[i].toLowerCase() == 'duro de matar' ){ %>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/rating.png" class="img-responsive">
+                      <br>
+                      <p style=" color: green ;"> Duro de matar %></p>
+                    </div>
+                    
+                <% } %>
+                <% if (data.badges[i].toLowerCase() == 'rapidos y furiosos' ){ %>
+
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="float: left;">
+                      <img src="images/badges/crown.png" class="img-responsive">
+                      <br>
+                      <p style=" color: green ;"> Rapidos y Furiosos %></p>
+                    </div>
+                    
+                <% } %>
+
+              <% } %>
+              </div>
             <% } %>
 
           </div>
