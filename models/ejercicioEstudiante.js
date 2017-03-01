@@ -19,3 +19,8 @@ module.exports.createEjercicio = function(newEjercicio, callback){
 	newEjercicio.save(callback);
 	
 }
+
+module.exports.findByEstudiante = function (idEstudiante, callback) {
+	var query = {estudiante: idEstudiante};
+	ejerE = EjercicioEstudiante.find(query,callback);
+}

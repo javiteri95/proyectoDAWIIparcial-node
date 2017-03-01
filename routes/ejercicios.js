@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Ejercicio = require('../models/ejercicio')
 var EjercicioEstudiante = require('../models/ejercicioEstudiante')
+var BadgesEstudiante = require('../models/badgesEstudiante')
 var PythonShell = require('python-shell');
 var fs = require('fs');
 /* GET home page. */
@@ -153,8 +154,63 @@ router.post('/subir',function (req,res,next) {
 
 					  		EjercicioEstudiante.createEjercicio(nuevoPuntaje, function(err, ejerES){
 								if(err) throw err;
-								console.log(ejerES);
+								
 							});
+
+					  		sem = [];
+
+
+
+
+					  		EjercicioEstudiante.findByEstudiante(idEstudiante,function (err,estudiantes) {
+					  			
+					  			if(estudiantes.length+1 == 10){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Novato", function (argument) {
+					  					console.log("Novato");
+					  				});
+					  				
+					  			}
+					  			if(estudiantes.length+1 == 20){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"PRO", function (argument) {
+					  					console.log("PRO");
+					  				});
+					  				
+					  			}
+					  			if(estudiantes.length+1 == 30){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Experto", function (argument) {
+					  					console.log("Experto");
+					  				});
+					  			
+					  			}
+					  			var hoy = new Date();
+					  			semana = 604800000
+					  			semanaPasadaMs = hoy.getTime() - semana;
+					  			semanaPasada = new Date(semanaPasadaMs)
+					  			estudiantes.forEach(function (ejer) {
+					  				if(ejer.fecha >= semanaPasada){
+					  					sem.push(ejer);
+					  				}
+					  			});
+					  			
+					  			if(sem.length+1 == 5){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Indestructible", function (argument) {
+					  					console.log("Indestructible");
+					  				});
+					  				
+					  			}
+					  			if(sem.length+1 == 10){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Duro de Matar", function (argument) {
+					  					console.log("Duro de Matar");
+					  				});
+					  			
+					  			}
+					  			if(sem.length+1 == 15){
+					  				BadgesEstudiante.agregarBadges(idEstudiante,"Rápidos y Furiosos", function (argument) {
+					  					console.log("Rápidos y Furiosos");
+					  				});
+					  			}
+
+					  		});
 
 					  		res.render("ejerciciosEstudiante",{message: "Ejercicio exitoso!!!!!"})
 					  	}
