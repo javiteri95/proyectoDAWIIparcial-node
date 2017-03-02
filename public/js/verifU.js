@@ -1,9 +1,9 @@
-function verifU(nombres){
+function verifU(nombres,apellidos){
     	$.ajax({
-    			url: '/usuario/'+nombres,
+    			url: '/usuario/'+nombres+'/'+apellidos,
     			type: 'GET',
 			    dataType: 'json',
-			    data: {nombres: nombres},
+			    data: {nombres: nombres,apellidos:apellidos},
     		})
     		 .done(function(resp) {
 		      console.log("success");

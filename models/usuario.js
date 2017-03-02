@@ -59,8 +59,8 @@ module.exports.getUsuarioById = function(id, callback){
 	Usuario.findById(id, callback);
 }
 
-module.exports.getUsuarioByNombre= function(nombre, callback){
-	var query = {nombre: nombres};
+module.exports.getUsuarioByNombreYApellidos= function(nombre,apellidos, callback){
+	var query = {nombres: nombres,apellidos:apellidos};
 	console.log("entra aqui 0")
 	Curso.findOne(query, callback);
 }

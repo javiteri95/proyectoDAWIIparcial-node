@@ -41,7 +41,7 @@
        <div class="row">
       <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row"">
         <label class="col-lg-12">Ingese nombre completo del estudiante</label><input class="col-lg-9" type="text" id="pro">
-        <button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porEstudiante();"></button>
+        <button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porEstudiante(event);"></button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           
@@ -55,7 +55,7 @@
       <div class="row">
       <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
         <label class="col-lg-12">Ingese número del paralelo</label><input class="col-lg-8" type="number" id="par" min="1">
-        <button class="glyphicon glyphicon-search autocomplete col-lg-1" style="margin-right: 30px" onclick="porParalelo();"></button>
+        <button class="glyphicon glyphicon-search autocomplete col-lg-1" style="margin-right: 30px" onclick="porParalelo(event);"></button>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           
@@ -101,10 +101,97 @@ function cambiar (tipo) {
         break;
     }  
 }
+Array.prototype.unique=function(a){
+  return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+});
 
-function porParalelo () {
+function porParalelo (event) {
   // body... 
 
+
+  $(".err").remove();
+  var p=$($(event.target).siblings('input')[0]).val();
+  var fechas=[];
+  var est=[];
+  $.ajax({
+          url: '/cursos/paralelo/'+p,
+          type: 'GET',
+          dataType: 'json',
+          data: {paralelo: p},
+        })
+         .done(function(resp) {
+          console.log("success");
+          est=JSON.parse(resp.estudiantes);
+          dates(est,fechas,p);
+        })
+        .fail(function(resp) {
+          console.log("error");
+          console.log(resp);
+          var error=document.createElement("span");
+        $(error).css('color','red');
+        $(error).html("No existe el praralelo");
+        $(error).addClass("col-lg-10");
+        $(error).addClass("err");
+        $(error).css('margin-left','0px');
+        $(error).css('float','left');
+        var br=document.createElement("br");
+        $("#curso .row .inpor").append(br);
+        $("#curso .row .inpor").append(error);
+        })
+        .always(function() {
+          console.log("complete");
+    });}
+        function dates (estudiantes,fechas,p) {
+          for (var i = 0; i < estudiantes.length; i++) {
+            $.ajax({
+          url: '/reportes/estudiante/'+estudiantes[i],
+          type: 'GET',
+          dataType: 'json',
+          data: {estudiante: estudiantes[i]},
+        })
+         .done(function(resp) {
+          console.log("success");
+          for (var i = 0; i < resp.length; i++) {
+            var ej=resp[i];
+            fechas.push(ej.fecha);
+          }
+          success(fechas,p)
+        })
+        .fail(function(resp) {
+          console.log("error");
+          console.log(resp);
+          var error=document.createElement("span");
+        $(error).css('color','red');
+        $(error).html("No hay información a mostrar");
+        $(error).addClass("col-lg-10");
+        $(error).addClass("err");
+        $(error).css('margin-left','0px');
+        $(error).css('float','left');
+        var br=document.createElement("br");
+        $("#curso .row .inpor").append(br);
+        $("#curso .row .inpor").append(error);
+        })
+        .always(function() {
+          console.log("complete");
+    });
+           } 
+        }
+        function success (fechas,curso) {
+          // body... 
+        var original=[]
+        var cantidades=[];
+        for (var i = 0; i < fechas.length; i++) {
+          original.push(new Date(fechas[i]));
+        }
+        var copia=original.unique();
+        for (var i = 0; i < original.length; i++) {
+          var cont= 0
+          for (var j = 0; j < copia.length; j++) {
+            if(copia[j]==original[i])
+              cont++;
+          }
+          cantidades.push(cont);
+        }/*
 var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Chrome"},
         {
           value: 16,
@@ -140,7 +227,7 @@ var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Ch
         strokeColor : "#ffffff",
         highlightFill: "#1864f2",
         highlightStroke: "#ffffff",
-        data : [90,30,10,80,15,5,15]
+        data : cantidades
       },
       {
         fillColor : "#e9e225",
@@ -152,8 +239,9 @@ var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Ch
     ]
 
   } 
+  */
     var lineChartData = {
-      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio"],
+      labels : copia,
       datasets : [
         {
           label: "Primera serie de datos",
@@ -163,8 +251,10 @@ var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Ch
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : [90,30,10,80,15,5,15]
-        },
+          data : cantidades
+        }
+        /*
+        ,
         {
           label: "Segunda serie de datos",
           fillColor : "rgba(151,187,205,0.2)",
@@ -175,12 +265,53 @@ var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Ch
           pointHighlightStroke : "rgba(151,187,205,1)",
           data : [40,50,70,40,85,55,15]
         }
+        */
       ]
 
     }
 var ctx4 = document.getElementById("curChart").getContext("2d");
 window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
 }
+function porEstudiante(event) {
+  $(".err").remove();
+  var e=$($(event.target).siblings('input')[0]).val();
+  var n=e.split(" ");
+  console.log(n[3])
+  if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
+    var nombres=""+n[0]+" "+n[1];
+  var apellidos=""+n[2]+" "+n[3];
+  console.log(nombres)
+  console.log(apellidos)
+  if ((/([A-Z]([a-z]+))+/.test(nombres)&&/([A-Z]([a-z]+))+/.test(apellidos))) {
+    console.log('correcto')
+  }
+  else{
+     var error=document.createElement("span");
+        $(error).css('color','red');
+        $(error).html("Ingrese nombre completo");
+        $(error).addClass("col-lg-10");
+        $(error).addClass("err");
+        $(error).css('margin-left','0px');
+        $(error).css('float','left');
+        var br=document.createElement("br");
+        $("#estudiante .row .inpor").append(br);
+        $("#estudiante .row .inpor").append(error);
+  }
+  }
+  else {
+    var error=document.createElement("span");
+     $(error).css('color','red');
+        $(error).html("Ingrese nombre completo");
+        $(error).addClass("col-lg-10");
+        $(error).addClass("err");
+        $(error).css('margin-left','0px');
+        $(error).css('float','left');
+        var br=document.createElement("br");
+        $("#estudiante .row .inpor").append(br);
+        $("#estudiante .row .inpor").append(error);
+  }
+  
+  }
 </script>
 
 </body>

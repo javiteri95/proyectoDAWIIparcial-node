@@ -55,10 +55,24 @@ function agregar(){
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
-	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para)) && (verifU(prof))) {
+	var n=prof.split(" ");
+	var l=[]
+	l.push(prof)
+	console.log(prof)
+	console.log(l)
+  if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
+    var nombres=""+n[0]+" "+n[1];
+  var apellidos=""+n[2]+" "+n[3];
+  console.log(nombres)
+  console.log(apellidos)
+	if ((/([A-Z]([a-z]+))+/.test(nombres)) &&(/([A-Z]([a-z]+))+/.test(apellidos)) && (/[0-9]+/.test(para)) && (verifU(nombres,apellidos))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
-			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val())) && (verifU(llena[i].val()))) {
+			var n=$(llena[i]).val().split(" ");
+  if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
+    var nombres=""+n[0]+" "+n[1];
+  var apellidos=""+n[2]+" "+n[3];
+			if ((/([A-Z]([a-z]+))/.test(nombres))&&(/([A-Z]([a-z]+))/.test(apellidos)) && (verifU(nombres,apellidos))) {
 				est.push($(llena[i]).val());
 			}
 		}
@@ -119,13 +133,13 @@ function agregar(){
 		    .always(function() {
 		      console.log("complete");
 		});
-		}
+		}}
 	else{
 		var errmesg=error();
 		var br=document.createElement("br");
 		$("#llenar").append(br);
 		$("#llenar").append(errmesg);
-	}
+	}}
 }
 function agregarEstudiante(){
 	$("#llenar .err").remove();
