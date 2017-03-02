@@ -4,7 +4,8 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var ejercicioEstudiante = new Schema({
-	estudiante : { type: Schema.Types.ObjectId, ref: 'Usuario', required: true  },
+	estudianteID : { type: Schema.Types.ObjectId, ref: 'Usuario', required: true  },
+	estudiante : String,
 	ejercicio : { type: Schema.Types.ObjectId, ref: 'Ejercicio', required: true  }, 
 	fecha : { type: Date, default: Date.now },
 	calificacion : {type: Number, required: true }
