@@ -36,13 +36,12 @@
       </div>
     </div>
     <br>
-    <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-lg-offset-2 col-md-offset-1 col-xs-offset-0" id="estudiante">
-      
-       <div class="row">
-      <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row"">
+    <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-lg-offset-2 col-md-offset-1 col-xs-offset-0" id="estudiante"> 
+      <div class="row">
+      <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
         <label class="col-lg-12">Ingese nombre completo del estudiante</label><input class="col-lg-9" type="text" id="pro">
         <button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porEstudiante(event);"></button>
-        </div>
+      </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           
           <canvas id="estChart" width="400" height="400"></canvas>
@@ -63,8 +62,6 @@
         </div>
           
       </div>
-
-
     </div>
 
 
@@ -274,16 +271,65 @@ window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
 }
 function porEstudiante(event) {
   $(".err").remove();
+  var fechasE=[];
   var e=$($(event.target).siblings('input')[0]).val();
   var n=e.split(" ");
   console.log(n[3])
   if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
     var nombres=""+n[0]+" "+n[1];
   var apellidos=""+n[2]+" "+n[3];
-  console.log(nombres)
-  console.log(apellidos)
   if ((/([A-Z]([a-z]+))+/.test(nombres)&&/([A-Z]([a-z]+))+/.test(apellidos))) {
     console.log('correcto')
+     $.ajax({
+      url: '/reportes/estudiante/'+e,
+      type: 'GET',
+      dataType: 'json',
+      data: {estudiante:e},
+    })
+    .done(function(resp) {
+      console.log("success");
+      console.log(resp)
+      for (var i = 0; i < resp.length; i++) {
+        fechasE.push(resp[i].fecha);
+      }
+      var originalE=[]
+        var cantidadesE=[];
+        for (var i = 0; i < fechasE.length; i++) {
+          originalE.push(new Date(fechasE[i]));
+        }
+        var copiaE=originalE.unique();
+        for (var i = 0; i < originalE.length; i++) {
+          var conta= 0
+          for (var j = 0; j < copiaE.length; j++) {
+            if(copiaE[j]==originalE[i])
+              conta++;
+          }
+          cantidadesE.push(conta);}
+
+      var lineChartData = {
+      labels : copiaE,
+      datasets : [
+        {
+          label: "Primera serie de datos",
+          fillColor : "rgba(220,220,220,0.2)",
+          strokeColor : "#6b9dfa",
+          pointColor : "#1e45d7",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : cantidadesE
+        }
+    ]
+
+    }
+var ctx4 = document.getElementById("estChart").getContext("2d");
+window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});})
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
   }
   else{
      var error=document.createElement("span");

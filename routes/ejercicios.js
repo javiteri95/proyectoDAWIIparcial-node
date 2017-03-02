@@ -122,7 +122,7 @@ router.post('/subir',function (req,res,next) {
 				  		}
 
 				  		pro = []
-				  		array =data.split("\n")
+				  		array =data.split("\r\n")
 				  		M = resu.length
 				  		N = array.length
 				  		console.log(M);

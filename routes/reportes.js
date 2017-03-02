@@ -47,10 +47,10 @@ router.get('/', function(req, res, next) {
 router.get('/estudiante/:estudiante',function (req,res,next) {
 	var estudiante=req.params.estudiante;
 	console.log(estudiante);
-	EjercicioEstudiante.findByEstudiante(estudiante,function(err,estudiante){
+	EjercicioEstudiante.findByEstudianteNombre(estudiante,function(err,ejercicio){
 		if(err) throw err;
-		console.log(estudiante);
-		res.send(estudiante);
+		console.log(ejercicio);
+		res.send(ejercicio);
 	});
 })
 
