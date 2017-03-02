@@ -42,6 +42,14 @@
         <label class="col-lg-12">Ingese nombre completo del estudiante</label><input class="col-lg-9" type="text" id="pro">
         <button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porEstudiante(event);"></button>
       </div>
+      <br>
+      <div class="col-lg-12">
+      <label class="col-lg-2">Rango inicial</label>
+        <input class="col-xs-4 col-lg-4 col-md-4 col-sm-4" type="date" name="f" id="fi">
+        <label class="col-lg-2">Rango final</label>
+      <input class="col-xs-4 col-lg-4 col-md-4 col-sm-4" type="date" name="f" id="ff">
+      </div>
+      
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           
           <canvas id="estChart" width="400" height="400"></canvas>
@@ -271,6 +279,10 @@ window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
 }
 function porEstudiante(event) {
   $(".err").remove();
+  var fi=new Date($("#fi").val());
+  var ff=new Date($("#fi").val());
+  console.log(fi)
+  console.log(ff)
   var fechasE=[];
   var e=$($(event.target).siblings('input')[0]).val();
   var n=e.split(" ");
@@ -304,7 +316,10 @@ function porEstudiante(event) {
         
       
       for (var i = 0; i < resp.length; i++) {
-        fechasE.push(resp[i].fecha);
+        if(fechasE<=fi||fechasE>=ff){
+          console.log('hola')
+        fechasE.push(resp[i].fecha);}
+        fechasE.push(resp[i].fecha)
       }
       var originalE=[]
         var cantidadesE=[];
