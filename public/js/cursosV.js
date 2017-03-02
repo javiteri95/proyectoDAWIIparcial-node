@@ -49,30 +49,43 @@ function tomar(){
     		$(".agregado").remove();
     	}
 }
+
+function verifU(nombres){
+    	return($.ajax({
+    			url: '/usuario/nombre/'+nombres,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {nombres: nombres},
+    		})
+    		 .done(function(resp) {
+    		 	console.log(resp);
+		      if(resp.usuario==""){
+		      	console.log("no sirve");
+		      	return false;
+		      }else{
+		      	console.log("si sirve");
+		      	return true;
+		      }
+		      
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      return false;
+		    }))
+}
+
 function agregar(){
 	$(".err").remove();
 	var prof=$("#prof").val();
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
-	var n=prof.split(" ");
-	var l=[]
-	l.push(prof)
-	console.log(prof)
-	console.log(l)
-  if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
-    var nombres=""+n[0]+" "+n[1];
-  var apellidos=""+n[2]+" "+n[3];
-  console.log(nombres)
-  console.log(apellidos)
-	if ((/([A-Z]([a-z]+))+/.test(nombres)) &&(/([A-Z]([a-z]+))+/.test(apellidos)) && (/[0-9]+/.test(para)) && (verifU(nombres,apellidos))) {
+	console.log(verifU(prof));
+	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))&&(verifU(prof))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
-			var n=$(llena[i]).val().split(" ");
-  if ((n[0]!=undefined)&&(n[1]!=undefined)&&(n[2]!=undefined)&&(n[3]!=undefined)) {
-    var nombres=""+n[0]+" "+n[1];
-  var apellidos=""+n[2]+" "+n[3];
-			if ((/([A-Z]([a-z]+))/.test(nombres))&&(/([A-Z]([a-z]+))/.test(apellidos)) && (verifU(nombres,apellidos))) {
+			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val()))&&(verifU($(llena[i]).val()))) {
 				est.push($(llena[i]).val());
 			}
 		}
@@ -133,13 +146,13 @@ function agregar(){
 		    .always(function() {
 		      console.log("complete");
 		});
-		}}
+		}
 	else{
 		var errmesg=error();
 		var br=document.createElement("br");
 		$("#llenar").append(br);
 		$("#llenar").append(errmesg);
-	}}
+	}
 }
 function agregarEstudiante(){
 	$("#llenar .err").remove();
