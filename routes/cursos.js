@@ -27,6 +27,22 @@ router.get('/todos',function(req, res, next){
   });
 });
 
+router.get('/profesores',function (req,res,next) {
+	profesores = [];
+	Curso.find({},function (err,cursos) {
+		cursos.forEach(function (curso) {
+			prof = curso.profesor
+			if(!profesores.includes(prof)){
+				profesores.push(prof)
+			}
+		})
+		profes = {}
+		profes.prof = profesores;
+		res.send(profesores)
+	})
+	
+})
+
 router.post('/agregar', function(req, res, next) {
   	var profesor = req.body.profesor;
 	var paralelo = req.body.paralelo;
@@ -175,54 +191,46 @@ router.post('/subir',function (req,res,next) {
 
 		    		console.log(allRows)
 		    		var nuevocurso=[]
-					  for (var i = 0; i < allRows.length; i++) {
-					  	if(i==allRows.length-1){
-					  		ban = true
-					  	}
-					  	console.log(i)
-					  	console.log( "ROWS:"+allRows[i])
-					    curso = allRows[i].split(";")
-					    if(/([A-Z]([a-z]+))+/.test(curso[0])){
-					      prof=curso[0]
-					    }
-					    else{
-					    	res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
-					  }
-					    if((/[0-9]+/.test(curso[1]))){
-					    para= parseInt(curso[1])}
-					    else{
-					    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
-					  }
-					    estudiantes = curso[2].split(',')
-					    est=[]
-					    for (var i = 0; i < estudiantes.length; i++) {
-					      if (/([A-Z]([a-z]+))/.test(estudiantes[i])) {
-					      est.push(estudiantes[i])
-					      }
-					    }
-					    if(est===[]){
-					    	errmesg = "";
-					    	res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
-					    }
+		    		allRows.forEach(function (linea) {
+		    				console.log( "ROWS:"+linea)
+		    				curso = linea.split(";")
+		    				if(/([A-Z]([a-z]+))+/.test(curso[0])){
+						      prof=curso[0]
+						    }
+						    else{
+						    	res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
+						  	}
 
+						  	if((/[0-9]+/.test(curso[1]))){
+						    para= parseInt(curso[1])}
+						    else{
+						    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
+						 	}
+						 	estudiantes = curso[2].split(',')
+					   		est=[]
+					   		for (var i = 0; i < estudiantes.length; i++) {
+						      if (/([A-Z]([a-z]+))/.test(estudiantes[i])) {
+						      est.push(estudiantes[i])
+						      }
+						    }
+						    if(est===[]){
+						    	errmesg = "";
+						    	res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
+						    }
 
-					     nuevocurso.push( {
-							profesor: prof,
-							paralelo: para,
-							estudiantes : JSON.stringify(est)
-						});
-
-						
-					    
-						console.log("no se sale")
-					  } 
-					  console.log(nuevocurso)
-					  Curso.createCursos(nuevocurso);
+						    nuevocurso.push( {
+								profesor: prof,
+								paralelo: para,
+								estudiantes : JSON.stringify(est)
+							});
+						    
+		    		})
+	  				console.log(nuevocurso)
+	  				Curso.saveUsers(nuevocurso)
 		    	}
 		    })
-		    	if(ban){
 		    	 res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:"Csv subido exitosamente"});
-		    	}
+		    	
 		  });
 
 

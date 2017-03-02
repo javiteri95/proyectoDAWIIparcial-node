@@ -40,10 +40,10 @@ router.get('/api/:dif',function (req,res,next) {
 router.get('/', function(req, res, next) {
   //if(( rol == 'profesor') || (rol == 'ayudante')){
   	if(false){
-  	res.render("ejerciciosProfesor"/*, { rol: rol }*/);}
+  	res.render("ejerciciosProfesor",{ rol: "profesor"}/*, { rol: rol }*/);}
   //}else if (rol == 'estudiante'){
   	else{
-  	res.render("ejerciciosEstudiante",{message:""}/*,{ rol: rol }*/);}
+  	res.render("ejerciciosEstudiante",{message:"", rol: "estudiante"}/*,{ rol: rol }*/);}
   //}
 });
 
