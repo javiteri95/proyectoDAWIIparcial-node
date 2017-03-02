@@ -97,7 +97,7 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 					$('#myModal').modal('hide');
 
 				}else{
-					$('tbody').append(" <tr id='" + data.usuario.id+ "'>" +
+					$('tbody').append(" <tr id='" + data.usuario.id+ "' role='row' class='odd'>" +
 						"<td class='nombresTabla'>" + data.usuario.nombres+ "</td>" + 
 						"<td class='apellidosTabla'>" +data.usuario.apellidos + "</td>" +
 						"<td class='correoTabla'>" +data.usuario.correo + "</td>" +

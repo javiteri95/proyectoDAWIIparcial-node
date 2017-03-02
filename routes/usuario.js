@@ -55,7 +55,7 @@ router.post('/', function(req, res, next) {
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.json({ type : 'error', error : errors})
+		res.json({ type : 'error', error : "Cometio uno o mas errores en el formulario"})
 	} else {
 		var nuevousuario = new Usuario({
 			nombres: nombres,
@@ -70,7 +70,7 @@ router.post('/', function(req, res, next) {
 
 		Usuario.createUsuario(nuevousuario, function(err, user){
 			if (err){
-				res.json({ type : 'error', error : err})
+				res.json({ type : 'error', error : "Algo malo paso"})
 			}else{
 
 				var smtpConfig = {
@@ -128,7 +128,7 @@ router.put('/', function(req, res, next) {
 
 	Usuario.findById(req.body.id, function (err, usuario) {
 	  if (err) {
-	  	var error = {type : 'error' , error : err}
+	  	var error = {type : 'error' , error : "Algo malo paso"}
 	  	res.json(error)
 	  }else{
 	  	  usuario.correo = req.body.correo;
@@ -141,7 +141,7 @@ router.put('/', function(req, res, next) {
 
 		  usuario.save(function (err, updatedUsuario) {
 		    if (err) {
-		    	var error = {type : 'error' , error : err}
+		    	var error = {type : 'error' , error : "Algo malo paso"}
 	  			res.json(error)
 		    }else{
 		    	var data = { type : 'success' , usuario : updatedUsuario}

@@ -355,6 +355,40 @@ router.get('/mejores', function (req, res, next) {
 
 })
 
+router.get('/mejores2', function (req, res, next) {
+	data =[]
+	Curso.getCursos(function (err,cursos) {
+		for (var i = 0; i < cursos.length; i++) {
+			var paralelo = cursos[i].paralelo
+			var nombresString = JSON.parse(cursos[i].estudiantes)
+			for (var j = 0; j < nombresString.length; j++) {
+				var nombreIndividual = nombresString[j]
+				EjercicioEstudiante.findByEstudianteNombre(nombreIndividual,function (err,EjerEstu) {
+
+					var notaTotal = 0
+					for (var k = 0 ; k<EjerEstu.length ; k++){
+						notaTotal += EjerEstu[k].nota
+					}
+					var dataTemp = {
+						paralelo : paralelo ,
+						nombreIndividual : nombreIndividual ,
+						notaTotal : notaTotal
+					}
+					console.log(dataTemp)
+					data.push(dataTemp)
+
+				})
+
+			}
+
+		}
+
+
+	})
+	console.log(data)
+	res.json(data)
+})
+
 
 
 

@@ -42,7 +42,7 @@ router.get("/", function(req,res,next){
 			var nombres = user.nombres
 			var apellidos = user.apellidos
 			var correo = user.correo
-			EjercicioEstudiante.find({estudiante : req.user.id}, function(error, ejercicioEst){
+			EjercicioEstudiante.find({estudianteID : req.user.id}, function(error, ejercicioEst){
 				if (error){
 					res.render("perfil",{type : "error", data : error, rol : req.user.rol})
 				}else{
