@@ -1,7 +1,7 @@
 $(document).ready(function(){
   var d=$("#direccion").html();
   if ((d!="")&&(d!="error")) {
-    csv(d);
+    //csv(d);
   }
 	$('#entradas').change(handleFileSelect)
 	$('#subir').prop('disabled',true);
