@@ -5,7 +5,8 @@ var Schema       = mongoose.Schema;
 
 var ejercicioEstudiante = new Schema({
 	estudianteID : { type: Schema.Types.ObjectId, ref: 'Usuario', required: true  },
-	estudiante : String,
+	estudianteN : String,
+	estudianteA : String,
 	ejercicio : { type: Schema.Types.ObjectId, ref: 'Ejercicio', required: true  }, 
 	fecha : { type: Date, default: Date.now },
 	calificacion : {type: Number, required: true }

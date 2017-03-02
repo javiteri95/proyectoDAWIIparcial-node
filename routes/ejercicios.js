@@ -150,7 +150,8 @@ router.post('/subir',function (req,res,next) {
 
 					  		var nuevoPuntaje = new EjercicioEstudiante({
 								estudianteID : idEstudiante,
-								estudiante : estu,
+								estudianteN : req.user.nombres,
+								estudianteA : req.user.apellidos ,
 								ejercicio : idE, 
 								calificacion : puntaje,
 							});
