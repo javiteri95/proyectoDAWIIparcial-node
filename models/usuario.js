@@ -59,6 +59,12 @@ module.exports.getUsuarioById = function(id, callback){
 	Usuario.findById(id, callback);
 }
 
+module.exports.getUsuarioByNombre= function(nombre, callback){
+	var query = {nombre: nombres};
+	console.log("entra aqui 0")
+	Curso.findOne(query, callback);
+}
+
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     	if(err) throw err;

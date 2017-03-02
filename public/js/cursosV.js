@@ -55,10 +55,10 @@ function agregar(){
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
-	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))) {
+	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para)) && (verifU(prof))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
-			if (/([A-Z]([a-z]+))/.test($(llena[i]).val())) {
+			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val())) && (verifU(llena[i].val()))) {
 				est.push($(llena[i]).val());
 			}
 		}
@@ -215,7 +215,7 @@ function porParalelo(){
 function error(){
 	var error=document.createElement("span");
 	$(error).css('color','red');
-	$(error).html("Ingrese los datos correctamente");
+	$(error).html("Ingrese los datos correctamente; campos profesor y paralelo requeridos, al menos un estudiante; o es probable que los usuarios no existan");
 	$(error).addClass("col-lg-10");
 		$(error).addClass("err");
 		$(error).css('margin-left','0px');

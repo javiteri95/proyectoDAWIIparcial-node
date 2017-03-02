@@ -2,7 +2,7 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Login form shake effect</title>
+  <title>Reportes</title>
   <% include partials/header %>
   
 </head>
@@ -12,9 +12,61 @@
   <header class="sticky">
   <% include partials/nav %>
 
-  </header > <!-- /header -->
+   </header > <!-- /header -->
   <section id="process">
-  Aqui van los reportes
+    <div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h1>Módulo Reportes</h1>
+          <p id="direccion" style="display: none;"><%= error%></p>
+        </div>
+          
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <button type="button" class="btn btn-primary btn-lg" onclick="cambiar('c')">
+            Reporte por curso
+          </button> 
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#archivo">
+            Reporte por estudiante
+          </button>     
+        </div>
+      </div>
+    </div>
+    <br>
+    <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-lg-offset-2 col-md-offset-1 col-xs-offset-0" id="estudiante">
+      
+       <div class="row">
+      <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row"">
+        <label class="col-lg-12">Ingese nombre completo del estudiante</label><input class="col-lg-9" type="text" id="pro">
+        <button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porEstudiante();"></button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          
+          <canvas id="estChart" width="400" height="400"></canvas>
+        </div>
+          
+      </div>
+    </div>
+
+    <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-lg-offset-2 col-md-offset-1 col-xs-offset-0" id="curso">
+      <div class="row">
+      <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+        <label class="col-lg-12">Ingese número del paralelo</label><input class="col-lg-8" type="number" id="par" min="1">
+        <button class="glyphicon glyphicon-search autocomplete col-lg-1" style="margin-right: 30px" onclick="porParalelo();"></button>
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          
+          <canvas id="curChart" width="400" height="400"></canvas>
+        </div>
+          
+      </div>
+
+
+    </div>
+
 
   </section>
 
@@ -30,6 +82,9 @@
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.js"></script>
+  <!-- Load Chart.js from a CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="/js/reportesV.js"></script>
 
 
 </body>
