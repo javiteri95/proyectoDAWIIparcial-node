@@ -27,34 +27,44 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 	var tipoI = $('#tipoI2').val();
 	var identificacion = $('#exampleIdentificacion2').val();
 	var carrera = $('#exampleCarrera2').val();
-	var dataE = { id : id , correo : correo , nombres : nombres , apellidos : apellidos , rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
-	console.log(dataE);
-	$.ajax({
-		type: "PUT",
-		url: "/usuario",
-		dataType: "json",
-		data: dataE,
-		success: function(data){
-			if (data.type == 'error'){
-				agregarMensaje(data.type , 'un error ocurrio al intentar actualizar');
-				$('#myModalEditar').modal('hide');
+	if ((rol == "profesor") && (tipoI=="matricula")){
+		agregarMensaje("error" , 'un profesor no tiene matricula');
+		$('#myModalEditar').modal('hide');
+	}else if((rol=="profesor") && (carrera!="")){
+		agregarMensaje("error" , 'un profesor no tiene carrera');
+		$('#myModalEditar').modal('hide');
+	} else {
+		var dataE = { id : id , correo : correo , nombres : nombres , apellidos : apellidos , rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
+		console.log(dataE);
+		$.ajax({
+			type: "PUT",
+			url: "/usuario",
+			dataType: "json",
+			data: dataE,
+			success: function(data){
+				if (data.type == 'error'){
+					agregarMensaje(data.type , 'un error ocurrio al intentar actualizar');
+					$('#myModalEditar').modal('hide');
 
-			}else{
-				console.log(id);
-				$( '#' + id + ' .correoTabla').html(data.usuario.correo);
-				$( '#' + id + ' .nombresTabla').html(data.usuario.nombres);
-				$( '#' + id + ' .apellidosTabla').html(data.usuario.apellidos);
-				$( '#' + id + ' .rolTabla').html(data.usuario.rol);
-				$( '#' + id + ' .tipoITabla').html(data.usuario.tipoI);
-				$( '#' + id + ' .identificacionTabla').html(data.usuario.identificacion);
-				$( '#' + id + ' .carreraTabla').html(data.usuario.carrera);
-				agregarMensaje(data.type , 'Actualizado con exito');
-				$('#tablaUsuarios').DataTable();	
-				$('#myModalEditar').modal('hide');
+				}else{
+					console.log(id);
+					$( '#' + id + ' .correoTabla').html(data.usuario.correo);
+					$( '#' + id + ' .nombresTabla').html(data.usuario.nombres);
+					$( '#' + id + ' .apellidosTabla').html(data.usuario.apellidos);
+					$( '#' + id + ' .rolTabla').html(data.usuario.rol);
+					$( '#' + id + ' .tipoITabla').html(data.usuario.tipoI);
+					$( '#' + id + ' .identificacionTabla').html(data.usuario.identificacion);
+					$( '#' + id + ' .carreraTabla').html(data.usuario.carrera);
+					agregarMensaje(data.type , 'Actualizado con exito');
+					$('#tablaUsuarios').DataTable();	
+					$('#myModalEditar').modal('hide');
+				}
+				console.log(data);
 			}
-			console.log(data);
-		}
-	})
+		})
+
+	}
+
   }
 
   $scope.createUsuario = function(){
@@ -66,39 +76,49 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 	var tipoI = $('#tipoI1').val();
 	var identificacion = $('#exampleIdentificacion1').val();
 	var carrera = $('#exampleCarrera1').val();
-	var dataE = {correo : correo , nombres : nombres , apellidos : apellidos ,password : password, rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
-	console.log(dataE);
-	$.ajax({
-		type: "POST",
-		url: "/usuario",
-		dataType: "json",
-		data: dataE,
-		success: function(data){
-			if (data.type == 'error'){
-				console.log(data.error)
-				agregarMensaje(data.type , data.error);
-				$('#myModal').modal('hide');
+	if ((rol == "profesor") && (tipoI=="matricula")){
+		agregarMensaje("error" , 'un profesor no tiene matricula');
+		$('#myModal').modal('hide');
+	}else if((rol=="profesor") && (carrera!="")){
+		agregarMensaje("error" , 'un profesor no tiene carrera');
+		$('#myModal').modal('hide');
+	}else{
+		var dataE = {correo : correo , nombres : nombres , apellidos : apellidos ,password : password, rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
+		console.log(dataE);
+		$.ajax({
+			type: "POST",
+			url: "/usuario",
+			dataType: "json",
+			data: dataE,
+			success: function(data){
+				if (data.type == 'error'){
+					console.log(data.error)
+					agregarMensaje(data.type , data.error);
+					$('#myModal').modal('hide');
 
-			}else{
-				$('tbody').append(" <tr id='" + data.usuario.id+ "'>" +
-					"<td class='nombresTabla'>" + data.usuario.nombres+ "</td>" + 
-					"<td class='apellidosTabla'>" +data.usuario.apellidos + "</td>" +
-					"<td class='correoTabla'>" +data.usuario.correo + "</td>" +
-					"<td class='rolTabla'>" + data.usuario.rol+ "</td>" +
-					"<td class='tipoITabla'>" +data.usuario.tipoI + "</td>" +
-					"<td class='identificacionTabla'>" + data.usuario.identificacion+ "</td>" +
-					"<td class='carreraTabla'>" + data.usuario.carrera + "</td>" +
-					"<td><a href='#' class='idConfX' > <span class='glyphicon glyphicon-edit' onclick='cargarModalEditar('"+ data.usuario.id + "');'> </span></a> </td>" +
-					"<td><a href='#' > <span class='glyphicon glyphicon-remove' onclick='cargarModalEliminar('"+ data.usuario.id+ "');'> </span></a> </td>" +
-					"</tr>"
-					)
+				}else{
+					$('tbody').append(" <tr id='" + data.usuario.id+ "'>" +
+						"<td class='nombresTabla'>" + data.usuario.nombres+ "</td>" + 
+						"<td class='apellidosTabla'>" +data.usuario.apellidos + "</td>" +
+						"<td class='correoTabla'>" +data.usuario.correo + "</td>" +
+						"<td class='rolTabla'>" + data.usuario.rol+ "</td>" +
+						"<td class='tipoITabla'>" +data.usuario.tipoI + "</td>" +
+						"<td class='identificacionTabla'>" + data.usuario.identificacion+ "</td>" +
+						"<td class='carreraTabla'>" + data.usuario.carrera + "</td>" +
+						"<td><a href='#' class='idConfX' > <span class='glyphicon glyphicon-edit' onclick='cargarModalEditar('"+ data.usuario.id + "');'> </span></a> </td>" +
+						"<td><a href='#' > <span class='glyphicon glyphicon-remove' onclick='cargarModalEliminar('"+ data.usuario.id+ "');'> </span></a> </td>" +
+						"</tr>"
+						)
 
-				agregarMensaje(data.type , 'Creado con exito');
-				$('#tablaUsuarios').DataTable();
-				$('#myModal').modal('hide');	
+					agregarMensaje(data.type , 'Creado con exito');
+					$('#tablaUsuarios').DataTable();
+					$('#myModal').modal('hide');	
+				}
 			}
-		}
-	})
+		})
+
+	}
+
 
 
 
