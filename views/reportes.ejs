@@ -289,6 +289,17 @@ function porEstudiante(event) {
     .done(function(resp) {
       console.log("success");
       console.log(resp)
+      if (resp.length==0) {
+        var error=document.createElement("span");
+        $(error).css('color','red');
+        $(error).html("Ingrese nombre completo");
+        $(error).addClass("col-lg-10");
+        $(error).addClass("err");
+        $(error).css('margin-left','0px');
+        $(error).css('float','left');
+        var br=document.createElement("br");
+        $("#estudiante .row .inpor").append(br);
+        $("#estudiante .row .inpor").append(error);
       for (var i = 0; i < resp.length; i++) {
         fechasE.push(resp[i].fecha);
       }
