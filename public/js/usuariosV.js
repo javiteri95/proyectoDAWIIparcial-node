@@ -28,6 +28,7 @@ app.controller("UsuarioCtrl", function($location, $scope, $http, $rootScope) {
 	var identificacion = $('#exampleIdentificacion2').val();
 	var carrera = $('#exampleCarrera2').val();
 	var dataE = { id : id , correo : correo , nombres : nombres , apellidos : apellidos , rol : rol , tipoI : tipoI , identificacion : identificacion , carrera : carrera};
+	if 
 	console.log(dataE);
 	$.ajax({
 		type: "PUT",

@@ -348,7 +348,8 @@ router.get('/mejores', function (req, res, next) {
 			data.push(c)
 
 		})
-		console.log(data);
+		res.header('Access-Control-Allow-Origin', "*")
+		res.json(data);
 	})
 	
 
