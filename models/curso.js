@@ -1,6 +1,6 @@
 var mongoose     = require('mongoose');
 var bcrypt = require('bcryptjs');
-var Q = require('q');
+var Q=require('q');
 //-------------------------------------------------------------------------
 /* Viteri, por qué me comentas esto, me genera inconvenientes :C no puedo acceder a la base cuando pruebo,
  yo no necesito comentar la tuya, no me da inconveneientes*/
