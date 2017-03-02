@@ -292,7 +292,7 @@ function porEstudiante(event) {
       if (resp.length==0) {
         var error=document.createElement("span");
         $(error).css('color','red');
-        $(error).html("Ingrese nombre completo");
+        $(error).html("No hay información que mostrar");
         $(error).addClass("col-lg-10");
         $(error).addClass("err");
         $(error).css('margin-left','0px');
@@ -300,6 +300,9 @@ function porEstudiante(event) {
         var br=document.createElement("br");
         $("#estudiante .row .inpor").append(br);
         $("#estudiante .row .inpor").append(error);
+      }else {
+        
+      
       for (var i = 0; i < resp.length; i++) {
         fechasE.push(resp[i].fecha);
       }
@@ -334,7 +337,7 @@ function porEstudiante(event) {
 
     }
 var ctx4 = document.getElementById("estChart").getContext("2d");
-window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});})
+window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});}})
     .fail(function() {
       console.log("error");
     })
