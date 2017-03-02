@@ -50,3 +50,9 @@ module.exports.saveUsers = function(cursos) {
       return Q.reject({ error: error });
   });
 }
+
+module.exports.getCursos = function(callback){
+	var query = {};
+	console.log("entra aqui 0")
+	Curso.find(query, callback);
+}

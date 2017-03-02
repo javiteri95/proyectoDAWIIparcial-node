@@ -5,8 +5,7 @@ var Schema       = mongoose.Schema;
 
 var ejercicioEstudiante = new Schema({
 	estudianteID : { type: Schema.Types.ObjectId, ref: 'Usuario', required: true  },
-	estudianteN : String,
-	estudianteA : String,
+	estudiante : String,
 	ejercicio : { type: Schema.Types.ObjectId, ref: 'Ejercicio', required: true  }, 
 	fecha : { type: Date, default: Date.now },
 	calificacion : {type: Number, required: true }
@@ -22,7 +21,7 @@ module.exports.createEjercicio = function(newEjercicio, callback){
 }
 
 module.exports.findByEstudiante = function (idEstudiante, callback) {
-	var query = {estudiante: idEstudiante};
+	var query = {estudianteID: idEstudiante};
 	ejerE = EjercicioEstudiante.find(query,callback);
 }
  
@@ -30,3 +29,7 @@ module.exports.createEjercicioEstudiante = function(newEjercicioEstudiante, call
 	newEjercicioEstudiante.save(callback);	
 }
 
+module.exports.findByEstudianteNombre = function (estudianteNombre, callback) {
+	var query = {estudiante: estudianteNombre};
+	ejerE = EjercicioEstudiante.find(query,callback);
+}

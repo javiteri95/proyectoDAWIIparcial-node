@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Ejercicio = require('../models/ejercicio')
+var Curso = require('../models/curso')
 var EjercicioEstudiante = require('../models/ejercicioEstudiante')
 var BadgesEstudiante = require('../models/badgesEstudiante')
 var PythonShell = require('python-shell');
@@ -38,12 +39,14 @@ router.get('/api/:dif',function (req,res,next) {
 
 
 router.get('/', function(req, res, next) {
-  //if(( rol == 'profesor') || (rol == 'ayudante')){
-  	if(false){
+	rol = req.user.rol;
+  if(( rol == 'profesor') || (rol == 'ayudante')){
+
   	res.render("ejerciciosProfesor",{ rol: "profesor"}/*, { rol: rol }*/);}
-  //}else if (rol == 'estudiante'){
-  	else{
+   else {if (rol == 'estudiante'){
+
   	res.render("ejerciciosEstudiante",{message:"", rol: "estudiante"}/*,{ rol: rol }*/);}
+  }
   //}
 });
 
@@ -119,7 +122,7 @@ router.post('/subir',function (req,res,next) {
 				  		}
 
 				  		pro = []
-				  		array =data.split("\r\n")
+				  		array =data.split("\n")
 				  		M = resu.length
 				  		N = array.length
 				  		console.log(M);
@@ -150,8 +153,7 @@ router.post('/subir',function (req,res,next) {
 
 					  		var nuevoPuntaje = new EjercicioEstudiante({
 								estudianteID : idEstudiante,
-								estudianteN : req.user.nombres,
-								estudianteA : req.user.apellidos ,
+								estudiante : estu,
 								ejercicio : idE, 
 								calificacion : puntaje,
 							});
@@ -300,6 +302,65 @@ router.post('/', function(req, res, next) {
 
 	}}
 });
+
+
+
+
+router.get('/mejores', function (req, res, next) {
+	data =[]
+	Curso.getCursos(function (err,cursos) {
+		cursos.forEach(function (curso) {
+			c= {}
+			c.paralelo = curso.paralelo;
+			est = JSON.parse(curso.estudiantes)
+			alumnos = []
+			est.forEach(function (estud) {
+				alu = {}
+				alu.nombres = estud
+				console.log(estud);
+				EjercicioEstudiante.findByEstudianteNombre(estud,function (err,EjerEstu) {
+					suma = 0;
+					EjerEstu.forEach(function (ejer) {
+						var suma = suma + ejer.calificacion
+					});
+					alu.nota = suma
+					console.log(suma);
+				})
+
+				alumnos.push(alu);
+				alumnos.sort(function (a,b) {
+					return (b.nota - a.nota)
+				})
+				if(alumnos.length > 3){
+					alumnos.pop()
+				}
+
+			})
+
+			a = {}
+
+			for (var i = 0; i < alumnos.length && i<3; i++) {
+				b = i+1
+				a["estudiante"+b] = alumnos [1]
+			}
+
+			c.estudiantes = a;
+			data.push(c)
+
+		})
+		console.log(data);
+	})
+	
+
+
+})
+
+
+
+
+
+
+
 
 
 module.exports = router;
