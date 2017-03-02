@@ -112,6 +112,15 @@ router.post('/', function(req, res, next) {
 	}
 });
 
+router.get('/usuario/:nombres',function(req,res,next){
+	var nombres=req.params.nombres;
+	Curso.getCursoByParalelo(paralelo,function(err,usuario){
+		if(err) throw err;
+		console.log(curso);
+		res.json({type:'success',usuario:usuario});
+	});
+})
+
 
 router.put('/', function(req, res, next) {
 
