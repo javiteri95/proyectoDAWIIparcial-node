@@ -86,6 +86,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <script src="/js/Chart.js"></script>
 <script>
+function cambiar (tipo) {
+  switch (tipo) {
+      case 'c':
+        $("#estudiante").css('display', 'none');
+        $("#curso").css('display', 'block');
+        break;
+      case 'e':
+        $("#curso").css('display', 'none');
+        $("#estudiante").css('display', 'block');
+        break;
+      default:
+        // statements_def
+        break;
+    }  
+}
+
+function porParalelo () {
+  // body... 
+
 var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Chrome"},
         {
           value: 16,
@@ -159,11 +178,9 @@ var pieData = [{value: 40,color:"#0b82e7",highlight: "#0c62ab",label: "Google Ch
       ]
 
     }
-var ctx = document.getElementById("chart-area").getContext("2d");
-var ctx2 = document.getElementById("chart-area2").getContext("2d");
-var ctx3 = document.getElementById("chart-area3").getContext("2d");
-var ctx4 = document.getElementById("chart-area4").getContext("2d");
+var ctx4 = document.getElementById("curChart").getContext("2d");
 window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
+}
 </script>
 
 </body>
