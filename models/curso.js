@@ -38,14 +38,14 @@ module.exports.getCursoByProfesor = function(profesor, callback){
 	console.log("entra aqui 0")
 	Curso.find(query, callback);
 }
-module.exports.createCursos = function (cursos) {
-	cursos.forEach(function (curso) {
-		new Curso({
-			profesor: curso.profesor,
-			paralelo: curso.paralelo,
-			estudiantes: curso.estudiantes
-		}).save(function (err,cu) {
-			console.log(cu)
-		})
-	})
+
+module.exports.saveUsers = function(cursos) {
+  Curso.collection.insert(cursos, function callback(error, insertedDocs) {
+    // Here I use KrisKowal's Q (https://github.com/kriskowal/q) to return a promise, 
+    // so that the caller of this function can act upon its success or failure
+    if (!error)
+      return Q.resolve(insertedDocs);
+    else
+      return Q.reject({ error: error });
+  });
 }
