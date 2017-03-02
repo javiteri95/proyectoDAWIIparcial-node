@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Cursos</title>
   <% include partials/header %>
-  
+  <link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
 </head>
 
 <body>
@@ -80,7 +81,9 @@
     <div id="profC" style="display: none">
       <div class="row">
       <div class="inpor col-lg-12 col-md-12 col-sm-12 col-xs-12 row"">
-      	<label class="col-lg-12">Ingese nombre completo del profesor</label><input class="col-lg-9" type="text" id="pro">
+        <div class="ui-widget">
+      	<label class="col-lg-12">Ingrese nombre completo del profesor</label><input class="col-lg-9 ui-autocomplete-input"" type="text" id="pro" autocomplete="off"></div>
+        <ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none; top: 32px; left: 50.6875px; width: 197px;"><li class="ui-menu-item"><div id="ui-id-14" tabindex="-1" class="ui-menu-item-wrapper">ColdFusion</div></li><li class="ui-menu-item"><div id="ui-id-15" tabindex="-1" class="ui-menu-item-wrapper">Fortran</div></li></ul><div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div style="display: none;">2 results are available, use up and down arrow keys to navigate.</div><div style="display: none;">ColdFusion</div><div style="display: none;">Fortran</div><div style="display: none;">10 results are available, use up and down arrow keys to navigate.</div><div>2 results are available, use up and down arrow keys to navigate.</div></div>
       	<button class="glyphicon glyphicon-search autocomplete col-lg-2" onclick="porProfesor();"></button>
       	</div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -279,6 +282,8 @@
 
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/jquery-1.12.4.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="js/csv.js"></script>

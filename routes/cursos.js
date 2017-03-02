@@ -27,6 +27,22 @@ router.get('/todos',function(req, res, next){
   });
 });
 
+router.get('/profesores',function (req,res,next) {
+	profesores = [];
+	Curso.find({},function (err,cursos) {
+		cursos.forEach(function (curso) {
+			prof = curso.profesor
+			if(!profesores.includes(prof)){
+				profesores.push(prof)
+			}
+		})
+		profes = {}
+		profes.prof = profesores;
+		res.send(profesores)
+	})
+	
+})
+
 router.post('/agregar', function(req, res, next) {
   	var profesor = req.body.profesor;
 	var paralelo = req.body.paralelo;
