@@ -169,6 +169,33 @@ router.delete('/', function(req, res, next) {
 });
 
 
+router.get('/nombre/:nombre',function (req,res,next) {
+	
+	Usuario.find({},function (err,usuarios) {
+		var bandera = true
+		usuarios.forEach(function (usu) {
+			nombres = usu.nombres+" "+usu.apellidos;
+			console.log(nombres +" - "+req.params.nombre);
+		if(nombres === req.params.nombre){
+			bandera= false
+			console.log("si hay");
+			 return res.send({type:'success',usuario:usu});
+
+			};
+		})
+			if(bandera){
+			return res.send({type:'success',usuario:""});
+		}
+		})
+	
+	})
+
+
+
+
+
+
+
 module.exports = router;
 
 /*

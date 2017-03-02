@@ -49,16 +49,43 @@ function tomar(){
     		$(".agregado").remove();
     	}
 }
+
+function verifU(nombres){
+    	return($.ajax({
+    			url: '/usuario/nombre/'+nombres,
+    			type: 'GET',
+			    dataType: 'json',
+			    data: {nombres: nombres},
+    		})
+    		 .done(function(resp) {
+    		 	console.log(resp);
+		      if(resp.usuario==""){
+		      	console.log("no sirve");
+		      	return false;
+		      }else{
+		      	console.log("si sirve");
+		      	return true;
+		      }
+		      
+		    })
+		    .fail(function(resp) {
+		      console.log("error");
+		      console.log(resp);
+		      return false;
+		    }))
+}
+
 function agregar(){
 	$(".err").remove();
 	var prof=$("#prof").val();
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
+	console.log(verifU(prof));
 	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))&&(verifU(prof))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
-			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val()))&&(verifU(llena[i].val()))) {
+			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val()))&&(verifU($(llena[i]).val()))) {
 				est.push($(llena[i]).val());
 			}
 		}

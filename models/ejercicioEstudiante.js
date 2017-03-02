@@ -33,3 +33,15 @@ module.exports.findByEstudianteNombre = function (estudianteNombre, callback) {
 	var query = {estudiante: estudianteNombre};
 	ejerE = EjercicioEstudiante.find(query,callback);
 }
+
+module.exports.calcularNotaEstudianteNombre = function (estudianteNombre) {
+	var query = {estudiante: estudianteNombre};
+	ejerE = EjercicioEstudiante.find(query,function (err,ests) {
+		var suma = 0;
+		ests.forEach(function (est) {
+			suma = suma + est.calificacion;
+		})
+		console.log(suma);
+		return suma
+	});
+}
