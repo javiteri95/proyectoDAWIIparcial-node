@@ -52,6 +52,8 @@ router.post('/subir',function (req,res,next) {
    else{
    	console.log(req.files);
    	idEstudiante = req.user._id;
+   	estu = req.user.nombres+ " "+req.user.apellidos
+   	console.log(estu);
     let file = req.files.solucion;
     var ruta = req.body.salida;
     var entrada = req.body.entrada;
@@ -147,7 +149,8 @@ router.post('/subir',function (req,res,next) {
 
 
 					  		var nuevoPuntaje = new EjercicioEstudiante({
-								estudiante : idEstudiante,
+								estudianteID : idEstudiante,
+								estudiante : estu,
 								ejercicio : idE, 
 								calificacion : puntaje,
 							});
@@ -212,7 +215,7 @@ router.post('/subir',function (req,res,next) {
 
 					  		});
 
-					  		res.render("ejerciciosEstudiante",{message: "Ejercicio exitoso!!!!!"})
+					  		res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Ejercicio exitoso!!!!!"})
 					  	}
 
 
