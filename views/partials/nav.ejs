@@ -6,8 +6,10 @@
 
   <nav id="main-nav-wrap">
         <ul class="main-navigation">
+          <% if (rol == 'estudiante'){%>
           <li ><a href="/perfil" >Perfil</a></li>
-          <% if (rol == 'administrador'){ %>
+          <li ><a href="/ejercicios" >Ejercicios</a></li>
+          <% } else if (rol == 'administrador'){ %>
           <li ><a href="/usuario" >Usuarios</a></li>
           <li ><a href="/cursos" >Cursos</a></li> 
           <li ><a href="/reportes" >Reportes</a></li>  
