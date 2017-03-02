@@ -62,8 +62,13 @@ router.post('/',
 router.post('/',
   passport.authenticate('local', {failureRedirect:'/',failureFlash: true}),
   function(req, res) {
-    
-    res.redirect('/usuario');
+    if (req.user.rol == "estudiante"){
+      res.redirect('/perfil')
+    }else if (req.user.rol == "administrador"){
+      res.redirect('/usuario')
+    }else{
+      res.redirect('/ejercicios')
+    }
 });
 
   // loggedin

@@ -1,21 +1,24 @@
 function verifU(nombres){
     	$.ajax({
-    			url: '/usuario/'+nombres,
+    			url: '/usuario/nombre/'+nombres,
     			type: 'GET',
 			    dataType: 'json',
 			    data: {nombres: nombres},
     		})
     		 .done(function(resp) {
-		      console.log("success");
-		      console.log(resp);
-		      return true;
+    		 	console.log(resp);
+		      if(resp.usuario==""){
+		      	console.log("no sirve");
+		      	return false;
+		      }else{
+		      	console.log("si sirve");
+		      	return true;
+		      }
+		      
 		    })
 		    .fail(function(resp) {
 		      console.log("error");
 		      console.log(resp);
 		      return false;
 		    })
-		    .always(function() {
-		      console.log("complete");
-		});
 }

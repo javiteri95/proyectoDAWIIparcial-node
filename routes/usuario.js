@@ -55,7 +55,7 @@ router.post('/', function(req, res, next) {
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.json({ type : 'error', error : errors})
+		res.json({ type : 'error', error : "Cometio uno o mas errores en el formulario"})
 	} else {
 		var nuevousuario = new Usuario({
 			nombres: nombres,
@@ -70,7 +70,7 @@ router.post('/', function(req, res, next) {
 
 		Usuario.createUsuario(nuevousuario, function(err, user){
 			if (err){
-				res.json({ type : 'error', error : err})
+				res.json({ type : 'error', error : "Algo malo paso"})
 			}else{
 
 				var smtpConfig = {
@@ -112,9 +112,10 @@ router.post('/', function(req, res, next) {
 	}
 });
 
-router.get('/usuario/:nombres',function(req,res,next){
+router.get('/usuario/:nombres/:apellidos',function(req,res,next){
 	var nombres=req.params.nombres;
-	Curso.getCursoByParalelo(paralelo,function(err,usuario){
+	var apellidos=req.params.apellidos;
+	Usuario.getUsuarioByNombreYApellidos(nombres,apellidos,function(err,usuario){
 		if(err) throw err;
 		console.log(curso);
 		res.json({type:'success',usuario:usuario});
@@ -127,7 +128,7 @@ router.put('/', function(req, res, next) {
 
 	Usuario.findById(req.body.id, function (err, usuario) {
 	  if (err) {
-	  	var error = {type : 'error' , error : err}
+	  	var error = {type : 'error' , error : "Algo malo paso"}
 	  	res.json(error)
 	  }else{
 	  	  usuario.correo = req.body.correo;
@@ -140,7 +141,7 @@ router.put('/', function(req, res, next) {
 
 		  usuario.save(function (err, updatedUsuario) {
 		    if (err) {
-		    	var error = {type : 'error' , error : err}
+		    	var error = {type : 'error' , error : "Algo malo paso"}
 	  			res.json(error)
 		    }else{
 		    	var data = { type : 'success' , usuario : updatedUsuario}
@@ -166,6 +167,33 @@ router.delete('/', function(req, res, next) {
 	    }
 	});
 });
+
+
+router.get('/nombre/:nombre',function (req,res,next) {
+	
+	Usuario.find({},function (err,usuarios) {
+		var bandera = true
+		usuarios.forEach(function (usu) {
+			nombres = usu.nombres+" "+usu.apellidos;
+			console.log(nombres +" - "+req.params.nombre);
+		if(nombres === req.params.nombre){
+			bandera= false
+			console.log("si hay");
+			 return res.send({type:'success',usuario:usu});
+
+			};
+		})
+			if(bandera){
+			return res.send({type:'success',usuario:""});
+		}
+		})
+	
+	})
+
+
+
+
+
 
 
 module.exports = router;

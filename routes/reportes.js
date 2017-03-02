@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+
+
+var EjercicioEstudiante = require('../models/ejercicioEstudiante')
+
 router.get('/', function(req, res, next) {
 	res.render('reportes', { rol : req.user.rol});
 });
@@ -34,5 +38,20 @@ router.get('/api', function(req, res, next) {
 });
 
 
+
+router.get('/', function(req, res, next) {
+	res.render('reportes', { rol : req.user.rol});
+});
+
+
+router.get('/estudiante/:estudiante',function (req,res,next) {
+	var estudiante=req.params.estudiante;
+	console.log(estudiante);
+	EjercicioEstudiante.findByEstudianteNombre(estudiante,function(err,ejercicio){
+		if(err) throw err;
+		console.log(ejercicio);
+		res.send(ejercicio);
+	});
+})
 
 module.exports = router;
