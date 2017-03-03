@@ -6,7 +6,17 @@ var router = express.Router();
 var EjercicioEstudiante = require('../models/ejercicioEstudiante')
 
 router.get('/', function(req, res, next) {
-	res.render('reportes', { rol : req.user.rol});
+	if(req.user!= undefined){
+	  rol = req.user.rol;
+	  if(rol == 'administrador'){
+
+	  	res.render('reportes', { rol : req.user.rol});/*, { rol: rol });}*/
+	   
+	 }else{
+	 	res.render("login")}
+	 }else{
+	res.render('login');}
+	
 });
 
 router.get('/api', function(req, res, next) {

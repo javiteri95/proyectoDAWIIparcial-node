@@ -51,7 +51,7 @@ function tomar(){
 }
 
 function verifU(nombres){
-    	return($.ajax({
+    	return ($.ajax({
     			url: '/usuario/nombre/'+nombres,
     			type: 'GET',
 			    dataType: 'json',
@@ -81,8 +81,9 @@ function agregar(){
 	var para=$("#paral").val();
 	var llena=$("#llenar input");
 	var est=[];
-	console.log(verifU(prof));
-	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))&&(verifU(prof))) {
+	console.log(verifU(prof))
+	console.log(verifU(prof).responseText);
+	if ((/([A-Z]([a-z]+))+/.test(prof)) && (/[0-9]+/.test(para))) {
 		for (var i = llena.length - 1; i >= 0; i--) {
 			console.log(llena[i]);
 			if ((/([A-Z]([a-z]+))/.test($(llena[i]).val()))&&(verifU($(llena[i]).val()))) {

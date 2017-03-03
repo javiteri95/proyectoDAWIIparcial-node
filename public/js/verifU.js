@@ -9,16 +9,16 @@ function verifU(nombres){
     		 	console.log(resp);
 		      if(resp.usuario==""){
 		      	console.log("no sirve");
-		      	return false;
+		      	return resp;
 		      }else{
 		      	console.log("si sirve");
-		      	return true;
+		      	return resp;
 		      }
 		      
 		    })
 		    .fail(function(resp) {
 		      console.log("error");
 		      console.log(resp);
-		      return false;
+		      return resp;
 		    })
 }
