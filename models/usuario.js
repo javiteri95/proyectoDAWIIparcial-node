@@ -1,6 +1,8 @@
 //Import the mongoose module
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var Q=require('q');
+
 
 //--------------------realiza la conexion---------------------------
 //Set up default mongoose connection
@@ -70,6 +72,18 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	if(err) throw err;
     	callback(null, isMatch);
 	});
+}
+
+
+module.exports.saveUsers = function(usuarios) {
+  Usuario.collection.insert(usuarios, function callback(error, insertedDocs) {
+    // Here I use KrisKowal's Q (https://github.com/kriskowal/q) to return a promise, 
+    // so that the caller of this function can act upon its success or failure
+    if (!error)
+      return Q.resolve(insertedDocs);
+    else
+      return Q.reject({ error: error });
+  });
 }
 
 module.exports.cambiarPassword = function(idUser, newPassword, callback){

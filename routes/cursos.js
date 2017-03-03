@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var Curso = require('../models/curso');
+var Usuario = require('../models/usuario');
 var fs = require('fs');
+var nodemailer = require('nodemailer');
 
 router.get('/', function(req, res, next) {
   Curso.find({}, function(err, courses) {
@@ -190,10 +192,11 @@ router.post('/subir',function (req,res,next) {
 		    		var allRows = data.split("\r\n");
 
 		    		console.log(allRows)
-		    		var nuevocurso=[]
+		    		
 		    		allRows.forEach(function (linea) {
 		    				console.log( "ROWS:"+linea)
 		    				curso = linea.split(";")
+		    				console.log(curso)
 		    				if(/([A-Z]([a-z]+))+/.test(curso[0])){
 						      prof=curso[0]
 						    }
@@ -202,47 +205,83 @@ router.post('/subir',function (req,res,next) {
 						  	}
 
 						  	if((/[0-9]+/.test(curso[1]))){
-						    para= parseInt(curso[1])}
-						    else{
-						    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
-						 	}
-						 	estudiantes = curso[2].split(',')
+						    para= parseInt(curso[1])
+						    et=curso[2]
+
+						    Curso.getCursoByParalelo(para,function(err,curso){
+
+						    	var nuevocurso=[]
+		    					var usus = []
+								if(err) res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
+								else{
+									var estudiantess = et.split(',')
+									console.log(estudiantess)
 					   		est=[]
-					   		for (var i = 0; i < estudiantes.length; i++) {
-						      if (/([A-Z]([a-z]+))/.test(estudiantes[i])) {
-						      est.push(estudiantes[i])
+					   		for (var i = 0; i < estudiantess.length; i++) {
+					   			var e=estudiantess[i].split('-');
+					   			console.log(e);
+					   			var ec=e[0];
+					   			var em=e[1];
+					   			var en=e[2];
+					   			var ea=e[3];
+					   			var eca=e[4];
+					   			var estu=""+e[2]+" "+e[3];est.push(estu);
+						      if ((/([A-Z]([a-z]+))/.test(en))&&(/([A-Z]([a-z]+))/.test(ea))) {
+						      	
+									usus.push( new Usuario({
+																nombres: en,
+																apellidos:ea,
+																correo: ec,
+																rol: "estudiante",
+																carrera : eca,
+																tipoI : "matricula",
+																password : "1234",
+																identificacion : em
+															}));
+
+
 						      }
-						    }
-						    if(est===[]){
+						      
+						    }}
+						    if(est.length ==0){
+						    	console.log("estudiantes vacio")
 						    	errmesg = "";
 						    	res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
 						    }
-
+							console.log("false")
 						    nuevocurso.push( {
 								profesor: prof,
 								paralelo: para,
 								estudiantes : JSON.stringify(est)
 							});
-						    
-		    		})
+							
+							console.log("hola")
 	  				console.log(nuevocurso)
+	  				console.log(usus)
+	  				Usuario.saveUsers(usus)
 	  				Curso.saveUsers(nuevocurso)
-		    	}
-		    })
-		    	 res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:"Csv subido exitosamente"});
+						})
+						    
+						} 	
+						   else{
+						    res.render('cursos', { listaCursos: courseMap , rol : req.user.rol, error:errmesg});
+						 	} //
+		    		
+		    	})
+		    }
+		    	 res.render('cursos', { listaCursos: courseMap , rol : "administrador", error:"Csv subido exitosamente"});
 		    	
 		  });
 
-
+})
 					 
 
-			}
+	}	})	
 
-     	})
 	}else{
 	  res.send("El formato debe ser csv");
-		} 
-	}
-});
+		}
+
+}});
 
 module.exports = router;
