@@ -1,4 +1,4 @@
-import sys
-lines = sys.argv[1]
-print('4')
-print('5')
+print("dddddnd")
+print("AASDfff")
+print("12d333")
+print("123rf")

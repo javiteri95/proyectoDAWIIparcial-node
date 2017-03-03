@@ -39,14 +39,18 @@ router.get('/api/:dif',function (req,res,next) {
 
 
 router.get('/', function(req, res, next) {
-	rol = req.user.rol;
-  if(( rol == 'profesor') || (rol == 'ayudante')){
+	if(req.user!= undefined){
+	  rol = req.user.rol;
+	  if(( rol == 'profesor') || (rol == 'ayudante')){
 
-  	res.render("ejerciciosProfesor",{ rol: "profesor"}/*, { rol: rol }*/);}
-   else {if (rol == 'estudiante'){
+	  	res.render("ejerciciosProfesor",{ rol: "profesor"}/*, { rol: rol }*/);}
+	   else {if (rol == 'estudiante'){
 
-  	res.render("ejerciciosEstudiante",{message:"", rol: "estudiante"}/*,{ rol: rol }*/);}
-  }
+	  	res.render("ejerciciosEstudiante",{message:"", rol: "estudiante"}/*,{ rol: rol }*/);}
+	  }
+	 }else{
+	 	res.render("login")
+	 }
   //}
 });
 
@@ -107,7 +111,7 @@ router.post('/subir',function (req,res,next) {
 			};
 
 			PythonShell.run(file.name, options, function (err, results) {
-			  if (err) throw err;
+			  if (err) res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"});
 			  
 			  // results is an array consisting of messages collected during execution
 			  fs.readFile("./public/"+ruta, 'utf-8', (err, data) => {
@@ -117,7 +121,7 @@ router.post('/subir',function (req,res,next) {
 				  	if(results != null && results != "" && results != undefined){
 				  		resu = []
 
-				  		for (var i = 0; i < results.length; i+=2) {
+				  		for (var i = 0; i < results.length; i++) {
 				  			resu.push(results[i])
 				  		}
 
@@ -125,10 +129,11 @@ router.post('/subir',function (req,res,next) {
 				  		array =data.split("\r\n")
 				  		M = resu.length
 				  		N = array.length
-				  		console.log(M);
-				  		console.log(N);
+				  		console.log(results)
+				  		console.log(resu);
+				  		console.log(array);
 					  	if(M!=N){
-					  		res.render("errorPython",{error: "Su código no da los resultados correctos"})
+					  		res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"})
 					  	}
 					  	else{
 
@@ -140,8 +145,7 @@ router.post('/subir',function (req,res,next) {
 					  			pro.push(b1)
 					  			if(a1 != b1){
 					  				console.log(pro);
-					  				
-					  				res.render("errorPython",{error: "Su código no da los resultados erroneos"})
+					  				res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"})
 					  			}
 					  		}
 					  		console.log("Resultados correctos");
@@ -233,7 +237,7 @@ router.post('/subir',function (req,res,next) {
 
      	})
 	}else{
-	  res.send("El formato debe ser py");
+	  res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "El formato debe ser py"});
 		} 
 	}
 });
