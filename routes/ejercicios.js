@@ -114,7 +114,7 @@ router.post('/subir',function (req,res,next) {
     type = file.mimetype;
     var format = file.name.split(".");
 	if(format[1] === "py"){
-
+		console.log('es py')
 	    file.mv(origen+ePath,function (err) {
      	if (err) console.log(err);
      	dir=""
@@ -132,14 +132,16 @@ router.post('/subir',function (req,res,next) {
 
      	dir = dir + "public"
      	en = dir+entrada;
+     	console.log('voy a empezar array correr python')
      	var options = {
 			  mode: 'text',
+			  pythonPath: './Python/Portable Python 3.2.5.1/App/python.exe',
 			  scriptPath: './public/data/resueltos',
 			  args: [en]
 			};
 
 			PythonShell.run(file.name, options, function (err, results) {
-			  if (err) res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"});
+			  if (err) res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su codigo genera error en Python"});
 			  
 			  // results is an array consisting of messages collected during execution
 			  fs.readFile("./public/"+ruta, 'utf-8', (err, data) => {
@@ -161,7 +163,7 @@ router.post('/subir',function (req,res,next) {
 				  		console.log(resu);
 				  		console.log(array);
 					  	if(M!=N){
-					  		res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"})
+					  		res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código da resultados erroneos"})
 					  	}
 					  	else{
 
@@ -173,7 +175,7 @@ router.post('/subir',function (req,res,next) {
 					  			pro.push(b1)
 					  			if(a1 != b1){
 					  				console.log(pro);
-					  				res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código no da los resultados erroneos"})
+					  				res.render("ejerciciosEstudiante",{rol: "estudiante" ,message: "Su código da resultados erroneos"})
 					  			}
 					  		}
 					  		console.log("Resultados correctos");
