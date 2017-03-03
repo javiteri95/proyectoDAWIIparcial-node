@@ -36,22 +36,34 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
          
-  
-  <div class="panel-group" id="accordion" ng-app="myApp" ng-controller="myCtrl">
+ <div ng-app="myApp" ng-controller="myCtrl">
+ <button  class="btn btn-info" ng-click="cargar('todos')">TODOS</button>
+  <button  class="btn btn-info"  ng-click="cargar('MIS Ejercicio')">MIS EJERICICIOS</button>
+  <br>
+  <hr>
+  <h3>{{message}}</h3>
+  <br>
+  <div class="panel-group" id="accordion" >
+
     <div class="panel panel-default" ng-repeat="x in Ejercicio">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index+1}}">{{ x.nombre + ' - ' + x.dificultad }}</a>
         </h4>
-      </div>
+      </div> 
       <div id="collapse{{$index+1}}" class="panel-collapse collapse">
         <div class="panel-body">
+        <button  ng-hide=nver ng-show=ver class="btn btn-danger pull-right"  ng-click="eliminar(x.id)">X</button>
+        <button  ng-hide=nver ng-show=ver class="btn btn-info pull-right"  ng-click="editar(x)" data-toggle="modal" data-target="#myModal1">EDITAR</button>
+
+        <br><br><br>
         <p>{{x.descripcion}}</p>
         <h3>Datos entrada</h3>
         <a href= {{x.entrada}} >Entradas.txt</a>
         <h3>Datos salidas</h3>
         <a href={{x.salida}}>Salidas.txt</a>
         </div>
+
         <div class="panel-footer">
           
           <ul class="list-group">
@@ -61,7 +73,7 @@
       </div>
     </div>
     </div>
-
+</div>
 
           
         </div>
@@ -74,6 +86,74 @@
 
 
   </section>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel1">Actualizar Ejercicio</h4>
+          </div>
+           <div class="modal-body">
+              <form  action='/ejercicios/actualizar' ref='uploadForm' id='uploadForm'  method="POST" ng-submit="uploadFile()" ng-app="myApp" ng-controller="controllers" name="myForm" encType="multipart/form-data" novalidate>
+            
+                <div class="form-group">
+                  <label for="titulo">Título</label>
+                  <input name= "titulo" id = "tit" type="text" class="form-control" id="inputtitulo" aria-describedby="tituloHelp" placeholder="Ingrese el titulo" ng-model="titulo" required>
+                  <span style="color:red" ng-show="myForm.titulo.$dirty && myForm.titulo.$invalid">
+                    <span ng-show="myForm.titulo.$error.required">Titulo es requerido.</span>
+                    </span>
+
+                </div>
+                <div class="form-group">
+                  <label for="combo1">Dificultad</label>
+                  <select class="form-control" id="combo1" ng-model="dificultad" >
+                    <option>FACIL</option>
+                    <option>INTERMEDIO</option>
+                    <option>DIFICIL</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="desc">Descripcion</label>
+                  <textarea name="descripcion" id="des" class="form-control" rows="2" id="descripcion" name="desc" required></textarea>
+                  <span style="color:red" ng-show="myForm.desc.$dirty && myForm.desc.$invalid">
+                    <span ng-show="myForm.desc.$error.required">Descripcion es requerida.</span>
+                    </span>
+
+                </div>
+
+                 Actualizar entradas : Dejar vacio para no actualizar
+                        <div class="form-group">
+                        <label for="rol">Datos entrada</label>
+                       <!-- <input type="file" uploader-model="entradas" class="form-control" id="inputEntrada" aria-describedby="EntradaHelp" placeholder="Ingrese el archivo con los datos" name="entrada"> -->
+                       <input type="file" name="entradas" />
+                      </div>
+                </div>
+
+
+                Actualizar salidas : Dejar vacio para no actualizar
+                        <div class="form-group">
+                        <label for="rol">Datos salida</label>
+                       <!-- <input type="file" uploader-model="salidas" class="form-control" id="inputSalida" aria-describedby="SalidaHelp" placeholder="Ingrese el archivo con los datos" name="salida"> -->
+                       <input type="file" name="salidas" />
+                      </div>
+                </div>
+               
+                <input  style="display: none;" type="text"  id="dif1" name="dificultad">
+                <input  style="display: none;" type="text"  id="identificacion" name="identificacion">
+                <div class="form-group" id ="et">
+                  <label for="titulo">Etiquetas</label>
+                  <input type="text" name="etiquetas" id="ets" class="form-control" id="inputEtiqueta1" aria-describedby="etiquetaHelp" placeholder="Ingrese las etiquetas separadas por comas" >
+                </div>
+
+                <input  type="submit" class="btn btn-primary">
+              </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
 
 
 

@@ -26,6 +26,34 @@ router.get('/api/', function(req, res, next) {
   });
 });
 
+router.delete('/:id',function (req,res,next) {
+	id = req.params.id;
+	console.log(id);
+	
+
+
+	Ejercicio.findOneAndRemove({ _id: id }, function(err) {
+  if (err) throw err;
+
+  // we have deleted the user
+  console.log('User deleted!');
+});
+
+
+})
+
+router.get('/api/todos', function(req, res, next) {
+  Ejercicio.find({}, function(err, ejers) {
+    var ejerMap = {};
+
+    ejers.forEach(function(ejer) {
+      ejerMap[ejer._id] = ejer;
+    });
+
+    res.send(ejers);  
+  });
+});
+
 router.get('/api/:dif',function (req,res,next) {
 	dificultad = req.params.dif;
 	Ejercicio.findDificulty(dificultad, function (err,ejers) {
@@ -243,14 +271,71 @@ router.post('/subir',function (req,res,next) {
 });
 
 
+router.post('/actualizar', function (req,res,next) {
+	var id = req.body.identificacion;
+	var titulo = req.body.titulo;
+	var descripcion = req.body.descripcion;
+	var etiquetas = req.body.etiquetas;
+	var dificultad = req.body.dificultad;
+
+	Ejercicio.findOneAndUpdate({ _id: id }, { titulo: titulo, descripcion: descripcion, dificultad: dificultad, etiquetas: etiquetas }, function(err, user) {
+  if (err) throw err;
+
+  // we have the updated user returned to us
+  console.log(user);
+});
+
+
+	if (!req.files){console.log("no hay archivos");}
+   else{
+
+   	idFile = new Date()
+   	origen = '../proyectoDAWIIparcial-node/public/'
+    ent = '/data/entradas/';
+   	if(req.files.entradas != undefined){
+
+    let fileE = req.files.entradas;
+    
+    
+    ePath = ent+idFile.getTime()+fileE.name
+     fileE.mv(origen+ePath,function (err) {
+     	if (err) console.log(err);
+     	console.log("Entradas subidas");
+     	Ejercicio.findOneAndUpdate({ _id: id }, { datosEntrada: ePath}, function(err, user) {
+		  if (err) throw err;
+
+		  // we have the updated user returned to us
+		  console.log(user);
+		});
+     })}
+     if(req.files.salidas != undefined){
+     let fileS = req.files.salidas;
+     sal = '/data/salidas/';
+     sPath = sal+idFile.getTime()+fileS.name;
+     fileS.mv(origen+sPath,function (err) {
+     	if (err) console.log(err);
+     	console.log("Salidas subidas");
+     	Ejercicio.findOneAndUpdate({ _id: id }, { datosSalida: sPath}, function(err, user) {
+		  if (err) throw err;
+
+		  // we have the updated user returned to us
+		  console.log(user);
+		});
+     })}
+ 	}
+
+  	res.redirect('/ejercicios');
+
+
+
+})
+
 
 
 
 router.post('/', function(req, res, next) {
   	var titulo = req.body.titulo;
 	var descripcion = req.body.descripcion;
-	var datosEntrada = req.body.entradas;
-	var datosSalida = req.body.salidas;
 	var etiquetas = req.body.etiquetas;
 	var dificultad = req.body.dificultad;
 	var profesorOayudante = req.user.id;
@@ -264,14 +349,15 @@ router.post('/', function(req, res, next) {
     let fileE = req.files.entradas;
     origen = '../proyectoDAWIIparcial-node/public/'
     ent = '/data/entradas/';
-    ePath = ent+fileE.name
+    idFile = new Date()
+    ePath = ent+idFile.getTime()+fileE.name
      fileE.mv(origen+ePath,function (err) {
      	if (err) console.log(err);
      	console.log("Entradas subidas");
      })
      let fileS = req.files.salidas;
      sal = '/data/salidas/';
-     sPath = sal+fileS.name;
+     sPath = sal+idFile.getTime()+fileS.name;
      fileE.mv(origen+sPath,function (err) {
      	if (err) console.log(err);
      	console.log("Salidas subidas");

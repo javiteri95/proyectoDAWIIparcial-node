@@ -1,6 +1,6 @@
-
-  $(document).ready(function() {
+ $(document).ready(function() {
     $("#dif").val($("#combo option:selected").html())
+    $("#dif1").val($("#combo1 option:selected").html())
     sincronizar();
   });
 
@@ -9,8 +9,12 @@
     console.log($("#combo option:selected").html());
       $("#dif").val($("#combo option:selected").html())
     });
+
+   $("#combo1").change(function(event) {
+    console.log($("#combo1 option:selected").html());
+      $("#dif1").val($("#combo1 option:selected").html())
+    });
   }
-  
 
 
 
@@ -30,7 +34,7 @@ function guardar() {
   }
   et = JSON.stringify(etiquetas)
   $.$.ajax({
-    url: '/localhost:3000/ejercicios',
+    url: '/ejercicios',
     type: 'POST',
     dataType: 'json',
     data: {titulo: titulo,descripcion:desc,dificultad:dificultad, datosEntrada : entrada, datosSalida: salidas, etiquetas: et},

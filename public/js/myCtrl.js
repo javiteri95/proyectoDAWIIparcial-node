@@ -1,5 +1,18 @@
 var app = angular.module("myApp",[]);
 app.controller('myCtrl', function($scope, $http) {
+
+	
+	
+	$scope.cargar = function llamar(value) {
+	URI = ""
+	if(value ===" todos"){
+		URI ='/ejercicios/api/todos'
+		msg = 'Ejercicios de Fundamentos'
+	}else{
+		URI ='/ejercicios/api/'
+		msg = 'Mis Ejercicios de Fundamentos'
+	}
+
 	$http({
   method: 'GET',
   url: '/ejercicios/api/'
@@ -10,17 +23,25 @@ app.controller('myCtrl', function($scope, $http) {
     for (var i = 0; i < ejercicios.length; i++) {
 
     	et = ejercicios[i].etiquetas.split(",")
-    	Ejercicios.push({nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
+    	Ejercicios.push({id: ejercicios[i]._id,nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
     	
     }
     $scope.Ejercicio = Ejercicios
+    $scope.message = msg
     
   }, function errorCallback(response) {
     // called asynchronously if an error occurs
     // or server returns response with an error status.
   });
+
+}
+	
+	llamar("MIs ejercicios")
     
 });
+
+
+
 
 
 app.controller('controller', ['$scope',"$http", function ($scope,$http) {

@@ -1,6 +1,7 @@
 
   $(document).ready(function() {
     $("#dif").val($("#combo option:selected").html())
+    $("#dif1").val($("#combo1 option:selected").html())
     sincronizar();
   });
 
@@ -8,6 +9,11 @@
    $("#combo").change(function(event) {
     console.log($("#combo option:selected").html());
       $("#dif").val($("#combo option:selected").html())
+    });
+
+   $("#combo1").change(function(event) {
+    console.log($("#combo1 option:selected").html());
+      $("#dif1").val($("#combo1 option:selected").html())
     });
   }
   

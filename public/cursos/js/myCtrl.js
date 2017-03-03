@@ -1,5 +1,5 @@
 var app = angular.module("myApp",[]);
-app.controller('myCtrl', function($scope, $http) {
+app.controller('myCtrl',[ '$scope',"$http",function($scope, $http) {
 	$http({
   method: 'GET',
   url: '/ejercicios/api/'
@@ -20,19 +20,47 @@ app.controller('myCtrl', function($scope, $http) {
     // or server returns response with an error status.
   });
     
-});
+
+	$scope.cargar = function (value) {
+		if(value =='todos'){
+			msg = "EJERCICIOS DE FUNDAMENTOS"
+			URI = '/ejercicios/api/todos'
+		}
+		else{
+				msg = "EJERCICIOS DE FUNDAMENTOS"
+				URI = '/ejercicios/api/todos'
+		}
+		
+		$http({
+  method: 'GET',
+  url: '/ejercicios/api/'
+}).then(function successCallback(response) {
+	var ejercicios = response.data;
+	console.log(ejercicios);
+	Ejercicios = []
+    for (var i = 0; i < ejercicios.length; i++) {
+
+    	et = ejercicios[i].etiquetas.split(",")
+    	Ejercicios.push({nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
+    	
+    }
+    $scope.Ejercicio = Ejercicios
+    
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  });
+}
+
+}]);
 
 
-app.controller('controller', ['$scope',"$http", function ($scope,$http) {
-	dificultadCombo = $("#dif");
 
-	$("#saltar").click(function(event) {
-		getEjercicios($scope,$http);
-	});
 
-	$(dificultadCombo).change(function(event) {
-		getEjercicios($scope,$http);
-	});
+app.controller('controllers', ['$scope',"$http", function ($scope,$http) {
+	if(){
+		
+	}
 
 	
 }]);

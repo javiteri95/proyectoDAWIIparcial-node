@@ -1,8 +1,8 @@
 var app = angular.module("myApp",[]);
-app.controller('myCtrl', function($scope, $http) {
+app.controller('myCtrl',[ '$scope',"$http",function($scope, $http) {
 	$http({
   method: 'GET',
-  url: '/ejercicios/api/'
+  url: '/ejercicios/api/TODOS'
 }).then(function successCallback(response) {
 	var ejercicios = response.data;
 	console.log(ejercicios);
@@ -10,17 +10,79 @@ app.controller('myCtrl', function($scope, $http) {
     for (var i = 0; i < ejercicios.length; i++) {
 
     	et = ejercicios[i].etiquetas.split(",")
-    	Ejercicios.push({nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
+    	Ejercicios.push({id: ejercicios[i]._id,nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
     	
     }
     $scope.Ejercicio = Ejercicios
-    
+    $scope.message = "EJERCICIOS DE FUNDAMENTOS";
+    $scope.ver = false;
+	$scope.nver = true;    
   }, function errorCallback(response) {
     // called asynchronously if an error occurs
     // or server returns response with an error status.
   });
     
-});
+
+	$scope.cargar = function (value) {
+		if(value =='todos'){
+			msg = "EJERCICIOS DE FUNDAMENTOS"
+			URI = '/ejercicios/api/todos'
+			bol = false
+		}
+		else{
+				msg = "MIS EJERCICIOS DE FUNDAMENTOS"
+				URI = '/ejercicios/api/'
+				bol = true
+		}
+ $scope.ver = bol
+ $scope.nver = !bol
+ $scope.message = msg;
+		$http({
+  method: 'GET',
+  url: URI
+}).then(function successCallback(response) {
+	var ejercicios = response.data;
+	console.log(ejercicios);
+	Ejercicios = []
+    for (var i = 0; i < ejercicios.length; i++) {
+
+    	et = ejercicios[i].etiquetas.split(",")
+    	Ejercicios.push({id: ejercicios[i]._id, nombre: ejercicios[i].titulo, dificultad: ejercicios[i].dificultad, descripcion: ejercicios[i].descripcion, entrada: ejercicios[i].datosEntrada, salida: ejercicios[i].datosSalida, etiquetas: et})
+    	
+    }
+    $scope.Ejercicio = Ejercicios
+    console.log($scope.ver);
+    return $scope
+    
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  });
+}
+
+
+	$scope.eliminar =function (value) {
+		$http.delete('/ejercicios/'+value).then($scope.cargar("Mis ejecicios"), $scope.cargar("Mis ejecicios"))
+	}
+
+
+
+	$scope.editar = function (value) {
+		$("#tit").val(value.nombre)
+		$("#des").val(value.descripcion)
+		es = ""
+		value.etiquetas.forEach(function (et) {
+			es += et+","
+		})
+
+		$("#ets").val(es.slice(0, -1))
+		$("#identificacion").val(value.id)
+	}
+
+
+}]);
+
+
 
 
 app.controller('controller', ['$scope',"$http", function ($scope,$http) {
@@ -36,6 +98,29 @@ app.controller('controller', ['$scope',"$http", function ($scope,$http) {
 
 	
 }]);
+
+
+app.controller('controllers', ['$scope',"$http", function ($scope,$http) {
+	$scope.nverE = true;
+	$scope.verE = false;
+	$scope.verS = false;
+	$scope.nverS = true;
+	$("#checkedE").change(function(event) {
+		console.log("EE");
+		$scope.verE = $scope.checkedE
+		$scope.nverE = !$scope.checkedE
+	});
+	$("#checkedS").change(function(event) {
+		console.log("SS")
+		$scope.verS = $scope.checkedS
+		$scope.nverS = !$scope.checkedS
+	});
+
+
+
+	
+}]);
+
 
 
 
