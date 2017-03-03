@@ -290,7 +290,7 @@ router.post('/actualizar', function (req,res,next) {
    else{
 
    	idFile = new Date()
-   	origen = '../public/'
+   	origen = './public/'
     ent = '/data/entradas/';
    	if(req.files.entradas != undefined){
 
@@ -347,7 +347,7 @@ router.post('/', function(req, res, next) {
    if (!req.files){console.log("no hay archivos");}
    else{
     let fileE = req.files.entradas;
-    origen = '../public/'
+    origen = './public/'
     ent = '/data/entradas/';
     idFile = new Date()
     ePath = ent+idFile.getTime()+fileE.name
