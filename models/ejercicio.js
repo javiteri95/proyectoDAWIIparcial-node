@@ -9,6 +9,7 @@ var ejercicio = new Schema({
 	datosEntrada : String,
 	datosSalida : String,
 	etiquetas : String,
+	profesorOayudante : { type: Schema.Types.ObjectId, ref: 'Usuario', required: true  },
 	dificultad : {
 		type : String,
 		enum : ['FACIL','INTERMEDIO','DIFICIL']

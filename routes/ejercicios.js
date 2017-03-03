@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 */
 
 router.get('/api/', function(req, res, next) {
-  Ejercicio.find({}, function(err, ejers) {
+  Ejercicio.find({profesorOayudante : req.user.id}, function(err, ejers) {
     var ejerMap = {};
 
     ejers.forEach(function(ejer) {
@@ -249,6 +249,7 @@ router.post('/', function(req, res, next) {
 	var datosSalida = req.body.salidas;
 	var etiquetas = req.body.etiquetas;
 	var dificultad = req.body.dificultad;
+	var profesorOayudante = req.user.id;
 
 	var fs = require('fs')
 
@@ -287,6 +288,7 @@ router.post('/', function(req, res, next) {
 			descripcion : descripcion, 
 			datosEntrada : ePath,
 			datosSalida : sPath,
+			profesorOayudante : profesorOayudante,
 			etiquetas : etiquetas,
 			dificultad : dificultad
 		});
