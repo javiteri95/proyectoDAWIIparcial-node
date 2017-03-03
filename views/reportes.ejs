@@ -186,7 +186,9 @@ function porParalelo (event) {
         var original=[]
         var cantidades=[];
         for (var i = 0; i < fechas.length; i++) {
-          original.push(new Date(fechas[i]));
+          var fp=new Date(fechas[i]);
+            fp.setHours(0,0,0,0)
+          original.push(fp);
         }
         var copia=original.unique();
         for (var i = 0; i < original.length; i++) {
@@ -324,7 +326,9 @@ function porEstudiante(event) {
       var originalE=[]
         var cantidadesE=[];
         for (var i = 0; i < fechasE.length; i++) {
-          originalE.push(new Date(fechasE[i]));
+          var f=new Date(fechasE[i]);
+            f.setHours(0,0,0,0)
+          originalE.push(f);
         }
         var copiaE=originalE.unique();
         for (var i = 0; i < originalE.length; i++) {
